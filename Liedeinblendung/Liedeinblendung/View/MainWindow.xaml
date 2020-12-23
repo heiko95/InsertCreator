@@ -14,21 +14,24 @@
         xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel" xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="335.235" Width="331.879" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="MainWindow" Height="500" Width="331.879" ResizeMode="NoResize" WindowStyle="ToolWindow">
 
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
 
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Liednummer" Text="{Binding InputNumber, UpdateSourceTrigger=LostFocus}">
@@ -40,13 +43,90 @@
         <TextBox Grid.Row="2" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Liedtitel" IsEnabled="False" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
         </TextBox>
 
-        <TextBox Grid.Row="1" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Verse" Text="{Binding InputVers, UpdateSourceTrigger=LostFocus}">
+        <TextBox Grid.Row="3" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Melodie" IsEnabled="False" Text="{Binding MelodieAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        </TextBox>
+
+        <TextBox Grid.Row="4" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Text" IsEnabled="False" Text="{Binding TextAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        </TextBox>
+
+        <ListBox Grid.Row="1" x:Name="Concepts" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="20" ItemContainerStyle="{x:Null}"
+            HorizontalContentAlignment="Stretch" ItemsSource="{Binding VerseList, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Concepts_SelectionChanged" >
+
+
+            <ListBox.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Style.Resources>
+                        <!-- Background of selected item when focussed -->
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                        <!-- Background of selected item when not focussed -->
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
+                        
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+
+
+            <!--<ListBox.ItemContainerStyle>
+               
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="False" >
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ListBox.ItemContainerStyle>-->
+
+
+
+
+            <ListBox.ItemTemplate>
+
+                <DataTemplate>
+
+                    <StackPanel>
+                        <ToggleButton Style="{DynamicResource MaterialDesignFlatToggleButton}" Grid.Row="1" Content="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>                 
+                        
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+
+            </ListBox.ItemsPanel>
+
+
+
+
+        </ListBox>
+
+
+        <!--<TextBox Grid.Row="1" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Verse" Text="{Binding InputVers, UpdateSourceTrigger=LostFocus}">
             <i1:Interaction.Behaviors>
                 <behaviors:TextBoxEnterKeyUpdateBehavior />
             </i1:Interaction.Behaviors>
-        </TextBox>
+        </TextBox>-->
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
             <!--<Button Margin="20" Content="Zurücksetzen" >
             </Button>-->
             <Button Margin="20" Content="Übernehmen" Command="{Binding AcceptCommand}" IsEnabled ="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" >

@@ -10,6 +10,10 @@ namespace Liedeinblendung.ViewModel
         public MainViewModel()
         {
             Hymnals = _hymnalReader.LoadHymnals();
+            VerseList = new List<Verse>() { new Verse() { Number = 1 }, new Verse() { Number = 2 }, new Verse() { Number = 3 },
+                                            new Verse() { Number = 4 }, new Verse() { Number = 5 }, new Verse() { Number = 6 },
+                                            new Verse() { Number = 7 }, new Verse() { Number = 8 }, new Verse() { Number = 9 }};
+
 
         }
 
@@ -44,6 +48,12 @@ namespace Liedeinblendung.ViewModel
         public bool NumberFalidFlag
         {
             get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public List<Verse> VerseList
+        {
+            get { return GetValue<List<Verse>>(); }
             set { SetValue(value); }
         }
 

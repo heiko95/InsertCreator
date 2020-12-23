@@ -83,6 +83,9 @@
     <Compile Include="Model\FadeInWriter.cs" />
     <Compile Include="Model\HymnalData.cs" />
     <Compile Include="Model\HymnalReader.cs" />
+    <Compile Include="Model\Metadata.cs" />
+    <Compile Include="Model\Song.cs" />
+    <Compile Include="Model\Verse.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />

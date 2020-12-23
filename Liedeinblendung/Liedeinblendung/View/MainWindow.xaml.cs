@@ -24,5 +24,10 @@ namespace Liedeinblendung
         {
             InitializeComponent();
         }
+
+        private void Concepts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
