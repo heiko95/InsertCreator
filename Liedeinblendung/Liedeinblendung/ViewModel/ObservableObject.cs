@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Liedeinblendung.ViewModel
 {
-    internal class ObservableObject : INotifyPropertyChanged
+    public class ObservableObject : INotifyPropertyChanged
     {
         /// <summary>
         /// Dictionary for property values

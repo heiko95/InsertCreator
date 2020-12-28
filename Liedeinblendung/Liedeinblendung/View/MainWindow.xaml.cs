@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,24 @@ namespace Liedeinblendung
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
-        private void Concepts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private object _selected;
+
+
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (List.SelectedItem != null)
+            {
+                _selected = List.SelectedItem;
+                return;
+            }
+            List.SelectedItem = _selected;
 
         }
+
+
     }
 }

@@ -15,8 +15,14 @@ namespace Liedeinblendung.Model
             using (System.IO.StreamWriter file =
             new System.IO.StreamWriter($"{Directory.GetCurrentDirectory()}/DataSource/FadeText.txt"))
             {
-                file.WriteLine($"{hymnalData.Number} {hymnalData.SongVerses}");
+                file.WriteLine($"{hymnalData.Book} {hymnalData.Number} {hymnalData.SongVerses}");
                 file.WriteLine(hymnalData.Name);
+            }
+
+            using (System.IO.StreamWriter file =
+            new System.IO.StreamWriter($"{Directory.GetCurrentDirectory()}/DataSource/FadeTextMeta.txt"))
+            {
+                file.WriteLine($"{hymnalData.TextAutor}{hymnalData.MelodieAutor}");
             }
 
         }
