@@ -1,26 +1,27 @@
-﻿using Liedeinblendung.Model;
+﻿using Liedeinblendung.Extensions;
+using Liedeinblendung.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 namespace Liedeinblendung.ViewModel
 {
-    class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
-        public MainViewModel()
+        public MainViewModel(List<Song> hymnalList, string bookname)
         {
-            Hymnals = _hymnalReader.LoadHymnals();
-            VerseList = new List<Verse>() { new Verse() { Number = 1 }, new Verse() { Number = 2 }, new Verse() { Number = 3 },
-                                            new Verse() { Number = 4 }, new Verse() { Number = 5 }, new Verse() { Number = 6 },
-                                            new Verse() { Number = 7 }, new Verse() { Number = 8 }, new Verse() { Number = 9 }};
+            VerseList = new ObservableCollection<SelectedVerse>();
 
-
+            _currentHymnal = hymnalList;
+            _bookname = bookname;
         }
 
         public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
 
-        public List<HymnalData> Hymnals { get; set; } = new List<HymnalData>();
-            
+        private readonly string _bookname;
 
         public string InputNumber 
         {
@@ -31,7 +32,6 @@ namespace Liedeinblendung.ViewModel
                 CheckValid(value);            
             }
         }
-
 
         public string InputText
         {
@@ -51,31 +51,50 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        public List<Verse> VerseList
+        public ObservableCollection<SelectedVerse> VerseList
         {
-            get { return GetValue<List<Verse>>(); }
+            get { return GetValue<ObservableCollection<SelectedVerse>>(); }
             set { SetValue(value); }
         }
 
+        public string MelodieAutor
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
-        private readonly HymnalReader _hymnalReader = new HymnalReader();
+        public string TextAutor
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public List<int> SelectedVerses
+        {
+            get { return GetValue<List<int>>(); }
+            set { SetValue(value); }
+        }
+
+        
+
+
         private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
 
-
+        private List<Song> _currentHymnal = new List<Song>();
 
 
 
 
         private void CheckValid(string number)
         {
-            if (Hymnals.Exists(x=>x.Number == number))
+            if (_currentHymnal.Exists(x=>x.Number == number))
             {
                 NumberFalidFlag = true;
                 CreateFade(number);
                 return;
             }
 
-            if (Hymnals.Exists(x => x.Number == $"{number}a"))
+            if (_currentHymnal.Exists(x => x.Number == $"{number}a"))
             {
 
                 NumberFalidFlag = true;
@@ -86,13 +105,75 @@ namespace Liedeinblendung.ViewModel
 
             NumberFalidFlag = false;
             InputText = "";
+            VerseList.Clear();
+            MelodieAutor = "";
+            TextAutor = "";
 
         }
 
         private void OnAcceptPressed(object obj)
         {
-            _fadeInWriter.WriteFade(new HymnalData() { Number = InputNumber, Name = InputText, SongVerses = InputVers });
+            WriteInputVers();
+            var hymnal = new HymnalData() {Book = _bookname,  Number = InputNumber, Name = InputText, SongVerses = InputVers, MelodieAutor = MelodieAutor, TextAutor = TextAutor };
+            _fadeInWriter.WriteFade(hymnal);
             ClearView();
+        }
+
+        private void WriteInputVers()
+        {
+            string state = "";
+            
+            foreach (var verse in VerseList)
+            {
+                if (verse.IsSelected)
+                    state += "T";
+                else
+                    state += "F";
+            }
+
+            List<Match> matches = new List<Match>();
+
+            foreach(Match match in Regex.Matches(state, "[T]{1,}"))
+            {
+                matches.Add(match);
+            }
+
+            if ( matches.Count > 0)
+            {
+                InputVers = " / ";
+
+                foreach (var match in matches)
+                {
+
+                    switch (match.Length)
+                    {
+                        case 1:
+                            InputVers = $"{InputVers}{match.Index + 1}";
+                            break;
+
+                        case 2:
+                            InputVers = $"{InputVers}{match.Index + 1}-{match.Index + match.Length}";
+                            break;
+
+                        default:
+                            InputVers = $"{InputVers}{match.Index + 1}-{match.Index + match.Length}";
+                            break;
+                    }
+
+                    InputVers = $"{InputVers} + ";
+
+
+                }
+
+                char[] charsToTrim = { ' ', '+'};
+                InputVers = InputVers.TrimEnd(charsToTrim);
+                return;
+
+            }
+            InputVers = "";
+
+
+
         }
 
         private void ClearView()
@@ -104,10 +185,33 @@ namespace Liedeinblendung.ViewModel
 
         private void CreateFade(string number)
         {
-            var hymnal = new HymnalData();
-            hymnal.Number = number;
-            hymnal.Name = InputText = Hymnals.Find(x => x.Number == number).Name;
-            hymnal.SongVerses = InputVers;
+            Song current = _currentHymnal.Find(x => x.Number == number);
+
+            VerseList.Clear();
+            InputText = current.Title;
+
+            foreach(var verse in current.Verses)
+            {
+                VerseList.Add(new SelectedVerse(verse));
+            }
+
+            if (current.Metadata.Exists(x => x.Key == "Text"))
+                TextAutor = $" Text: {current.Metadata.Find(x => x.Key == "Text").Value}";
+            else
+                TextAutor = "";
+
+            if (current.Metadata.Exists(x => x.Key == "Melodie"))
+                MelodieAutor = $" Melodie: {current.Metadata.Find(x => x.Key == "Melodie").Value}";
+            else if
+                 (current.Metadata.Exists(x => x.Key == "Musik"))
+                MelodieAutor = $" Musik: {current.Metadata.Find(x => x.Key == "Musik").Value}";
+            else
+            MelodieAutor = "";
+
+
+
+
+            //hymnal.SongVerses = InputVers;
         }
 
 

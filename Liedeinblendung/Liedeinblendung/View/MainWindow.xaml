@@ -11,132 +11,110 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Liedeinblendung"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel" xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
+        xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel" 
+        xmlns:view="clr-namespace:Liedeinblendung.View" 
+        xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="331.879" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Liedeinblendung" Height="550" Width="415.879" ResizeMode="NoResize" WindowStyle="ToolWindow">
 
     <Window.DataContext>
-        <viewModels:MainViewModel />
+        <viewModels:WindowViewModel />
     </Window.DataContext>
 
-    
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="1.2*"></RowDefinition>
-        </Grid.RowDefinitions>
+        <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}" >
 
-        <TextBox Grid.Row="0" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Liednummer" Text="{Binding InputNumber, UpdateSourceTrigger=LostFocus}">
-            <i1:Interaction.Behaviors>
-                <behaviors:TextBoxEnterKeyUpdateBehavior />
-            </i1:Interaction.Behaviors>
-        </TextBox>
+            <materialDesign:DialogHost.DialogContent>
 
-        <TextBox Grid.Row="2" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Liedtitel" IsEnabled="False" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-        </TextBox>
+                <DockPanel  Width="400" Height="500">               
 
-        <TextBox Grid.Row="3" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Melodie" IsEnabled="False" Text="{Binding MelodieAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-        </TextBox>
+                    <Label Content="Liedeinblendung"                            
+                           FontSize="20"
+                           Margin="10"
+                           DockPanel.Dock="Top">
+                    </Label>
 
-        <TextBox Grid.Row="4" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Text" IsEnabled="False" Text="{Binding TextAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-        </TextBox>
-
-        <ListBox Grid.Row="1" x:Name="Concepts" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="20" ItemContainerStyle="{x:Null}"
-            HorizontalContentAlignment="Stretch" ItemsSource="{Binding VerseList, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Concepts_SelectionChanged" >
-
-
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Style.Resources>
-                        <!-- Background of selected item when focussed -->
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                        <!-- Background of selected item when not focussed -->
-                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
+                    <TextBox Style="{x:Null}" Height="200" Margin="10"  DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding License}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
                         
-                    </Style.Resources>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="Foreground" Value="Transparent" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.Resources>
-
-
-            <!--<ListBox.ItemContainerStyle>
-               
-                <Style TargetType="ListBoxItem">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True" >
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                        </Trigger>
-
-                        <Trigger Property="IsSelected" Value="False" >
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                        </Trigger>
-                    </Style.Triggers>
-
-                </Style>
-            </ListBox.ItemContainerStyle>-->
+                    </TextBox>
 
 
 
+                    <Grid DockPanel.Dock="Top" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>                            
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-            <ListBox.ItemTemplate>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                <DataTemplate>
+                        <Label Grid.Column="0" Grid.Row="0" Content="Autor:"></Label>
+                        <Label Grid.Column="0" Grid.Row="1" Content="Kontakt:"></Label>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Version:"></Label>
+                        <Label Grid.Column="0" Grid.Row="3" Content="Veröffentlicht:"></Label>
 
-                    <StackPanel>
-                        <ToggleButton Style="{DynamicResource MaterialDesignFlatToggleButton}" Grid.Row="1" Content="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>                 
+                        <Label Grid.Column="1" Grid.Row="0" Content="Heiko Gruber:"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" Content="heigrbk@arcor.de"></Label>
+                        <Label Grid.Column="1" Grid.Row="2" Content="1.0.0"></Label>
+                        <Label Grid.Column="1" Grid.Row="3" Content="28.12.2020"></Label>
+
+
+
+                    </Grid>
+                    
+                    
+                    
                         
+                        
+                    
 
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                    <Button 
+                        Content="Schließen"
+                        Margin="10"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        DockPanel.Dock="Top">
+                    </Button>
 
+                </DockPanel>
 
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
+            </materialDesign:DialogHost.DialogContent>
+            
 
-            </ListBox.ItemsPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-
-
-
-        </ListBox>
-
-
-        <!--<TextBox Grid.Row="1" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Verse" Text="{Binding InputVers, UpdateSourceTrigger=LostFocus}">
-            <i1:Interaction.Behaviors>
-                <behaviors:TextBoxEnterKeyUpdateBehavior />
-            </i1:Interaction.Behaviors>
-        </TextBox>-->
-
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
-            <!--<Button Margin="20" Content="Zurücksetzen" >
-            </Button>-->
-            <Button Margin="20" Content="Übernehmen" Command="{Binding AcceptCommand}" IsEnabled ="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" >
-            </Button>
-        </StackPanel>
+            <materialDesign:Card Margin="10" Grid.Row="1">
+                <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}">
 
 
+                </view:InputView>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Row="0" Margin="10">
+                <DockPanel>
+                    <ListBox  x:Name="List" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="{Binding Selected, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
+                        <ListBoxItem Content="Gesangbuch"></ListBoxItem>
+                        <ListBoxItem Content="Chorbuch"></ListBoxItem>
+                    </ListBox>
+
+                        <ToggleButton HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Info" Height="Auto"/>
+
+                </DockPanel>
 
 
+            </materialDesign:Card>
 
+        </Grid>
+        </materialDesign:DialogHost>
 
     </Grid>
 </Window>

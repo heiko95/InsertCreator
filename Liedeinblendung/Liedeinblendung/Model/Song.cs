@@ -16,6 +16,6 @@ namespace Liedeinblendung.Model
 
         public List<Verse> Verses { get; set; } = new List<Verse>();
 
-        public List<Metadata> Metadatas { get; set; } = new List<Metadata>();
+        public List<Metadata> Metadata { get; set; } = new List<Metadata>();
     }
 }

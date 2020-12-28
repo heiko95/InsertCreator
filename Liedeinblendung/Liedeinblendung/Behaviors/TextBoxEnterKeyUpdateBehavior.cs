@@ -38,7 +38,12 @@ namespace Liedeinblendung.Behaviors
                 {
                     if (e.Key == Key.Enter)
                     {
-                        textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                        //textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+
+                        // Kill logical focus
+                        FocusManager.SetFocusedElement(FocusManager.GetFocusScope(textBox), null);
+                        // Kill keyboard focus
+                        Keyboard.ClearFocus();
                     }
                 }
             }
