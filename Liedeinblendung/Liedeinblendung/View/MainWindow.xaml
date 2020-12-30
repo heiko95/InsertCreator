@@ -16,18 +16,18 @@
         xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Liedeinblendung" Height="550" Width="415.879" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Liedeinblendung" Height="550" Width="415" ResizeMode="NoResize" WindowStyle="ToolWindow">
 
     <Window.DataContext>
         <viewModels:WindowViewModel />
     </Window.DataContext>
 
     <Grid>
-        <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}" >
+        <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" >
 
             <materialDesign:DialogHost.DialogContent>
 
-                <DockPanel  Width="400" Height="500">               
+                <DockPanel  Width="390" Height="500">               
 
                     <Label Content="Liedeinblendung"                            
                            FontSize="20"
@@ -100,13 +100,52 @@
             </materialDesign:Card>
 
             <materialDesign:Card Grid.Row="0" Margin="10">
+                
                 <DockPanel>
-                    <ListBox  x:Name="List" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="{Binding Selected, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
+                     <ListBox x:Name="List" Style="{StaticResource MaterialDesignToolToggleFlatListBox}" SelectedIndex="{Binding Selected, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                         <ListBoxItem Content="Gesangbuch"></ListBoxItem>
                         <ListBoxItem Content="Chorbuch"></ListBoxItem>
-                    </ListBox>
 
-                        <ToggleButton HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Info" Height="Auto"/>
+
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True" >
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    <Style.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+
+                        <Button HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="0,0,-1,0" Content="Info" Height="Auto" >
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsPressed" Value="True" >
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="False" >
+                                            <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    
+                                    <Style.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                    </Style.Resources>
+                                </Style>
+                            </Button.Style>
+                            
+                        </Button>
 
                 </DockPanel>
 
