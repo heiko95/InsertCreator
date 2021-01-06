@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liedeinblendung", "Liedeinblendung\Liedeinblendung.csproj", "{D323AB68-F07A-478B-BC1F-F20ACC3A6CBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsertCreator", "InsertCreator.csproj", "{D323AB68-F07A-478B-BC1F-F20ACC3A6CBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {29122A41-B307-4212-9898-E72D6DDC5EFD}
+		SolutionGuid = {4CEBFFB2-7A81-4512-BA84-31CFD3CDA1DB}
 	EndGlobalSection
 EndGlobal

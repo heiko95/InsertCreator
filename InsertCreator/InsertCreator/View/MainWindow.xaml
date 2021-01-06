@@ -16,7 +16,7 @@
         xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Liedeinblendung" Height="550" Width="415" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Insert Creator" Height="550" Width="415" ResizeMode="CanMinimize" WindowStyle="SingleBorderWindow" Icon="Logo.png">
 
     <Window.DataContext>
         <viewModels:WindowViewModel />
@@ -27,9 +27,9 @@
 
             <materialDesign:DialogHost.DialogContent>
 
-                <DockPanel  Width="390" Height="500">               
+                <DockPanel  Width="390" Height="500">
 
-                    <Label Content="Liedeinblendung"                            
+                    <Label Content="Insert Creator"                            
                            FontSize="20"
                            Margin="10"
                            DockPanel.Dock="Top">
@@ -62,7 +62,7 @@
                         <Label Grid.Column="1" Grid.Row="0" Content="Heiko Gruber:"></Label>
                         <Label Grid.Column="1" Grid.Row="1" Content="heigrbk@arcor.de"></Label>
                         <Label Grid.Column="1" Grid.Row="2" Content="1.0.0"></Label>
-                        <Label Grid.Column="1" Grid.Row="3" Content="28.12.2020"></Label>
+                        <Label Grid.Column="1" Grid.Row="3" Content="01.01.2021"></Label>
 
 
 
