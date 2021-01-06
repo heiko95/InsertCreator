@@ -11,7 +11,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Liedeinblendung"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel" xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
+        xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel"
+        xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" 
         d:DesignHeight="450" d:DesignWidth="415">
@@ -50,6 +51,8 @@
             <ListBox  x:Name="Concepts" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="20" Style="{StaticResource MaterialDesignToolToggleFlatListBox}"
             HorizontalContentAlignment="Center" ItemsSource="{Binding VerseList, UpdateSourceTrigger=PropertyChanged}" SelectionMode="Multiple">
 
+
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -59,9 +62,19 @@
                 </ListBox.ItemTemplate>
 
                 <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                         <Setter Property="IsSelected" Value="{Binding IsSelected}" />
-                    </Style>
+                             <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True" >
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Style.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                            </Style.Resources>
+                        </Style>
                 </ListBox.ItemContainerStyle>
 
 
