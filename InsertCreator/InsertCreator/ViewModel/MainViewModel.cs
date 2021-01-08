@@ -113,8 +113,8 @@ namespace Liedeinblendung.ViewModel
 
         private void OnAcceptPressed(object obj)
         {
-            WriteInputVers();
-            var hymnal = new HymnalData() {Book = _bookname,  Number = InputNumber, Name = InputText, SongVerses = InputVers, MelodieAutor = MelodieAutor, TextAutor = TextAutor };
+            //WriteInputVers();
+            var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
             _fadeInWriter.WriteFade(hymnal);
             ClearView();
         }

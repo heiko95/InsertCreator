@@ -1,9 +1,11 @@
-﻿using Liedeinblendung.Model;
+﻿using Liedeinblendung.Extensions;
+using Liedeinblendung.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +32,23 @@ namespace Liedeinblendung.ViewModel
             CurrentData = _gbData;
             License = File.ReadAllText(($"{Directory.GetCurrentDirectory()}/License.txt"));
 
+        }
+
+
+        public string Version
+        {
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+        }
+
+        public string PublishDate
+        {
+            get
+            {
+                return File.GetCreationTime(Assembly.GetExecutingAssembly().Location).ToString().Split(' ')[0];
+            }
         }
 
 
