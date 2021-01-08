@@ -12,7 +12,7 @@
     xmlns:view="clr-namespace:Liedeinblendung.View"
     xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel"
     Title="Insert Creator"
-    Width="415"
+    Width="500"
     Height="550"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
@@ -24,18 +24,19 @@
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
 
-    <Window.DataContext>
-        <viewModels:WindowViewModel />
-    </Window.DataContext>
 
     <Grid>
-        <materialDesign:DialogHost Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+
+                
+            <materialDesign:DialogHost Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}" >
 
             <materialDesign:DialogHost.DialogContent>
 
-                <DockPanel Width="390" Height="500">
+                <DockPanel Width="475" Height="500">
 
-                    <Label
+                    <view:ConfigView DockPanel.Dock="Top" Width="475" Height="400"></view:ConfigView> 
+
+                   <!-- <Label
                         Margin="10"
                         Content="Insert Creator"
                         DockPanel.Dock="Top"
@@ -99,18 +100,8 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             Content="{Binding PublishDate}" />
-
-
-
-
-                    </Grid>
-
-
-
-
-
-
-
+                    </Grid> -->
+                    
                     <Button
                         Margin="10"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
@@ -122,7 +113,12 @@
             </materialDesign:DialogHost.DialogContent>
 
 
-            <Grid>
+
+
+
+
+
+        <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="6*" />
@@ -141,12 +137,14 @@
                             SelectionChanged="ListBox_SelectionChanged"
                             SelectionMode="Single"
                             Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
-                            <ListBoxItem Content="Gesangbuch" />
-                            <ListBoxItem Content="Chorbuch" />
+                            <ListBoxItem Content="Gesangbuch" Width="100" HorizontalContentAlignment="Center"/>
+                            <ListBoxItem Content="Chorbuch"  Width="100" HorizontalContentAlignment="Center" />
+
 
 
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
+                                    
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="FontWeight" Value="Bold" />
@@ -156,39 +154,83 @@
                                     </Style.Triggers>
                                     <Style.Resources>
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+
+             
                                     </Style.Resources>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
 
-                        <Button
-                            Height="Auto"
-                            Margin="0,0,-1,0"
-                            HorizontalAlignment="Right"
+                        <DockPanel HorizontalAlignment="Right">
+                            <Button
+                            Height="Auto"    
+                            Width="50"
+                            Padding="-5"
+                            FontSize="20"
                             Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                            Content="Info">
-                            <Button.Style>
-                                <Style BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" TargetType="Button">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
-                                            <Setter Property="Foreground" Value="White" />
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="False">
-                                            <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
-                                            <Setter Property="Foreground" Value="White" />
-                                            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}" />
-                                        </Trigger>
-                                    </Style.Triggers>
+                            Content="&#x2699;"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center">  
 
-                                    <Style.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                                    </Style.Resources>
-                                </Style>
-                            </Button.Style>
 
-                        </Button>
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+
+                                        <Style.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                        </Style.Resources>
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+
+                            <Button
+                            Height="Auto"
+                            Margin="0,0,-1,0"                                
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Width="50"
+                            Padding="-5"
+                            FontSize="30"
+                            Content="&#9432;"
+                            HorizontalContentAlignment="Center">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+
+                                        <Style.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                        </Style.Resources>
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+
+                        </DockPanel>
+
+                     
 
                     </DockPanel>
 
@@ -196,7 +238,9 @@
                 </materialDesign:Card>
 
             </Grid>
+
         </materialDesign:DialogHost>
+
 
     </Grid>
 </Window>

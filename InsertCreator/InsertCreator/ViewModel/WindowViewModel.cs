@@ -17,17 +17,9 @@ namespace Liedeinblendung.ViewModel
         public WindowViewModel()
         {
             _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
-            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
+            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");          
 
-            string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-               
-                File.Create($"{path}/FadeText.txt", 1024);
-                File.Create($"{path}/FadeTextMeta.txt", 1024);                      
-            }
                
             CurrentData = _gbData;
             License = File.ReadAllText(($"{Directory.GetCurrentDirectory()}/License.txt"));
