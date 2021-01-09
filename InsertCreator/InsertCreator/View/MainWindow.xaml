@@ -24,101 +24,59 @@
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
+                <materialDesign:DialogHost
+                    Background="{DynamicResource MaterialDesignCardBackground}"
+                    BorderBrush="{DynamicResource MaterialDesignDivider}"
+                    CloseOnClickAway="True"
+                    Identifier="ConfigWindow">
+                    <StackPanel>
+                        <view:ConfigView DataContext="{Binding}" />
+                        <Button
+                            Margin="10"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Content="Schließen"
+                            DockPanel.Dock="Top" />
+                    </StackPanel>
+                </materialDesign:DialogHost>
+            </DataTemplate>
 
-    <Grid>
-
-                
-            <materialDesign:DialogHost Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}" >
-
-            <materialDesign:DialogHost.DialogContent>
-
-                <DockPanel Width="475" Height="500">
-
-                    <view:ConfigView DockPanel.Dock="Top" Width="475" Height="400"></view:ConfigView> 
-
-                   <!-- <Label
-                        Margin="10"
-                        Content="Insert Creator"
-                        DockPanel.Dock="Top"
-                        FontSize="20" />
-
-                    <TextBox
-                        Height="200"
-                        Margin="10"
-                        DockPanel.Dock="Top"
-                        IsReadOnly="True"
-                        Style="{x:Null}"
-                        Text="{Binding License}"
-                        TextWrapping="Wrap"
-                        VerticalScrollBarVisibility="Auto" />
-
-
-
-                    <Grid Margin="10" DockPanel.Dock="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Content="Autor:" />
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Content="Kontakt:" />
-                        <Label
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Content="Version:" />
-                        <Label
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            Content="Veröffentlicht:" />
-
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Content="Heiko Gruber:" />
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Content="heigrbk@arcor.de" />
-                        <Label
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Content="{Binding Version}" />
-                        <Label
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            Content="{Binding PublishDate}" />
-                    </Grid> -->
-                    
+            <DataTemplate DataType="{x:Type viewModels:MinistryConfigViewModel}">
+                <StackPanel>
+                    <view:MinistryConfigView DataContext="{Binding}" />
                     <Button
                         Margin="10"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                         Content="Schließen"
                         DockPanel.Dock="Top" />
+                </StackPanel>
+            </DataTemplate>
 
-                </DockPanel>
+            <DataTemplate DataType="{x:Type viewModels:InfoViewModel}">
 
-            </materialDesign:DialogHost.DialogContent>
+                <StackPanel>
+                    <view:InfoView DataContext="{Binding}" />
+                    <Button
+                        Margin="10"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        Content="Schließen"
+                        DockPanel.Dock="Top" />
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
 
 
-
-
-
-
-
-        <Grid>
+        <materialDesign:DialogHost
+            Background="{DynamicResource MaterialDesignCardBackground}"
+            BorderBrush="{DynamicResource MaterialDesignDivider}"
+            CloseOnClickAway="True"
+            Identifier="MainWindow">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="6*" />
@@ -137,14 +95,17 @@
                             SelectionChanged="ListBox_SelectionChanged"
                             SelectionMode="Single"
                             Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
-                            <ListBoxItem Content="Gesangbuch" Width="100" HorizontalContentAlignment="Center"/>
-                            <ListBoxItem Content="Chorbuch"  Width="100" HorizontalContentAlignment="Center" />
-
-
-
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Gesangbuch" />
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Chorbuch" />
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
-                                    
+
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="FontWeight" Value="Bold" />
@@ -154,23 +115,22 @@
                                     </Style.Triggers>
                                     <Style.Resources>
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-
-             
                                     </Style.Resources>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
 
-                        <DockPanel HorizontalAlignment="Right">
+                        <DockPanel HorizontalAlignment="Right" Background="{StaticResource MaterialDesignToolBarBackground}">
+
                             <Button
-                            Height="Auto"    
-                            Width="50"
-                            Padding="-5"
-                            FontSize="20"
-                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                            Content="&#x2699;"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center">  
+                                Width="50"
+                                Height="Auto"
+                                Padding="-5"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Command="{Binding OnShowConfig}"
+                                Content="&#x2699;"
+                                FontSize="20">
 
 
                                 <Button.Style>
@@ -197,14 +157,14 @@
                             </Button>
 
                             <Button
-                            Height="Auto"
-                            Margin="0,0,-1,0"                                
-                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                            Width="50"
-                            Padding="-5"
-                            FontSize="30"
-                            Content="&#9432;"
-                            HorizontalContentAlignment="Center">
+                                Width="50"
+                                Height="Auto"
+                                Margin="0,0,-1,0"
+                                Padding="-5"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OnShowInfo}"
+                                Content="&#9432;"
+                                FontSize="30">
                                 <Button.Style>
                                     <Style BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" TargetType="Button">
                                         <Style.Triggers>
@@ -230,7 +190,7 @@
 
                         </DockPanel>
 
-                     
+
 
                     </DockPanel>
 

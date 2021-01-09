@@ -9,46 +9,39 @@ using System.Reflection;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Liedeinblendung.ViewModel
 {
     public class WindowViewModel : ObservableObject
     {
+
+        public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
+        public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
+
+        async private void OpenInfoDialog(object obj)
+        {
+            await MaterialDesignThemes.Wpf.DialogHost.Show(InfoViewModel, "MainWindow");
+        }
+
+        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
+
+        public InfoViewModel InfoViewModel = new InfoViewModel();
+
+        async private void OpenConfigDialog(object obj)
+        {
+            await MaterialDesignThemes.Wpf.DialogHost.Show(ConfigViewModel, "MainWindow");
+        }
+
+
+
+
         public WindowViewModel()
         {
             _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
             _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");          
-
-
-               
-            CurrentData = _gbData;
-            License = File.ReadAllText(($"{Directory.GetCurrentDirectory()}/License.txt"));
-
-        }
-
-
-        public string Version
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        public string PublishDate
-        {
-            get
-            {
-                return File.GetCreationTime(Assembly.GetExecutingAssembly().Location).ToString().Split(' ')[0];
-            }
-        }
-
-
-
-        public string License
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
+                           
+            CurrentData = _gbData;   
         }
 
         public int Selected
