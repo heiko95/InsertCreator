@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Liedeinblendung.Model
 {    
-    class Ministry
+    public class Ministry
     {
         public string Function { get; set; }
         public string ForeName { get; set; }
         public string SureName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return $"{Function}{ForeName}{SureName}"; 
+            }
+        }
+
     }
 }

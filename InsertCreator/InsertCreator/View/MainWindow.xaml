@@ -26,6 +26,7 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="Converter" />
             <DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
                 <materialDesign:DialogHost
                     Background="{DynamicResource MaterialDesignCardBackground}"
@@ -83,7 +84,15 @@
                 </Grid.RowDefinitions>
 
                 <materialDesign:Card Grid.Row="1" Margin="10">
-                    <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}" />
+                    <Grid>
+                        <Grid>
+                            <view:MinistryView DataContext="{Binding MinistryData, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                        <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
+                            <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+
+                    </Grid>
                 </materialDesign:Card>
 
                 <materialDesign:Card Grid.Row="0" Margin="10">
@@ -103,6 +112,10 @@
                                 Width="100"
                                 HorizontalContentAlignment="Center"
                                 Content="Chorbuch" />
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Amtsträger" />
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
 

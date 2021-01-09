@@ -60,9 +60,14 @@ namespace Liedeinblendung.Model
 
             // TODO Pos Anpassen
             drawingTool.DrawString(
-             $"{ministry.Function} {ministry.ForeName}{ministry.SureName}",
-             new Font("Arial", 48, FontStyle.Bold, GraphicsUnit.Pixel),
+             $"{ministry.ForeName} {ministry.SureName}",
+             new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
              new SolidBrush(Color.Black), new PointF(90, 840));
+
+            drawingTool.DrawString(
+             ministry.Function,
+             new Font("Calibri", 44, GraphicsUnit.Pixel),
+             new SolidBrush(Color.Black), new PointF(90, 910));
         }
 
 
@@ -75,12 +80,12 @@ namespace Liedeinblendung.Model
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
-             new Font("Arial", 48, FontStyle.Bold, GraphicsUnit.Pixel),
+             new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
              new SolidBrush(Color.Black), new PointF(90, 840));
 
             drawingTool.DrawString(
                 hymnalData.Name,
-                new Font("Arial", 44, GraphicsUnit.Pixel),
+                new Font("Calibri", 44, GraphicsUnit.Pixel),
                 new SolidBrush(Color.Black), new PointF(90, 910));
 
             drawingTool.DrawImage(
@@ -101,21 +106,25 @@ namespace Liedeinblendung.Model
 
             var drawingTool = Graphics.FromImage(image);
 
-            // TODO Pos Anpassen
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
-             new Font("Arial", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(90, 840));
-
+             new Font("Calibri", 44, FontStyle.Bold, GraphicsUnit.Pixel),
+             new SolidBrush(Color.Black), new PointF(90, 810));
+            
             drawingTool.DrawString(
                 hymnalData.Name,
-                new Font("Arial", 44, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Black), new PointF(90, 910));
+                new Font("Calibri", 40, GraphicsUnit.Pixel),
+                new SolidBrush(Color.Black), new PointF(90, 865));
 
             drawingTool.DrawString(
-               $"{hymnalData.TextAutor}{hymnalData.MelodieAutor}",
-               new Font("Arial", 16, GraphicsUnit.Pixel),
-               new SolidBrush(Color.Black), new PointF(90, 975));
+               hymnalData.TextAutor,
+               new Font("Calibri", 24, GraphicsUnit.Pixel),
+               new SolidBrush(Color.Black), new PointF(90, 926));
+
+            drawingTool.DrawString(
+               hymnalData.MelodieAutor,
+               new Font("Calibri", 24, GraphicsUnit.Pixel),
+               new SolidBrush(Color.Black), new PointF(90, 956));
 
             drawingTool.DrawImage(
                 GetLogo(), new PointF(1425, 825));
