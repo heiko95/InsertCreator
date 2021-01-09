@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Liedeinblendung.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,9 +22,10 @@ namespace Liedeinblendung
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(WindowViewModel vm)
         {
             InitializeComponent();
+            this.DataContext = vm;
 
         }
 

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Liedeinblendung.View
 {
     /// <summary>
-    /// Interaktionslogik für InfoView.xaml
+    /// Interaction logic for ConfigView.xaml
     /// </summary>
-    public partial class InfoView : UserControl
+    public partial class ConfigView : UserControl
     {
-        public InfoView()
+        public ConfigView()
         {
             InitializeComponent();
         }
