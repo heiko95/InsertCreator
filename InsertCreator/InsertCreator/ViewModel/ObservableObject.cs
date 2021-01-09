@@ -56,19 +56,19 @@ namespace Liedeinblendung.ViewModel
                     if (!Equals(comparableValue, comparableDictionary))
                     {
                         _propertyValues[key] = value;
-                        OnPropertyChanged(propertyName);
+                        InvokePropertyChanged(propertyName);
                     }
                 }
                 else
                 {
                     _propertyValues[key] = value;
-                    OnPropertyChanged(propertyName);
+                    InvokePropertyChanged(propertyName);
                 }
             }
             else
             {
                 _propertyValues.Add(key, value);
-                OnPropertyChanged(propertyName);
+                InvokePropertyChanged(propertyName);
             }
 
             callback?.Invoke();
@@ -79,7 +79,7 @@ namespace Liedeinblendung.ViewModel
         /// </summary>
         /// <param name="propertyName"></param>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void InvokePropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

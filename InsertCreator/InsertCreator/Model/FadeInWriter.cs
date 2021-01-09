@@ -19,9 +19,9 @@ namespace Liedeinblendung.Model
         {
             CreateTextfiles(hymnalData);
 
-            var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(ConfigSectionName.hymnalInsertOptions, KeyName.UseGreenscreen));
+            var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
 
-            if (Convert.ToBoolean(_appSetting.ReadSetting(ConfigSectionName.hymnalInsertOptions, KeyName.ShowComponistAndAutor)))
+            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor)))
                 CreateHymnalInsertPictureMeta(hymnalData, greenScreen);
             else
                 CreateHymnalInsertPicture(hymnalData, greenScreen);
@@ -47,7 +47,7 @@ namespace Liedeinblendung.Model
 
         public void LoadImages()
         {            
-            Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(ConfigSectionName.hymnalInsertOptions, KeyName.UseGreenscreen)));
+            Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
 
         }
@@ -83,8 +83,16 @@ namespace Liedeinblendung.Model
                 new Font("Arial", 44, GraphicsUnit.Pixel),
                 new SolidBrush(Color.Black), new PointF(90, 910));
 
+            drawingTool.DrawImage(
+                GetLogo(), new PointF(1425,825));
+
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
 
+        }
+
+        private Image GetLogo()
+        {
+            return Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png");
         }
 
         private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent)
@@ -108,6 +116,9 @@ namespace Liedeinblendung.Model
                $"{hymnalData.TextAutor}{hymnalData.MelodieAutor}",
                new Font("Arial", 16, GraphicsUnit.Pixel),
                new SolidBrush(Color.Black), new PointF(90, 975));
+
+            drawingTool.DrawImage(
+                GetLogo(), new PointF(1425, 825));
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
 

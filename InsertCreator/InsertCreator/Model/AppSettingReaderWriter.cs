@@ -19,18 +19,17 @@ namespace Liedeinblendung.Model
         /// <param name="configSection"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string ReadSetting(ConfigSectionName configSection, KeyName key)
+        public string ReadSetting(KeyName key)
         {
             try
             {
-                ConfigurationManager.RefreshSection(configSection.ToString());
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                var section = ConfigurationManager.GetSection(configSection.ToString()) as NameValueCollection;
-                return section[key.ToString()] ?? "Not Found";
+                var appSettings = ConfigurationManager.AppSettings;
+                return appSettings[key.ToString()] ?? "Not Found";
+                
             }
             catch (ConfigurationErrorsException)
-            {              
-                return string.Empty;
+            {
+                return "";
             }
         }
 
@@ -46,47 +45,19 @@ namespace Liedeinblendung.Model
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings.Remove(key.ToString());
                 config.AppSettings.Settings.Add(key.ToString(), value);               
-                config.Save(ConfigurationSaveMode.Full);
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
             }
 
             catch (ConfigurationErrorsException)
             {
                
             }
-        }
-
-
-        // TODO Wird wahrscheinlich noch gebraucht
-        public List<string> ReadSection(ConfigSectionName configSection)
-        {
-            var list = new List<string>();
-            try
-            {
-                ConfigurationManager.RefreshSection(configSection.ToString());
-                var section = ConfigurationManager.GetSection(configSection.ToString()) as NameValueCollection;
-
-                foreach (var key in section.AllKeys)
-                {
-                    list.Add(section[key.ToString()]);
-                }               
-                return list;
-            }
-            catch (ConfigurationErrorsException)
-            {                
-                return list;
-            }
-        }
-        
+        }        
     }
 
 
-    /// <summary>
-    /// SectionNameEnum
-    /// </summary>
-    public enum ConfigSectionName
-    {
-        hymnalInsertOptions
-    }
+
 
     /// <summary>
     /// SettingsKeyEnum
@@ -94,7 +65,8 @@ namespace Liedeinblendung.Model
     public enum KeyName
     {
         UseGreenscreen,
-        ShowComponistAndAutor 
+        ShowComponistAndAutor,
+        UseLogo
     }
 
 }
