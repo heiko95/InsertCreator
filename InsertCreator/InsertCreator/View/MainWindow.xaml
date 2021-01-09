@@ -1,159 +1,246 @@
-﻿<Window x:Class="Liedeinblendung.MainWindow"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
-        FontFamily="{materialDesign:MaterialDesignFont}"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Liedeinblendung"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel" 
-        xmlns:view="clr-namespace:Liedeinblendung.View" 
-        xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors" 
-        xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
-        mc:Ignorable="d"
-        Title="Insert Creator" Height="550" Width="415" ResizeMode="CanMinimize" WindowStyle="SingleBorderWindow" Icon="Logo.png">
+﻿<Window
+    x:Class="Liedeinblendung.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Liedeinblendung.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Liedeinblendung"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Liedeinblendung.View"
+    xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel"
+    Title="Insert Creator"
+    Width="500"
+    Height="550"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Icon="Logo.png"
+    ResizeMode="CanMinimize"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStyle="SingleBorderWindow"
+    mc:Ignorable="d">
 
-    <Window.DataContext>
-        <viewModels:WindowViewModel />
-    </Window.DataContext>
 
     <Grid>
-        <materialDesign:DialogHost BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" >
+
+                
+            <materialDesign:DialogHost Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}" >
 
             <materialDesign:DialogHost.DialogContent>
 
-                <DockPanel  Width="390" Height="500">
+                <DockPanel Width="475" Height="500">
 
-                    <Label Content="Insert Creator"                            
-                           FontSize="20"
-                           Margin="10"
-                           DockPanel.Dock="Top">
-                    </Label>
+                    <view:ConfigView DockPanel.Dock="Top" Width="475" Height="400"></view:ConfigView> 
 
-                    <TextBox Style="{x:Null}" Height="200" Margin="10"  DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding License}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
-                        
-                    </TextBox>
+                   <!-- <Label
+                        Margin="10"
+                        Content="Insert Creator"
+                        DockPanel.Dock="Top"
+                        FontSize="20" />
+
+                    <TextBox
+                        Height="200"
+                        Margin="10"
+                        DockPanel.Dock="Top"
+                        IsReadOnly="True"
+                        Style="{x:Null}"
+                        Text="{Binding License}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
 
 
 
-                    <Grid DockPanel.Dock="Top" Margin="10">
+                    <Grid Margin="10" DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>                            
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0" Content="Autor:"></Label>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Kontakt:"></Label>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Version:"></Label>
-                        <Label Grid.Column="0" Grid.Row="3" Content="Veröffentlicht:"></Label>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Content="Autor:" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Content="Kontakt:" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Content="Version:" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Content="Veröffentlicht:" />
 
-                        <Label Grid.Column="1" Grid.Row="0" Content="Heiko Gruber:"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" Content="heigrbk@arcor.de"></Label>
-                        <Label Grid.Column="1" Grid.Row="2" Content="1.0.0"></Label>
-                        <Label Grid.Column="1" Grid.Row="3" Content="01.01.2021"></Label>
-
-
-
-                    </Grid>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Content="Heiko Gruber:" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Content="heigrbk@arcor.de" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Content="{Binding Version}" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Content="{Binding PublishDate}" />
+                    </Grid> -->
                     
-                    
-                    
-                        
-                        
-                    
-
-                    <Button 
-                        Content="Schließen"
+                    <Button
                         Margin="10"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                        DockPanel.Dock="Top">
-                    </Button>
+                        Content="Schließen"
+                        DockPanel.Dock="Top" />
 
                 </DockPanel>
 
             </materialDesign:DialogHost.DialogContent>
-            
 
-            <Grid>
+
+
+
+
+
+
+        <Grid>
                 <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="6*"></RowDefinition>
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="6*" />
+                </Grid.RowDefinitions>
 
-            <materialDesign:Card Margin="10" Grid.Row="1">
-                <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}">
+                <materialDesign:Card Grid.Row="1" Margin="10">
+                    <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}" />
+                </materialDesign:Card>
 
+                <materialDesign:Card Grid.Row="0" Margin="10">
 
-                </view:InputView>
-            </materialDesign:Card>
+                    <DockPanel>
+                        <ListBox
+                            x:Name="List"
+                            SelectedIndex="{Binding Selected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectionChanged="ListBox_SelectionChanged"
+                            SelectionMode="Single"
+                            Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
+                            <ListBoxItem Content="Gesangbuch" Width="100" HorizontalContentAlignment="Center"/>
+                            <ListBoxItem Content="Chorbuch"  Width="100" HorizontalContentAlignment="Center" />
 
-            <materialDesign:Card Grid.Row="0" Margin="10">
-                
-                <DockPanel>
-                     <ListBox x:Name="List" Style="{StaticResource MaterialDesignToolToggleFlatListBox}" SelectedIndex="{Binding Selected, UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
-                        <ListBoxItem Content="Gesangbuch"></ListBoxItem>
-                        <ListBoxItem Content="Chorbuch"></ListBoxItem>
 
 
                             <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
+                                    
                                     <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True" >
+                                        <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="FontWeight" Value="Bold" />
                                             <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
                                             <Setter Property="Foreground" Value="White" />
                                         </Trigger>
                                     </Style.Triggers>
                                     <Style.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+
+             
                                     </Style.Resources>
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
 
-                        <Button HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Margin="0,0,-1,0" Content="Info" Height="Auto" >
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsPressed" Value="True" >
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                            <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
-                                            <Setter Property="Foreground" Value="White" />
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="False" >
-                                            <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
-                                            <Setter Property="Foreground" Value="White" />
-                                            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                    
-                                    <Style.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                                    </Style.Resources>
-                                </Style>
-                            </Button.Style>
-                            
-                        </Button>
-
-                </DockPanel>
+                        <DockPanel HorizontalAlignment="Right">
+                            <Button
+                            Height="Auto"    
+                            Width="50"
+                            Padding="-5"
+                            FontSize="20"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Content="&#x2699;"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center">  
 
 
-            </materialDesign:Card>
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                            </Trigger>
+                                        </Style.Triggers>
 
-        </Grid>
+                                        <Style.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                        </Style.Resources>
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+
+                            <Button
+                            Height="Auto"
+                            Margin="0,0,-1,0"                                
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Width="50"
+                            Padding="-5"
+                            FontSize="30"
+                            Content="&#9432;"
+                            HorizontalContentAlignment="Center">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                                <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignToolBarBackground}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+
+                                        <Style.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                        </Style.Resources>
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+
+                        </DockPanel>
+
+                     
+
+                    </DockPanel>
+
+
+                </materialDesign:Card>
+
+            </Grid>
+
         </materialDesign:DialogHost>
+
 
     </Grid>
 </Window>
