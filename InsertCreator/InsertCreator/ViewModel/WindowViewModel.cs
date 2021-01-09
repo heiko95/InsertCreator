@@ -39,25 +39,40 @@ namespace Liedeinblendung.ViewModel
         public WindowViewModel()
         {
             _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
-            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");          
-                           
-            CurrentData = _gbData;   
+            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
+            _ministryData = new MinistryViewModel();
+            HymnalInputVisible = true;
+
+            CurrentData = _gbData;
         }
 
         public int Selected
         {
             get { return GetValue<int>(); }
-            set 
-            { 
+            set
+            {
                 SetValue(value);
 
+                if (value == 2)
+                {
+                    HymnalInputVisible = false;
+                    return;
+                }
+
+                HymnalInputVisible = true;
                 if (value == 1)
                 {
                     CurrentData = _cbData;
                     return;
                 }
-                CurrentData = _gbData; 
+                CurrentData = _gbData;
             }
+        }
+
+        public bool HymnalInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
         }
 
         public MainViewModel CurrentData 
@@ -69,6 +84,7 @@ namespace Liedeinblendung.ViewModel
 
         private readonly MainViewModel _gbData;
         private readonly MainViewModel _cbData;
+        private readonly MinistryViewModel _ministryData;
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
 
 

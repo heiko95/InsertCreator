@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Liedeinblendung.ViewModel
 {
@@ -19,7 +21,24 @@ namespace Liedeinblendung.ViewModel
             ShowMetaData = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor));
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
-                //Logo = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png";
+                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
+                PreviewLogo = BitmapToImageSource(image);
+            }
+        }
+
+        private BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+
+                return bitmapimage;
             }
         }
 
@@ -33,23 +52,24 @@ namespace Liedeinblendung.ViewModel
 
         private void LoadLogo(object obj)
         {
-            Logo = _DefaultPicture;
-            InvokePropertyChanged("Logo");
+
 
             _pictureReader.LoadPicture();
 
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
-                Logo = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png";
+                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
+                PreviewLogo = BitmapToImageSource(image);
             }
         }
+
+
 
         public ICommand OnReset => new RelayCommand(RemoveLogo);
 
         private void RemoveLogo(object obj)
         {
-            Logo = _DefaultPicture;
-            InvokePropertyChanged("Logo");
+            PreviewLogo = null;
             _pictureReader.RemovePicture();
         }
 
@@ -73,14 +93,15 @@ namespace Liedeinblendung.ViewModel
             }
         }        
 
-        public string Logo
+
+        public ImageSource PreviewLogo
         {
-            get { return GetValue<string>(); }
+            get { return GetValue<ImageSource>(); }
             set
             {
                 SetValue(string.Empty);
-                SetValue(value);                 
-                
+                SetValue(value);
+
             }
         }
 
