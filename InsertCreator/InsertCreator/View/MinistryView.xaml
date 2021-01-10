@@ -21,54 +21,44 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
             <RowDefinition Height="1.2*" />
         </Grid.RowDefinitions>
 
-
-        <ComboBox
+        <TextBox
             Grid.Row="0"
             Margin="20"
             VerticalAlignment="Center"
-            materialDesign:HintAssist.Hint="Name"
-            IsEditable="True"
-            IsEnabled="True"
-            IsReadOnly="False"
-            SelectionChanged="ComboBox_SelectionChanged">
+            materialDesign:HintAssist.Hint="Suche"
+            Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Ministries.Function}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-
-        </ComboBox>
-
-        <ComboBox
+        <DataGrid
             Grid.Row="1"
             Margin="20"
-            VerticalAlignment="Center"
-            materialDesign:HintAssist.Hint="Funktion"
-            IsEditable="True"
-            IsEnabled="True"
-            IsReadOnly="False"
-            SelectionChanged="ComboBox_SelectionChanged">
+            VerticalAlignment="Top"
+            ItemsSource="{Binding Ministries}"
+            SelectionMode="Single">
+
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="Titel" ItemsSource="{Binding Function}" />
+                <DataGridTextColumn Binding="{Binding ForeName}" Header="Vorname" />
+                <DataGridTextColumn Binding="{Binding SureName}" Header="Nachname" />
+            </DataGrid.Columns>
 
 
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Ministries.Function}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
 
-        </ComboBox>
+
+        </DataGrid>
+
+
+
+
+
+
+
+
+
+
 
 
         <StackPanel

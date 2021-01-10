@@ -86,10 +86,10 @@
                 <materialDesign:Card Grid.Row="1" Margin="10">
                     <Grid>
                         <Grid>
-                            <view:MinistryView DataContext="{Binding MinistryData, UpdateSourceTrigger=PropertyChanged}" />
+                            <view:MinistryView DataContext="{Binding MinistryViewModel, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
-                            <view:InputView DataContext="{Binding CurrentData, UpdateSourceTrigger=PropertyChanged}" />
+                            <view:InputView DataContext="{Binding CurrentHymnalViewModel, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
 
                     </Grid>
