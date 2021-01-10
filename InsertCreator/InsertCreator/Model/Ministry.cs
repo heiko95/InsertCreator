@@ -12,13 +12,6 @@ namespace Liedeinblendung.Model
         public string ForeName { get; set; }
         public string SureName { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                return $"{Function}{ForeName}{SureName}"; 
-            }
-        }
 
     }
 }

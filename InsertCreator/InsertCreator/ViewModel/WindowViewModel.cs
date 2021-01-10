@@ -16,6 +16,17 @@ namespace Liedeinblendung.ViewModel
     public class WindowViewModel : ObservableObject
     {
 
+
+        public WindowViewModel()
+        {
+            _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
+            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
+            HymnalInputVisible = true;
+            MinistryViewModel = new MinistryViewModel();
+
+            CurrentHymnalViewModel = _gbData;
+        }
+
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
         public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
 
@@ -24,26 +35,9 @@ namespace Liedeinblendung.ViewModel
             await MaterialDesignThemes.Wpf.DialogHost.Show(InfoViewModel, "MainWindow");
         }
 
-        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
-
-        public InfoViewModel InfoViewModel = new InfoViewModel();
-
         async private void OpenConfigDialog(object obj)
         {
             await MaterialDesignThemes.Wpf.DialogHost.Show(ConfigViewModel, "MainWindow");
-        }
-
-
-
-
-        public WindowViewModel()
-        {
-            _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
-            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
-            _ministryData = new MinistryViewModel();
-            HymnalInputVisible = true;
-
-            CurrentData = _gbData;
         }
 
         public int Selected
@@ -62,10 +56,10 @@ namespace Liedeinblendung.ViewModel
                 HymnalInputVisible = true;
                 if (value == 1)
                 {
-                    CurrentData = _cbData;
+                    CurrentHymnalViewModel = _cbData;
                     return;
                 }
-                CurrentData = _gbData;
+                CurrentHymnalViewModel = _gbData;
             }
         }
 
@@ -75,18 +69,29 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        public MainViewModel CurrentData 
-        { 
-            get { return GetValue<MainViewModel>(); }
-            set { SetValue(value); }
-
-        }
+        
 
         private readonly MainViewModel _gbData;
         private readonly MainViewModel _cbData;
-        private readonly MinistryViewModel _ministryData;
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
 
+
+        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
+
+        public InfoViewModel InfoViewModel = new InfoViewModel();
+
+        public MinistryViewModel MinistryViewModel
+        {
+            get { return GetValue<MinistryViewModel>(); }
+            set { SetValue(value); }
+        }
+
+
+        public MainViewModel CurrentHymnalViewModel
+        {
+            get { return GetValue<MainViewModel>(); }
+            set { SetValue(value); }
+        }
 
 
 
