@@ -115,7 +115,7 @@ namespace Liedeinblendung.ViewModel
         {
             //WriteInputVers();
             var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
-            _fadeInWriter.WriteFade(hymnal);
+            _fadeInWriter.WriteHymnalFade(hymnal);
             ClearView();
         }
 

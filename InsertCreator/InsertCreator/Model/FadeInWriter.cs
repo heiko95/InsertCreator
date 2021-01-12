@@ -16,7 +16,7 @@ namespace Liedeinblendung.Model
         private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
 
 
-        public void WriteFade(HymnalData hymnalData)
+        public void WriteHymnalFade(HymnalData hymnalData)
         {
             CreateTextfiles(hymnalData);
 
@@ -26,10 +26,17 @@ namespace Liedeinblendung.Model
                 CreateHymnalInsertPictureMeta(hymnalData, greenScreen);
             else
                 CreateHymnalInsertPicture(hymnalData, greenScreen);
-
         }
 
+        public void WriteMinistryFade(MinistryGridViewModel ministry)
+        {
+            var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
 
+            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor)))
+                CreateMinistrieInsert(ministry, greenScreen);
+            else
+                CreateMinistrieInsert(ministry, greenScreen);
+        }
 
 
         private void CreateTextfiles(HymnalData hymnalData)
@@ -55,7 +62,7 @@ namespace Liedeinblendung.Model
 
         }
 
-        public void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)
+        private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)
         {
             Bitmap image = LoadFrame(transparent);
 

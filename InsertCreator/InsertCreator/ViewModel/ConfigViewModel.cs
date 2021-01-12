@@ -1,6 +1,7 @@
 ﻿using Liedeinblendung.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Liedeinblendung.ViewModel
     public class ConfigViewModel : ObservableObject
     {
 
+        public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
         public ConfigViewModel()
         {
             UseGreenScreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
@@ -42,11 +44,21 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-        private string _DefaultPicture = $"{Directory.GetCurrentDirectory()}/DataSource/Logo.png";
-        private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter(); 
-        private PictureReader _pictureReader = new PictureReader();
+      
 
-        public ICommand OnShowMinistryConfig => new RelayCommand(OpenMinistryConfigDialog);
+        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter(); 
+        private readonly PictureReader _pictureReader = new PictureReader();
+        private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
+
+
+        public ICommand OnLoadCsv => new RelayCommand(LoadCSV);
+
+        public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
+
+        private void SaveCSV(object obj)
+        {
+            _csvReaderWriter.SaveCsv();
+        }
 
         public ICommand OnUpload => new RelayCommand(LoadLogo);
 
@@ -67,16 +79,20 @@ namespace Liedeinblendung.ViewModel
 
         public ICommand OnReset => new RelayCommand(RemoveLogo);
 
+
+
+
         private void RemoveLogo(object obj)
         {
             PreviewLogo = null;
             _pictureReader.RemovePicture();
         }
 
-        public MinistryConfigViewModel MinistryConfigViewModel = new MinistryConfigViewModel();
-        async private void OpenMinistryConfigDialog(object obj)
+        private void LoadCSV(object obj)
         {
-            await MaterialDesignThemes.Wpf.DialogHost.Show(MinistryConfigViewModel, "ConfigWindow");
+            var loadedMinisries = _csvReaderWriter.ImportCsv();
+            if (loadedMinisries != null)
+                OnLoadMinistries?.Invoke(this, loadedMinisries);
         }
 
 

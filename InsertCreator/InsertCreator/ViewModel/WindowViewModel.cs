@@ -23,8 +23,13 @@ namespace Liedeinblendung.ViewModel
             _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
             HymnalInputVisible = true;
             MinistryViewModel = new MinistryViewModel();
-
+            ConfigViewModel.OnLoadMinistries += UpdateMinistries;
             CurrentHymnalViewModel = _gbData;
+        }
+
+        private void UpdateMinistries(object sender, ObservableCollection<MinistryGridViewModel> e)
+        {
+            MinistryViewModel.UpdateMinistries(e);
         }
 
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);

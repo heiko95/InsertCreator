@@ -34,6 +34,17 @@ namespace Liedeinblendung.ViewModel
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
-       
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MinistryGridViewModel other)
+            {
+                return this.ForeName == other.ForeName &&
+                    this.SureName == other.SureName &&
+                    this.Function == other.Function;                 
+            }
+            return false;
+        }
+
     }
 }

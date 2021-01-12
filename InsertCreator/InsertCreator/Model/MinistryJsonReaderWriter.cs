@@ -25,7 +25,16 @@ namespace Liedeinblendung.Model
 
             var o1 = File.ReadAllText(_path);
 
-            ministries = JsonConvert.DeserializeObject<ObservableCollection<MinistryGridViewModel>>(o1);
+            var tmpMinistries = JsonConvert.DeserializeObject<ObservableCollection<MinistryGridViewModel>>(o1);
+
+            foreach (var ministrie in tmpMinistries)
+            {
+                if(ministrie.SureName != null && ministrie.ForeName != null)
+                {
+                    ministries.Add(ministrie);
+                }
+
+            }
 
             return ministries;
         }
