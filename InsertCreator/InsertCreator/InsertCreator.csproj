@@ -42,6 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
@@ -71,7 +73,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
@@ -113,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
     <Compile Include="ViewModel\MinistryConfigViewModel.cs" />
     <Compile Include="View\MinistryConfigView.xaml.cs">
@@ -148,7 +151,7 @@
     <Compile Include="Model\HymnalJsonReader.cs" />
     <Compile Include="Model\AppSettingReaderWriter.cs" />
     <Compile Include="Model\Metadata.cs" />
-    <Compile Include="Model\Ministry.cs" />
+    <Compile Include="ViewModel\MinistryGridViewModel.cs" />
     <Compile Include="Model\SelectedVerse.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\Verse.cs" />

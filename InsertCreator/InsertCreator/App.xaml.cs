@@ -28,6 +28,9 @@ namespace Liedeinblendung
                 Directory.CreateDirectory(path);
                 File.Create($"{path}/FadeText.txt", 1024);
                 File.Create($"{path}/FadeTextMeta.txt", 1024);
+                File.Create($"{path}/Ministry.json", 1024);
+
+                
             }
             fadeInWriter.LoadImages();
 
