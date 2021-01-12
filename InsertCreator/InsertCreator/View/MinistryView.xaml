@@ -30,19 +30,62 @@
             Margin="20"
             VerticalAlignment="Center"
             materialDesign:HintAssist.Hint="Suche"
-            Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
 
-        <DataGrid
+        <DataGrid 
             Grid.Row="1"
             Margin="20"
             VerticalAlignment="Top"
-            ItemsSource="{Binding Ministries}"
-            SelectionMode="Single">
+            ItemsSource="{Binding MinistryView}"
+            SelectionMode="Single"
+            AutoGenerateColumns="False"
+            SelectedItem="{Binding SelectedItem}">
+            
 
             <DataGrid.Columns>
-                <DataGridComboBoxColumn Header="Titel" ItemsSource="{Binding Function}" />
-                <DataGridTextColumn Binding="{Binding ForeName}" Header="Vorname" />
-                <DataGridTextColumn Binding="{Binding SureName}" Header="Nachname" />
+                <DataGridTextColumn Binding="{Binding ForeName}" Header="Vorname" MinWidth="150" CellStyle="{StaticResource MaterialDesignDataGridCell}"  />
+                <DataGridTextColumn Binding="{Binding SureName}" Header="Nachname" MinWidth="150" CellStyle="{StaticResource MaterialDesignDataGridCell}" />
+
+                <!--<DataGridTemplateColumn Header="Vorname" MinWidth="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Style="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                              Text="{Binding ForeName}">
+                            </TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Nachname" MinWidth="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                              Text="{Binding SureName}">
+                            </TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+
+                <DataGridTemplateColumn Header="Titel" MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox IsEditable="True" 
+                                      Style="{StaticResource MaterialDesignDataGridComboBox}"
+                              Text="{Binding Function, UpdateSourceTrigger=LostFocus}" 
+                              ItemsSource="{Binding RelativeSource={RelativeSource
+                                FindAncestor, 
+                                AncestorType={x:Type UserControl}},
+                                Path=DataContext.UsedFunctions , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+
+               
+
+
             </DataGrid.Columns>
 
 
