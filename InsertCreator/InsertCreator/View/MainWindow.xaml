@@ -44,16 +44,7 @@
                 </materialDesign:DialogHost>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModels:MinistryConfigViewModel}">
-                <StackPanel>
-                    <view:MinistryConfigView DataContext="{Binding}" />
-                    <Button
-                        Margin="10"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                        Content="Schließen"
-                        DockPanel.Dock="Top" />
-                </StackPanel>
-            </DataTemplate>
+            
 
             <DataTemplate DataType="{x:Type viewModels:InfoViewModel}">
 

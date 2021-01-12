@@ -32,19 +32,34 @@
             materialDesign:HintAssist.Hint="Suche"
             Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
 
-        <DataGrid 
+        <DataGrid
             Grid.Row="1"
             Margin="20"
             VerticalAlignment="Top"
-            ItemsSource="{Binding MinistryView}"
-            SelectionMode="Single"
             AutoGenerateColumns="False"
-            SelectedItem="{Binding SelectedItem}">
-            
+            CanUserAddRows="True"
+            CanUserDeleteRows="True"
+            ItemsSource="{Binding MinistryView}"
+            RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
+            SelectedItem="{Binding SelectedItem}"
+            SelectionMode="Single">
+
+
+
+
+
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ForeName}" Header="Vorname" MinWidth="150" CellStyle="{StaticResource MaterialDesignDataGridCell}"  />
-                <DataGridTextColumn Binding="{Binding SureName}" Header="Nachname" MinWidth="150" CellStyle="{StaticResource MaterialDesignDataGridCell}" />
+                <DataGridTextColumn
+                    MinWidth="140"
+                    Binding="{Binding ForeName}"
+                    CellStyle="{StaticResource MaterialDesignDataGridCell}"
+                    Header="Vorname" />
+                <DataGridTextColumn
+                    MinWidth="140"
+                    Binding="{Binding SureName}"
+                    CellStyle="{StaticResource MaterialDesignDataGridCell}"
+                    Header="Nachname" />
 
                 <!--<DataGridTemplateColumn Header="Vorname" MinWidth="150">
                     <DataGridTemplateColumn.CellTemplate>
@@ -67,23 +82,21 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
 
-                <DataGridTemplateColumn Header="Titel" MinWidth="100">
+                <DataGridTemplateColumn MinWidth="120" Header="Titel">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox IsEditable="True" 
-                                      Style="{StaticResource MaterialDesignDataGridComboBox}"
-                              Text="{Binding Function, UpdateSourceTrigger=LostFocus}" 
-                              ItemsSource="{Binding RelativeSource={RelativeSource
-                                FindAncestor, 
-                                AncestorType={x:Type UserControl}},
-                                Path=DataContext.UsedFunctions , UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <ComboBox
+                                IsEditable="True"
+                                ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.UsedFunctions, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                Style="{StaticResource MaterialDesignDataGridComboBox}"
+                                Text="{Binding Function, UpdateSourceTrigger=LostFocus}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
 
 
-               
+
 
 
             </DataGrid.Columns>

@@ -115,12 +115,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
-    <Compile Include="ViewModel\MinistryConfigViewModel.cs" />
-    <Compile Include="View\MinistryConfigView.xaml.cs">
-      <DependentUpon>MinistryConfigView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\MinistryView.xaml.cs">
       <DependentUpon>MinistryView.xaml</DependentUpon>
     </Compile>
@@ -175,10 +172,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MinistryConfigView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MinistryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

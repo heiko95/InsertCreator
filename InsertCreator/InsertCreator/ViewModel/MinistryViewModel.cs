@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Liedeinblendung.ViewModel
@@ -24,14 +25,17 @@ namespace Liedeinblendung.ViewModel
         private void OnAcceptPressed(object obj)
         {
             if (SelectedItem != null)
-                _fadeInWriter.CreateMinistrieInsert(SelectedItem);
+                _fadeInWriter.WriteMinistryFade(SelectedItem);
         }
 
         public MinistryViewModel()
         {
             Ministries  = new ObservableCollection<MinistryGridViewModel>();
 
-            Ministries = _readerWriter.LoadMinistryData();
+            if (_readerWriter.LoadMinistryData() != null)
+                Ministries = _readerWriter.LoadMinistryData();
+
+
 
             foreach (var ministry in Ministries)
             {
@@ -43,6 +47,22 @@ namespace Liedeinblendung.ViewModel
             MinistryViewSource.Source = Ministries;
             Ministries.CollectionChanged += CollectionChanged();
             MinistryViewSource.Filter += MinistryViewSource_Filter;
+        }
+
+        internal void UpdateMinistries(ObservableCollection<MinistryGridViewModel> ministryList)
+        {
+            var count = 0;
+            foreach (var item in ministryList)
+            {
+                if(!Ministries.Contains(item))
+                {
+                    Ministries.Add(item);
+                    count++;
+                }
+            }
+            MessageBox.Show($"{count} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MinistryViewSource.Source = Ministries;
+            MinistryView.Refresh();
         }
 
         private NotifyCollectionChangedEventHandler CollectionChanged()
