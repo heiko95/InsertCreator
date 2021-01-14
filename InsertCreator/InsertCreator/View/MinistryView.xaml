@@ -1,10 +1,9 @@
 ﻿<UserControl
     x:Class="Liedeinblendung.View.MinistryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Liedeinblendung.View"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="415"
@@ -44,11 +43,6 @@
             SelectedItem="{Binding SelectedItem}"
             SelectionMode="Single">
 
-
-
-
-
-
             <DataGrid.Columns>
                 <DataGridTextColumn
                     MinWidth="140"
@@ -61,27 +55,6 @@
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
                     Header="Nachname" />
 
-                <!--<DataGridTemplateColumn Header="Vorname" MinWidth="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                Style="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                              Text="{Binding ForeName}">
-                            </TextBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <DataGridTemplateColumn Header="Nachname" MinWidth="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                              Text="{Binding SureName}">
-                            </TextBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
-
                 <DataGridTemplateColumn MinWidth="120" Header="Titel">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -93,35 +66,14 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-
-
-
-
-
             </DataGrid.Columns>
-
-
-
-
         </DataGrid>
-
-
-
-
-
-
-
-
-
-
-
 
         <StackPanel
             Grid.Row="5"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
-            <!--<Button Margin="20" Content="Zurücksetzen" >
+            <!--<Button Margin="20" Content="Zurücksetzen">
             </Button>-->
             <Button
                 Margin="20"
@@ -129,6 +81,5 @@
                 Content="Übernehmen"
                 IsEnabled="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-
     </Grid>
 </UserControl>

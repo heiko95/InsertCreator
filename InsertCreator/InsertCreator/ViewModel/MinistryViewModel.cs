@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -19,7 +15,6 @@ namespace Liedeinblendung.ViewModel
         private MinistryJsonReaderWriter _readerWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
         private FadeInWriter _fadeInWriter = new FadeInWriter();
 
-
         public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
 
         private void OnAcceptPressed(object obj)
@@ -30,19 +25,16 @@ namespace Liedeinblendung.ViewModel
 
         public MinistryViewModel()
         {
-            Ministries  = new ObservableCollection<MinistryGridViewModel>();
+            Ministries = new ObservableCollection<MinistryGridViewModel>();
 
             if (_readerWriter.LoadMinistryData() != null)
                 Ministries = _readerWriter.LoadMinistryData();
-
-
 
             foreach (var ministry in Ministries)
             {
                 if (!UsedFunctions.Contains(ministry.Function))
                     UsedFunctions.Add(ministry.Function);
             }
-
 
             MinistryViewSource.Source = Ministries;
             Ministries.CollectionChanged += CollectionChanged();
@@ -54,7 +46,7 @@ namespace Liedeinblendung.ViewModel
             var count = 0;
             foreach (var item in ministryList)
             {
-                if(!Ministries.Contains(item))
+                if (!Ministries.Contains(item))
                 {
                     Ministries.Add(item);
                     count++;
@@ -79,7 +71,7 @@ namespace Liedeinblendung.ViewModel
                 {
                     //Added items
                     item.OnUpdateFunction += UpdateFunctionList;
-                }               
+                }
                 return;
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -88,10 +80,9 @@ namespace Liedeinblendung.ViewModel
                 {
                     //Removed items
                     item.OnUpdateFunction -= UpdateFunctionList;
-                }                
+                }
                 return;
-            }         
-
+            }
         }
 
         private void UpdateFunctionList(object sender, string e)
@@ -105,7 +96,6 @@ namespace Liedeinblendung.ViewModel
             InvokePropertyChanged("UsedFunctions");
             //MinistryView.Refresh();
         }
-             
 
         private void MinistryViewSource_Filter(object sender, FilterEventArgs e)
         {
@@ -131,20 +121,21 @@ namespace Liedeinblendung.ViewModel
         public string FilterText
         {
             get { return GetValue<string>(); }
-            set { SetValue(value);
+            set
+            {
+                SetValue(value);
                 MinistryView.Refresh();
             }
         }
 
-
         public MinistryGridViewModel SelectedItem
         {
             get { return GetValue<MinistryGridViewModel>(); }
-            set { SetValue(value); }
+            set
+            {
+                SetValue(value);
+            }
         }
-
-
-
 
         /// <summary>
         /// Filtered List
@@ -159,14 +150,12 @@ namespace Liedeinblendung.ViewModel
             get { return MinistryViewSource.View; }
         }
 
-
-
         private ListChangedEventHandler OnCollectionChanged()
         {
             return new ListChangedEventHandler(change);
         }
 
-        void change(object sender, ListChangedEventArgs e)
+        private void change(object sender, ListChangedEventArgs e)
         {
             //var newFunction = Ministries[e.NewIndex].Function;
             //if (!UsedFunctions.Contains(newFunction))
@@ -177,7 +166,6 @@ namespace Liedeinblendung.ViewModel
             //InvokePropertyChanged("UsedFunctions");
             //MinistryView.Refresh();
         }
-
 
         //private void RemoveUnusedFunctions()
         //{
@@ -195,19 +183,19 @@ namespace Liedeinblendung.ViewModel
         //        }
         //    }
 
-
         //    UsedFunctions.Clear();
         //    UsedFunctions = usedFunctions;
 
         //}
 
-        public ObservableCollection<MinistryGridViewModel> Ministries 
+        public ObservableCollection<MinistryGridViewModel> Ministries
         {
             get { return GetValue<ObservableCollection<MinistryGridViewModel>>(); }
-            set { SetValue(value); 
+            set
+            {
+                SetValue(value);
             }
-        } 
-                  
+        }
 
         public List<string> UsedFunctions { get; set; } = new List<string>();
     }

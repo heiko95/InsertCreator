@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Liedeinblendung.Model
 {
     public class PictureReader
     {
-
         private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+
         public void LoadPicture()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -44,12 +41,11 @@ namespace Liedeinblendung.Model
                 $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png",
                 $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"
             };
-                       
+
             _appSetting.WriteAppSetting(KeyName.UseLogo, "false");
-          
+
             foreach (var file in files)
             {
-
                 if (File.Exists(file))
                 {
                     File.Delete(file);
@@ -68,14 +64,10 @@ namespace Liedeinblendung.Model
             if (image.Width < image.Height)
             {
                 ratio = (double)size / image.Height;
-                return new Bitmap(image, Convert.ToInt32(image.Width*ratio) , size);     
+                return new Bitmap(image, Convert.ToInt32(image.Width * ratio), size);
             }
             ratio = (double)size / image.Width;
-            return new Bitmap(image, size, Convert.ToInt32(image.Height * ratio));       
-
+            return new Bitmap(image, size, Convert.ToInt32(image.Height * ratio));
         }
-
-
-
     }
 }

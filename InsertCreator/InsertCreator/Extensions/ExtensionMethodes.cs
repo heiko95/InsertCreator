@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Liedeinblendung.Extensions
 {
@@ -12,7 +8,6 @@ namespace Liedeinblendung.Extensions
     /// </summary>
     public static class ExtensionMethodes
     {
-
         #region ObservableCollection extensions
 
         /// <summary>
@@ -29,9 +24,6 @@ namespace Liedeinblendung.Extensions
             }
         }
 
-        #endregion
-
- 
-
+        #endregion ObservableCollection extensions
     }
 }

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Liedeinblendung.ViewModel
 {
     /// <summary>
-    /// A command whose sole purpose is to relay its functionality 
-    /// to other objects by invoking delegates. 
+    /// A command whose sole purpose is to relay its functionality
+    /// to other objects by invoking delegates.
     /// The default return value for the CanExecute method is 'true'.
     /// <see cref="RaiseCanExecuteChanged"/> needs to be called whenever
     /// <see cref="CanExecute"/> is expected to return a different value.
@@ -17,6 +13,7 @@ namespace Liedeinblendung.ViewModel
     public class RelayCommand : ICommand
     {
         #region Private members
+
         /// <summary>
         /// Creates a new command that can always execute.
         /// </summary>
@@ -26,7 +23,8 @@ namespace Liedeinblendung.ViewModel
         /// True if command is executing, false otherwise
         /// </summary>
         private readonly Func<bool> canExecute;
-        #endregion
+
+        #endregion Private members
 
         /// <summary>
         /// Initializes a new instance of <see cref="RelayCommand"/> that can always execute.

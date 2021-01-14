@@ -1,12 +1,8 @@
 ﻿using Liedeinblendung.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,8 +11,8 @@ namespace Liedeinblendung.ViewModel
 {
     public class ConfigViewModel : ObservableObject
     {
-
         public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
+
         public ConfigViewModel()
         {
             UseGreenScreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
@@ -44,12 +40,9 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-      
-
-        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter(); 
+        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
         private readonly PictureReader _pictureReader = new PictureReader();
         private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
-
 
         public ICommand OnLoadCsv => new RelayCommand(LoadCSV);
 
@@ -64,8 +57,6 @@ namespace Liedeinblendung.ViewModel
 
         private void LoadLogo(object obj)
         {
-
-
             _pictureReader.LoadPicture();
 
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
@@ -75,12 +66,7 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-
-
         public ICommand OnReset => new RelayCommand(RemoveLogo);
-
-
-
 
         private void RemoveLogo(object obj)
         {
@@ -95,20 +81,18 @@ namespace Liedeinblendung.ViewModel
                 OnLoadMinistries?.Invoke(this, loadedMinisries);
         }
 
-
         public bool UseGreenScreen
         {
             get { return GetValue<bool>(); }
-            set 
-            { 
+            set
+            {
                 if (UseGreenScreen != value)
                 {
                     SetValue(value);
                     _appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
-                }                
+                }
             }
-        }        
-
+        }
 
         public ImageSource PreviewLogo
         {
@@ -117,16 +101,13 @@ namespace Liedeinblendung.ViewModel
             {
                 SetValue(string.Empty);
                 SetValue(value);
-
             }
         }
-
-
 
         public bool ShowMetaData
         {
             get { return GetValue<bool>(); }
-            set 
+            set
             {
                 if (ShowMetaData != value)
                 {
@@ -135,6 +116,5 @@ namespace Liedeinblendung.ViewModel
                 }
             }
         }
-
     }
 }

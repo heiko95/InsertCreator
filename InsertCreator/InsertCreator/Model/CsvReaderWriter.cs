@@ -1,20 +1,17 @@
 ﻿using Liedeinblendung.ViewModel;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Liedeinblendung.Model
 {
     public class CsvReaderWriter
     {
-
         private MinistryJsonReaderWriter _ministryJsonReaderWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
+
         public ObservableCollection<MinistryGridViewModel> ImportCsv()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -31,10 +28,10 @@ namespace Liedeinblendung.Model
                     {
                         return ReadCsv(openFileDialog.FileName);
                     }
-                    catch 
+                    catch
                     {
                         MessageBox.Show("Fehler beim Import", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }  
+                    }
                 }
             }
             return null;
@@ -50,14 +47,12 @@ namespace Liedeinblendung.Model
             saveFileDialog1.InitialDirectory = Environment.GetEnvironmentVariable("userprofile");
             saveFileDialog1.FileName = $"Export_{DateTime.UtcNow.ToString("u").Split(' ')[0]}";
 
-
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var ministries = _ministryJsonReaderWriter.LoadMinistryData();
                 SaveCsv(ministries, saveFileDialog1.FileName);
             }
         }
-
 
         private void SaveCsv(ObservableCollection<MinistryGridViewModel> ministries, string filepath)
         {
@@ -73,7 +68,7 @@ namespace Liedeinblendung.Model
                 //Append new line character.
                 sb.Append("\r\n");
             }
-            File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));           
+            File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));
         }
 
         private ObservableCollection<MinistryGridViewModel> ReadCsv(string filepath)
@@ -92,8 +87,5 @@ namespace Liedeinblendung.Model
                 return ministries;
             }
         }
-
-
-
     }
 }

@@ -1,22 +1,12 @@
-﻿using Liedeinblendung.Extensions;
-using Liedeinblendung.Model;
-using System;
-using System.Collections.Generic;
+﻿using Liedeinblendung.Model;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Liedeinblendung.ViewModel
 {
     public class WindowViewModel : ObservableObject
     {
-
-
         public WindowViewModel()
         {
             _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
@@ -74,12 +64,9 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        
-
         private readonly MainViewModel _gbData;
         private readonly MainViewModel _cbData;
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
-
 
         public ConfigViewModel ConfigViewModel = new ConfigViewModel();
 
@@ -91,20 +78,10 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-
         public MainViewModel CurrentHymnalViewModel
         {
             get { return GetValue<MainViewModel>(); }
             set { SetValue(value); }
         }
-
-
-
-
-
-
-
-
-
     }
 }

@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Liedeinblendung.ViewModel;
+using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Liedeinblendung.ViewModel;
 
 namespace Liedeinblendung.Model
 {
-
-    class FadeInWriter
+    internal class FadeInWriter
     {
         private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-
 
         public void WriteHymnalFade(HymnalData hymnalData)
         {
@@ -38,7 +31,6 @@ namespace Liedeinblendung.Model
                 CreateMinistrieInsert(ministry, greenScreen);
         }
 
-
         private void CreateTextfiles(HymnalData hymnalData)
         {
             using (System.IO.StreamWriter file =
@@ -56,10 +48,9 @@ namespace Liedeinblendung.Model
         }
 
         public void LoadImages()
-        {            
+        {
             Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-
         }
 
         private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)
@@ -84,11 +75,9 @@ namespace Liedeinblendung.Model
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
-
         private void CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true)
         {
-           
-            Bitmap image = LoadFrame(transparent);         
+            Bitmap image = LoadFrame(transparent);
 
             var drawingTool = Graphics.FromImage(image);
 
@@ -102,18 +91,15 @@ namespace Liedeinblendung.Model
                 new Font("Calibri", 44, GraphicsUnit.Pixel),
                 new SolidBrush(Color.Black), new PointF(90, 910));
 
-
-            DrawLogo(drawingTool);          
+            DrawLogo(drawingTool);
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-
         }
 
         private void DrawLogo(Graphics drawingTool)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
                 drawingTool.DrawImage(Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"), new PointF(1425, 825));
-
         }
 
         private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent)
@@ -126,7 +112,7 @@ namespace Liedeinblendung.Model
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
              new Font("Calibri", 44, FontStyle.Bold, GraphicsUnit.Pixel),
              new SolidBrush(Color.Black), new PointF(90, 810));
-            
+
             drawingTool.DrawString(
                 hymnalData.Name,
                 new Font("Calibri", 40, GraphicsUnit.Pixel),
@@ -145,7 +131,6 @@ namespace Liedeinblendung.Model
             DrawLogo(drawingTool);
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-
         }
 
         private Bitmap LoadFrame(bool transparent)
@@ -160,9 +145,6 @@ namespace Liedeinblendung.Model
                 image = new Bitmap(greenFrame);
 
             return image;
-
         }
-
-
     }
 }

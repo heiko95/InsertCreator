@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Liedeinblendung.ViewModel;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Liedeinblendung.ViewModel;
-using Newtonsoft.Json;
 
 namespace Liedeinblendung.Model
 {
@@ -29,22 +24,18 @@ namespace Liedeinblendung.Model
 
             foreach (var ministrie in tmpMinistries)
             {
-                if(ministrie.SureName != null && ministrie.ForeName != null)
+                if (ministrie.SureName != null && ministrie.ForeName != null)
                 {
                     ministries.Add(ministrie);
                 }
-
             }
 
             return ministries;
         }
 
-
         public void WriteMinistryData(ObservableCollection<MinistryGridViewModel> ministries)
         {
-            File.WriteAllText(_path, JsonConvert.SerializeObject(ministries));            
+            File.WriteAllText(_path, JsonConvert.SerializeObject(ministries));
         }
-
-
     }
 }

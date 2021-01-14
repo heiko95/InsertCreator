@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Liedeinblendung.ViewModel
 {
     public class InfoViewModel : ObservableObject
     {
-
         public InfoViewModel()
         {
             License = File.ReadAllText(($"{Directory.GetCurrentDirectory()}/License.txt"));
@@ -36,7 +30,6 @@ namespace Liedeinblendung.ViewModel
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
-        }           
-
+        }
     }
 }
