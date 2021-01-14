@@ -1,6 +1,5 @@
 ﻿using Liedeinblendung.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -35,12 +34,8 @@ namespace Liedeinblendung.ViewModel
             }
 
             MinistryViewSource.Source = Ministries;
-            Ministries.CollectionChanged += CollectionChanged;           
+            Ministries.CollectionChanged += CollectionChanged;
             MinistryViewSource.Filter += MinistryViewSource_Filter;
-
-           
-            
-
         }
 
         #endregion Public Constructors
@@ -55,7 +50,8 @@ namespace Liedeinblendung.ViewModel
             set
             {
                 SetValue(value);
-                //MinistryView.Refresh();
+                MinistryView.Refresh();
+                MinistryView.MoveCurrentToFirst();
             }
         }
 
@@ -75,10 +71,6 @@ namespace Liedeinblendung.ViewModel
         {
             get { return MinistryViewSource.View; }
         }
-
-
-
-
 
         public MinistryGridViewModel SelectedItem
         {
@@ -149,8 +141,7 @@ namespace Liedeinblendung.ViewModel
                 FilterText = "";
                 MinistryViewSource.Source = Ministries;
                 return;
-            }           
-       
+            }
         }
 
         private void MinistryViewSource_Filter(object sender, FilterEventArgs e)
@@ -166,7 +157,13 @@ namespace Liedeinblendung.ViewModel
 
                 if (!string.IsNullOrEmpty(p.ForeName) && !string.IsNullOrEmpty(p.SureName))
                 {
-                    if (p.SureName.ToLower().StartsWith(FilterText.ToLower()) || p.ForeName.ToLower().StartsWith(FilterText.ToLower()))
+                    
+                    if (p.SureName.ToLower().StartsWith(FilterText.ToLower()) 
+                        || p.ForeName.ToLower().StartsWith(FilterText.ToLower())
+                        || p.FullName.ToLower().StartsWith(FilterText.ToLower())
+                        || p.FullName2.ToLower().StartsWith(FilterText.ToLower())
+                        || p.FullName2.ToLower().Replace(",", "").StartsWith(FilterText.ToLower())
+                        )
                     {
                         e.Accepted = true;
                         return;
@@ -191,9 +188,7 @@ namespace Liedeinblendung.ViewModel
             }
             //UsedFunctions.Sort();
             //OnPropertyChanged("UsedFunctions");
-            //UsedFunctionView.Refresh();
-
-
+            //MinistryView.Refresh();
         }
 
         #endregion Private Methods
