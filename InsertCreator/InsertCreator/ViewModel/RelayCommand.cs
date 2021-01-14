@@ -23,6 +23,7 @@ namespace Liedeinblendung.ViewModel
         /// Creates a new command that can always execute.
         /// </summary>
         private readonly Action<object> execute;
+
         #endregion Private members
 
         #region Public Constructors

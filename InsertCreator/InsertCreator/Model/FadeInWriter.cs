@@ -136,11 +136,13 @@ namespace Liedeinblendung.Model
                 file.WriteLine($"{hymnalData.TextAutor}{hymnalData.MelodieAutor}");
             }
         }
+
         private void DrawLogo(Graphics drawingTool)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
                 drawingTool.DrawImage(Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"), new PointF(1425, 825));
         }
+
         private Bitmap LoadFrame(bool transparent)
         {
             var transparentFrame = $"{Directory.GetCurrentDirectory()}/DataSource/InsertFrameTrans.png";

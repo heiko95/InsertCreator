@@ -32,6 +32,7 @@
             Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
 
         <DataGrid
+            x:Name="MGrid"
             Grid.Row="1"
             Margin="20"
             VerticalAlignment="Top"
@@ -41,7 +42,8 @@
             ItemsSource="{Binding MinistryView}"
             RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
             SelectedItem="{Binding SelectedItem}"
-            SelectionMode="Single">
+            SelectionMode="Single" 
+            >
 
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -60,7 +62,7 @@
                         <DataTemplate>
                             <ComboBox
                                 IsEditable="True"
-                                ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.UsedFunctions, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.UsedFunctions}"
                                 Style="{StaticResource MaterialDesignDataGridComboBox}"
                                 Text="{Binding Function, UpdateSourceTrigger=LostFocus}" />
                         </DataTemplate>

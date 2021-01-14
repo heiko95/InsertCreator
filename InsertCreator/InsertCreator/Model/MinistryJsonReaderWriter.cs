@@ -28,15 +28,18 @@ namespace Liedeinblendung.Model
         {
             var ministries = new ObservableCollection<MinistryGridViewModel>();
 
-            var o1 = File.ReadAllText(_path);
+            var ministrytext = File.ReadAllText(_path);
 
-            var tmpMinistries = JsonConvert.DeserializeObject<ObservableCollection<MinistryGridViewModel>>(o1);
-
-            foreach (var ministrie in tmpMinistries)
+            if (!string.IsNullOrEmpty(ministrytext))
             {
-                if (ministrie.SureName != null && ministrie.ForeName != null)
+                var tmpMinistries = JsonConvert.DeserializeObject<ObservableCollection<MinistryGridViewModel>>(ministrytext);
+
+                foreach (var ministrie in tmpMinistries)
                 {
-                    ministries.Add(ministrie);
+                    if (ministrie.SureName != null && ministrie.ForeName != null)
+                    {
+                        ministries.Add(ministrie);
+                    }
                 }
             }
 
