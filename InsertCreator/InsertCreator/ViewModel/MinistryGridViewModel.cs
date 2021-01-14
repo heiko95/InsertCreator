@@ -15,7 +15,11 @@ namespace Liedeinblendung.ViewModel
         public string ForeName
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set
+            {
+                SetValue(value);
+                OnUpdateFunction?.Invoke(this, value);
+            }
         }
 
         public string Function
@@ -27,12 +31,16 @@ namespace Liedeinblendung.ViewModel
                 OnUpdateFunction?.Invoke(this, value);
             }
         }
+
         public string SureName
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set
+            {
+                SetValue(value);
+                OnUpdateFunction?.Invoke(this, value);
+            }
         }
-
 
         public string FullName
         {

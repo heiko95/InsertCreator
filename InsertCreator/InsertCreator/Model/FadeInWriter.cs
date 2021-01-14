@@ -18,7 +18,9 @@ namespace Liedeinblendung.Model
         public void LoadImages()
         {
             Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
         public void WriteHymnalFade(HymnalData hymnalData)
@@ -65,6 +67,7 @@ namespace Liedeinblendung.Model
 
             DrawLogo(drawingTool);
 
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
@@ -95,7 +98,7 @@ namespace Liedeinblendung.Model
                new SolidBrush(Color.Black), new PointF(90, 956));
 
             DrawLogo(drawingTool);
-
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
@@ -117,8 +120,8 @@ namespace Liedeinblendung.Model
              new SolidBrush(Color.Black), new PointF(90, 910));
 
             DrawLogo(drawingTool);
-
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
         private void CreateTextfiles(HymnalData hymnalData)

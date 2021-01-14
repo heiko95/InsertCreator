@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Liedeinblendung.View
@@ -14,6 +12,19 @@ namespace Liedeinblendung.View
         {
             InitializeComponent();
             this.MGrid.PreviewKeyDown += MoveCellOnEnterKey;
+            this.MGrid.MouseDoubleClick += GridMouseDoubleDown;
+        }
+
+        private void GridMouseDoubleDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                DataGrid grid = sender as DataGrid;
+                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+                {
+                    DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+                }
+            }
         }
 
         private void MoveCellOnEnterKey(object sender, KeyEventArgs e)
@@ -29,7 +40,5 @@ namespace Liedeinblendung.View
                 InputManager.Current.ProcessInput(tabKeyEvent);
             }
         }
-
-
     }
 }

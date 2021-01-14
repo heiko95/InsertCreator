@@ -1,9 +1,9 @@
 ﻿<UserControl
     x:Class="Liedeinblendung.View.MinistryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="415"
@@ -39,21 +39,20 @@
             AutoGenerateColumns="False"
             CanUserAddRows="True"
             CanUserDeleteRows="True"
-            ItemsSource="{Binding MinistryView}"
+            ItemsSource="{Binding MinistryView, UpdateSourceTrigger=PropertyChanged}"
             RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
             SelectedItem="{Binding SelectedItem}"
-            SelectionMode="Single" 
-            >
+            SelectionMode="Single">
 
             <DataGrid.Columns>
                 <DataGridTextColumn
                     MinWidth="140"
-                    Binding="{Binding ForeName}"
+                    Binding="{Binding ForeName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
                     Header="Vorname" />
                 <DataGridTextColumn
                     MinWidth="140"
-                    Binding="{Binding SureName}"
+                    Binding="{Binding SureName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
                     Header="Nachname" />
 
