@@ -33,6 +33,17 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
+
+        public string FullName
+        {
+            get { return $"{ForeName} {SureName}"; }
+        }
+
+        public string FullName2
+        {
+            get { return $"{SureName}, {ForeName}"; }
+        }
+
         #endregion Public Properties
 
         #region Public Methods
