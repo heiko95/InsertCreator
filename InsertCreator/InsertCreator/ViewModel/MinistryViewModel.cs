@@ -35,11 +35,14 @@ namespace Liedeinblendung.ViewModel
             }
 
             MinistryViewSource.Source = Ministries;
-            Ministries.CollectionChanged += CollectionChanged;
+            Ministries.CollectionChanged += CollectionChanged;           
             MinistryViewSource.Filter += MinistryViewSource_Filter;
+
+           
+            
+
         }
 
-       
         #endregion Public Constructors
 
         #region Public Properties
@@ -52,7 +55,7 @@ namespace Liedeinblendung.ViewModel
             set
             {
                 SetValue(value);
-                MinistryView.Refresh();
+                //MinistryView.Refresh();
             }
         }
 
@@ -73,6 +76,10 @@ namespace Liedeinblendung.ViewModel
             get { return MinistryViewSource.View; }
         }
 
+
+
+
+
         public MinistryGridViewModel SelectedItem
         {
             get { return GetValue<MinistryGridViewModel>(); }
@@ -83,7 +90,7 @@ namespace Liedeinblendung.ViewModel
         }
 
         //}
-        public List<string> UsedFunctions { get; set; } = new List<string>();
+        public ObservableCollection<string> UsedFunctions { get; set; } = new ObservableCollection<string>();
 
         #endregion Public Properties
 
@@ -118,7 +125,6 @@ namespace Liedeinblendung.ViewModel
 
         #region Private Methods
 
-
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _readerWriter.WriteMinistryData(Ministries);
@@ -129,6 +135,8 @@ namespace Liedeinblendung.ViewModel
                     //Added items
                     item.OnUpdateFunction += UpdateFunctionList;
                 }
+                FilterText = "";
+                MinistryViewSource.Source = Ministries;
                 return;
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -138,10 +146,12 @@ namespace Liedeinblendung.ViewModel
                     //Removed items
                     item.OnUpdateFunction -= UpdateFunctionList;
                 }
+                FilterText = "";
+                MinistryViewSource.Source = Ministries;
                 return;
-            }
+            }           
+       
         }
-
 
         private void MinistryViewSource_Filter(object sender, FilterEventArgs e)
         {
@@ -153,14 +163,16 @@ namespace Liedeinblendung.ViewModel
             else
             {
                 MinistryGridViewModel p = (MinistryGridViewModel)e.Item;
-                if (p.SureName.ToLower().StartsWith(FilterText.ToLower()) || p.ForeName.ToLower().StartsWith(FilterText.ToLower()))
+
+                if (!string.IsNullOrEmpty(p.ForeName) && !string.IsNullOrEmpty(p.SureName))
                 {
-                    e.Accepted = true;
+                    if (p.SureName.ToLower().StartsWith(FilterText.ToLower()) || p.ForeName.ToLower().StartsWith(FilterText.ToLower()))
+                    {
+                        e.Accepted = true;
+                        return;
+                    }
                 }
-                else
-                {
-                    e.Accepted = false;
-                }
+                e.Accepted = false;
             }
         }
 
@@ -169,7 +181,6 @@ namespace Liedeinblendung.ViewModel
             if (SelectedItem != null)
                 _fadeInWriter.WriteMinistryFade(SelectedItem);
         }
-       
 
         private void UpdateFunctionList(object sender, string e)
         {
@@ -178,13 +189,13 @@ namespace Liedeinblendung.ViewModel
             {
                 UsedFunctions.Add(newFunction);
             }
-            UsedFunctions.Sort();
-            InvokePropertyChanged("UsedFunctions");
-            //MinistryView.Refresh();
+            //UsedFunctions.Sort();
+            //OnPropertyChanged("UsedFunctions");
+            //UsedFunctionView.Refresh();
+
+
         }
 
         #endregion Private Methods
-
-      
     }
 }

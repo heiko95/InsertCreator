@@ -107,6 +107,7 @@ namespace Liedeinblendung.ViewModel
                 return bitmapimage;
             }
         }
+
         private void LoadCSV(object obj)
         {
             var loadedMinisries = _csvReaderWriter.ImportCsv();

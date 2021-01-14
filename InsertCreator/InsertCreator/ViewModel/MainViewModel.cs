@@ -33,6 +33,7 @@ namespace Liedeinblendung.ViewModel
         #region Public Properties
 
         public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
+
         public string InputNumber
         {
             get { return GetValue<string>(); }
