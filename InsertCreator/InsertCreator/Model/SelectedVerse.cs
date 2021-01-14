@@ -1,9 +1,4 @@
 ﻿using Liedeinblendung.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Liedeinblendung.Model
 {
@@ -26,7 +21,5 @@ namespace Liedeinblendung.Model
             get { return GetValue<Verse>(); }
             set { SetValue(value); }
         }
-
-
     }
 }

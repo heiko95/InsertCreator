@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Liedeinblendung.ViewModel;
 
 namespace Liedeinblendung.ViewModel
-{    
+{
     public class MinistryGridViewModel : ObservableObject
     {
+        public event EventHandler<string> OnUpdateFunction;
 
-        public event EventHandler<string> OnUpdateFunction; 
-
-
-        public string Function 
+        public string Function
         {
             get { return GetValue<string>(); }
-            set 
+            set
             {
                 SetValue(value);
                 OnUpdateFunction?.Invoke(this, value);
-            }                           
+            }
         }
 
         public string ForeName
@@ -41,10 +34,9 @@ namespace Liedeinblendung.ViewModel
             {
                 return this.ForeName == other.ForeName &&
                     this.SureName == other.SureName &&
-                    this.Function == other.Function;                 
+                    this.Function == other.Function;
             }
             return false;
         }
-
     }
 }

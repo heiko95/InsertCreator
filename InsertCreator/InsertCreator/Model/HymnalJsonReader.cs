@@ -1,17 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Liedeinblendung.Model
 {
-    class HymnalJsonReader
+    internal class HymnalJsonReader
     {
-
         public List<Song> LoadHymnalData(string path)
         {
             var songs = new List<Song>();
@@ -22,6 +16,5 @@ namespace Liedeinblendung.Model
 
             return songs;
         }
-
     }
 }

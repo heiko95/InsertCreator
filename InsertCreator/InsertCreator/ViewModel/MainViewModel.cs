@@ -1,9 +1,6 @@
-﻿using Liedeinblendung.Extensions;
-using Liedeinblendung.Model;
-using System;
+﻿using Liedeinblendung.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -23,13 +20,13 @@ namespace Liedeinblendung.ViewModel
 
         private readonly string _bookname;
 
-        public string InputNumber 
+        public string InputNumber
         {
             get { return GetValue<string>(); }
-            set 
-            { 
+            set
+            {
                 SetValue(value);
-                CheckValid(value);            
+                CheckValid(value);
             }
         }
 
@@ -75,19 +72,13 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        
-
-
         private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
 
         private List<Song> _currentHymnal = new List<Song>();
 
-
-
-
         private void CheckValid(string number)
         {
-            if (_currentHymnal.Exists(x=>x.Number == number))
+            if (_currentHymnal.Exists(x => x.Number == number))
             {
                 NumberFalidFlag = true;
                 CreateFade(number);
@@ -96,7 +87,6 @@ namespace Liedeinblendung.ViewModel
 
             if (_currentHymnal.Exists(x => x.Number == $"{number}a"))
             {
-
                 NumberFalidFlag = true;
                 InputNumber = $"{number}a";
                 CreateFade(InputNumber);
@@ -108,7 +98,6 @@ namespace Liedeinblendung.ViewModel
             VerseList.Clear();
             MelodieAutor = "";
             TextAutor = "";
-
         }
 
         private void OnAcceptPressed(object obj)
@@ -122,7 +111,7 @@ namespace Liedeinblendung.ViewModel
         private void WriteInputVers()
         {
             string state = "";
-            
+
             foreach (var verse in VerseList)
             {
                 if (verse.IsSelected)
@@ -133,18 +122,17 @@ namespace Liedeinblendung.ViewModel
 
             List<Match> matches = new List<Match>();
 
-            foreach(Match match in Regex.Matches(state, "[T]{1,}"))
+            foreach (Match match in Regex.Matches(state, "[T]{1,}"))
             {
                 matches.Add(match);
             }
 
-            if ( matches.Count > 0)
+            if (matches.Count > 0)
             {
                 InputVers = " / ";
 
                 foreach (var match in matches)
                 {
-
                     switch (match.Length)
                     {
                         case 1:
@@ -161,26 +149,19 @@ namespace Liedeinblendung.ViewModel
                     }
 
                     InputVers = $"{InputVers} + ";
-
-
                 }
 
-                char[] charsToTrim = { ' ', '+'};
+                char[] charsToTrim = { ' ', '+' };
                 InputVers = InputVers.TrimEnd(charsToTrim);
                 return;
-
             }
             InputVers = "";
-
-
-
         }
 
         private void ClearView()
         {
             InputNumber = "";
             InputVers = "";
-
         }
 
         private void CreateFade(string number)
@@ -190,7 +171,7 @@ namespace Liedeinblendung.ViewModel
             VerseList.Clear();
             InputText = current.Title;
 
-            foreach(var verse in current.Verses)
+            foreach (var verse in current.Verses)
             {
                 VerseList.Add(new SelectedVerse(verse));
             }
@@ -206,16 +187,9 @@ namespace Liedeinblendung.ViewModel
                  (current.Metadata.Exists(x => x.Key == "Musik"))
                 MelodieAutor = $" Musik: {current.Metadata.Find(x => x.Key == "Musik").Value}";
             else
-            MelodieAutor = "";
-
-
-
+                MelodieAutor = "";
 
             //hymnal.SongVerses = InputVers;
         }
-
-
-        
-
     }
 }

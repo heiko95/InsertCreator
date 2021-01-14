@@ -1,12 +1,7 @@
 ﻿using Liedeinblendung.Model;
 using Liedeinblendung.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Liedeinblendung
@@ -16,8 +11,6 @@ namespace Liedeinblendung
     /// </summary>
     public partial class App : Application
     {
-
-
         protected override void OnStartup(StartupEventArgs e)
         {
             string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
@@ -25,22 +18,19 @@ namespace Liedeinblendung
 
             if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(path);                
+                Directory.CreateDirectory(path);
             }
             FileCreate("FadeText.txt", path);
             FileCreate("FadeTextMeta.txt", path);
             FileCreate("Ministry.json", path);
             fadeInWriter.LoadImages();
 
-
             var vm = new WindowViewModel();
             var window = new MainWindow(vm);
             window.Show();
-
         }
 
-
-        private void FileCreate (string filename, string path)
+        private void FileCreate(string filename, string path)
         {
             var fullpath = $"{path}/{filename}";
 

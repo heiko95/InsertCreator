@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Liedeinblendung.Model
 {
-    class HymnalData
+    internal class HymnalData
     {
-
         public string Book { get; set; } = "";
 
         public string Number { get; set; } = "";
@@ -23,7 +18,6 @@ namespace Liedeinblendung.Model
 
         public string MelodieAutor { get; set; } = "";
 
-       
         public HymnalData(string book, string number, string name, string textAutor, string melodieAutor, ObservableCollection<SelectedVerse> selectedVerses)
         {
             Book = book;
@@ -36,8 +30,6 @@ namespace Liedeinblendung.Model
 
         private string WriteInputVers(ObservableCollection<SelectedVerse> verses)
         {
-
-
             string state = "";
 
             string inputVerse = "";
@@ -63,7 +55,6 @@ namespace Liedeinblendung.Model
 
                 foreach (var match in matches)
                 {
-
                     switch (match.Length)
                     {
                         case 1:
@@ -80,18 +71,13 @@ namespace Liedeinblendung.Model
                     }
 
                     inputVerse = $"{inputVerse} + ";
-
-
                 }
 
                 char[] charsToTrim = { ' ', '+' };
                 inputVerse = inputVerse.TrimEnd(charsToTrim);
                 return inputVerse;
-
             }
             return inputVerse;
-
-
         }
     }
 }

@@ -19,8 +19,6 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
 
-
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -79,8 +77,6 @@
                 SelectionMode="Multiple"
                 Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
 
-
-
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -109,20 +105,13 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
 
-
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
-
                 </ListBox.ItemsPanel>
-
-
-
-
             </ListBox>
         </StackPanel>
-
 
         <!--<TextBox Grid.Row="1" VerticalAlignment="Center" Margin="20" materialDesign:HintAssist.Hint="Verse" Text="{Binding InputVers, UpdateSourceTrigger=LostFocus}">
             <i1:Interaction.Behaviors>
@@ -134,7 +123,7 @@
             Grid.Row="5"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
-            <!--<Button Margin="20" Content="Zurücksetzen" >
+            <!--<Button Margin="20" Content="Zurücksetzen">
             </Button>-->
             <Button
                 Margin="20"
@@ -142,6 +131,5 @@
                 Content="Übernehmen"
                 IsEnabled="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-
     </Grid>
 </UserControl>

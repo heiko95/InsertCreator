@@ -44,8 +44,6 @@
                 </materialDesign:DialogHost>
             </DataTemplate>
 
-            
-
             <DataTemplate DataType="{x:Type viewModels:InfoViewModel}">
 
                 <StackPanel>
@@ -61,7 +59,6 @@
     </Window.Resources>
 
     <Grid>
-
 
         <materialDesign:DialogHost
             Background="{DynamicResource MaterialDesignCardBackground}"
@@ -82,7 +79,6 @@
                         <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
                             <view:InputView DataContext="{Binding CurrentHymnalViewModel, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
-
                     </Grid>
                 </materialDesign:Card>
 
@@ -136,7 +132,6 @@
                                 Content="&#x2699;"
                                 FontSize="20">
 
-
                                 <Button.Style>
                                     <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
                                         <Style.Triggers>
@@ -157,7 +152,6 @@
                                         </Style.Resources>
                                     </Style>
                                 </Button.Style>
-
                             </Button>
 
                             <Button
@@ -189,22 +183,11 @@
                                         </Style.Resources>
                                     </Style>
                                 </Button.Style>
-
                             </Button>
-
                         </DockPanel>
-
-
-
                     </DockPanel>
-
-
                 </materialDesign:Card>
-
             </Grid>
-
         </materialDesign:DialogHost>
-
-
     </Grid>
 </Window>

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace Liedeinblendung.Model
 {
     /// <summary>
     /// Read and write App.config
     /// </summary>
-    class AppSettingReaderWriter
+    internal class AppSettingReaderWriter
     {
         /// <summary>
         /// Read setting in entered section
@@ -25,7 +19,6 @@ namespace Liedeinblendung.Model
             {
                 var appSettings = ConfigurationManager.AppSettings;
                 return appSettings[key.ToString()] ?? "Not Found";
-                
             }
             catch (ConfigurationErrorsException)
             {
@@ -44,20 +37,15 @@ namespace Liedeinblendung.Model
             {
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings.Remove(key.ToString());
-                config.AppSettings.Settings.Add(key.ToString(), value);               
+                config.AppSettings.Settings.Add(key.ToString(), value);
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
             }
-
             catch (ConfigurationErrorsException)
             {
-               
             }
-        }        
+        }
     }
-
-
-
 
     /// <summary>
     /// SettingsKeyEnum
@@ -68,5 +56,4 @@ namespace Liedeinblendung.Model
         ShowComponistAndAutor,
         UseLogo
     }
-
 }
