@@ -10,7 +10,13 @@ namespace Liedeinblendung.Model
 {
     public class CsvReaderWriter
     {
+        #region Private Fields
+
         private MinistryJsonReaderWriter _ministryJsonReaderWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public ObservableCollection<MinistryGridViewModel> ImportCsv()
         {
@@ -54,22 +60,9 @@ namespace Liedeinblendung.Model
             }
         }
 
-        private void SaveCsv(ObservableCollection<MinistryGridViewModel> ministries, string filepath)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < ministries.Count; i++)
-            {
-                string[] ministry = new string[] { ministries[i].SureName, ministries[i].ForeName, ministries[i].Function };
-                for (int j = 0; j < ministry.Length; j++)
-                {
-                    //Append data with separator.
-                    sb.Append(ministry[j] + ';');
-                }
-                //Append new line character.
-                sb.Append("\r\n");
-            }
-            File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));
-        }
+        #endregion Public Methods
+
+        #region Private Methods
 
         private ObservableCollection<MinistryGridViewModel> ReadCsv(string filepath)
         {
@@ -87,5 +80,24 @@ namespace Liedeinblendung.Model
                 return ministries;
             }
         }
+
+        private void SaveCsv(ObservableCollection<MinistryGridViewModel> ministries, string filepath)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < ministries.Count; i++)
+            {
+                string[] ministry = new string[] { ministries[i].SureName, ministries[i].ForeName, ministries[i].Function };
+                for (int j = 0; j < ministry.Length; j++)
+                {
+                    //Append data with separator.
+                    sb.Append(ministry[j] + ';');
+                }
+                //Append new line character.
+                sb.Append("\r\n");
+            }
+            File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));
+        }
+
+        #endregion Private Methods
     }
 }

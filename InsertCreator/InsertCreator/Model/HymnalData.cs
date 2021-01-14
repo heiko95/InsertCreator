@@ -6,17 +6,7 @@ namespace Liedeinblendung.Model
 {
     internal class HymnalData
     {
-        public string Book { get; set; } = "";
-
-        public string Number { get; set; } = "";
-
-        public string SongVerses { get; set; } = "";
-
-        public string Name { get; set; } = "";
-
-        public string TextAutor { get; set; } = "";
-
-        public string MelodieAutor { get; set; } = "";
+        #region Public Constructors
 
         public HymnalData(string book, string number, string name, string textAutor, string melodieAutor, ObservableCollection<SelectedVerse> selectedVerses)
         {
@@ -27,6 +17,23 @@ namespace Liedeinblendung.Model
             MelodieAutor = melodieAutor;
             SongVerses = WriteInputVers(selectedVerses);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public string Book { get; set; } = "";
+
+        public string MelodieAutor { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Number { get; set; } = "";
+
+        public string SongVerses { get; set; } = "";
+        public string TextAutor { get; set; } = "";
+
+        #endregion Public Properties
+
+        #region Private Methods
 
         private string WriteInputVers(ObservableCollection<SelectedVerse> verses)
         {
@@ -79,5 +86,7 @@ namespace Liedeinblendung.Model
             }
             return inputVerse;
         }
+
+        #endregion Private Methods
     }
 }

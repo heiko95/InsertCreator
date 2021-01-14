@@ -11,7 +11,17 @@ namespace Liedeinblendung.ViewModel
 {
     public class ConfigViewModel : ObservableObject
     {
-        public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
+        #region Private Fields
+
+        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+
+        private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
+
+        private readonly PictureReader _pictureReader = new PictureReader();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ConfigViewModel()
         {
@@ -24,75 +34,23 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-        private BitmapImage BitmapToImageSource(Bitmap bitmap)
-        {
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
+        #endregion Public Constructors
 
-                return bitmapimage;
-            }
-        }
+        #region Public Events
 
-        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-        private readonly PictureReader _pictureReader = new PictureReader();
-        private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
+        public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
+
+        #endregion Public Events
+
+        #region Public Properties
 
         public ICommand OnLoadCsv => new RelayCommand(LoadCSV);
 
-        public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
-
-        private void SaveCSV(object obj)
-        {
-            _csvReaderWriter.SaveCsv();
-        }
-
-        public ICommand OnUpload => new RelayCommand(LoadLogo);
-
-        private void LoadLogo(object obj)
-        {
-            _pictureReader.LoadPicture();
-
-            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
-            {
-                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
-                PreviewLogo = BitmapToImageSource(image);
-            }
-        }
-
         public ICommand OnReset => new RelayCommand(RemoveLogo);
 
-        private void RemoveLogo(object obj)
-        {
-            PreviewLogo = null;
-            _pictureReader.RemovePicture();
-        }
+        public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
 
-        private void LoadCSV(object obj)
-        {
-            var loadedMinisries = _csvReaderWriter.ImportCsv();
-            if (loadedMinisries != null)
-                OnLoadMinistries?.Invoke(this, loadedMinisries);
-        }
-
-        public bool UseGreenScreen
-        {
-            get { return GetValue<bool>(); }
-            set
-            {
-                if (UseGreenScreen != value)
-                {
-                    SetValue(value);
-                    _appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
-                }
-            }
-        }
+        public ICommand OnUpload => new RelayCommand(LoadLogo);
 
         public ImageSource PreviewLogo
         {
@@ -116,5 +74,68 @@ namespace Liedeinblendung.ViewModel
                 }
             }
         }
+
+        public bool UseGreenScreen
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (UseGreenScreen != value)
+                {
+                    SetValue(value);
+                    _appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
+                }
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Private Methods
+
+        private BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+
+                return bitmapimage;
+            }
+        }
+        private void LoadCSV(object obj)
+        {
+            var loadedMinisries = _csvReaderWriter.ImportCsv();
+            if (loadedMinisries != null)
+                OnLoadMinistries?.Invoke(this, loadedMinisries);
+        }
+
+        private void LoadLogo(object obj)
+        {
+            _pictureReader.LoadPicture();
+
+            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
+            {
+                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
+                PreviewLogo = BitmapToImageSource(image);
+            }
+        }
+
+        private void RemoveLogo(object obj)
+        {
+            PreviewLogo = null;
+            _pictureReader.RemovePicture();
+        }
+
+        private void SaveCSV(object obj)
+        {
+            _csvReaderWriter.SaveCsv();
+        }
+
+        #endregion Private Methods
     }
 }

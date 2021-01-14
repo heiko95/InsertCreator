@@ -6,6 +6,8 @@ namespace Liedeinblendung.Model
 {
     internal class HymnalJsonReader
     {
+        #region Public Methods
+
         public List<Song> LoadHymnalData(string path)
         {
             var songs = new List<Song>();
@@ -16,5 +18,7 @@ namespace Liedeinblendung.Model
 
             return songs;
         }
+
+        #endregion Public Methods
     }
 }

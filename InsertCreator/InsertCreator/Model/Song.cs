@@ -4,6 +4,9 @@ namespace Liedeinblendung.Model
 {
     public class Song
     {
+        #region Public Properties
+
+        public List<Metadata> Metadata { get; set; } = new List<Metadata>();
         public string Number { get; set; }
 
         public string Title { get; set; }
@@ -12,6 +15,6 @@ namespace Liedeinblendung.Model
 
         public List<Verse> Verses { get; set; } = new List<Verse>();
 
-        public List<Metadata> Metadata { get; set; } = new List<Metadata>();
+        #endregion Public Properties
     }
 }
