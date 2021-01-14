@@ -131,6 +131,8 @@ namespace Liedeinblendung.ViewModel
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+
+
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 foreach (MinistryGridViewModel item in e.NewItems)
@@ -147,6 +149,7 @@ namespace Liedeinblendung.ViewModel
                 {
                     //Removed items
                     item.OnUpdateFunction -= UpdateElement;
+                    _readerWriter.WriteMinistryData(Ministries);
                 }
 
                 return;
