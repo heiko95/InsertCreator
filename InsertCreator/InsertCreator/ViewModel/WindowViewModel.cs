@@ -7,6 +7,26 @@ namespace Liedeinblendung.ViewModel
 {
     public class WindowViewModel : ObservableObject
     {
+        #region Public Fields
+
+        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
+
+        public InfoViewModel InfoViewModel = new InfoViewModel();
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private readonly MainViewModel _cbData;
+
+        private readonly MainViewModel _gbData;
+
+        private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public WindowViewModel()
         {
             _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
@@ -17,23 +37,31 @@ namespace Liedeinblendung.ViewModel
             CurrentHymnalViewModel = _gbData;
         }
 
-        private void UpdateMinistries(object sender, ObservableCollection<MinistryGridViewModel> e)
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public MainViewModel CurrentHymnalViewModel
         {
-            MinistryViewModel.UpdateMinistries(e);
+            get { return GetValue<MainViewModel>(); }
+            set { SetValue(value); }
+        }
+
+        public bool HymnalInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public MinistryViewModel MinistryViewModel
+        {
+            get { return GetValue<MinistryViewModel>(); }
+            set { SetValue(value); }
         }
 
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
+
         public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
-
-        async private void OpenInfoDialog(object obj)
-        {
-            await MaterialDesignThemes.Wpf.DialogHost.Show(InfoViewModel, "MainWindow");
-        }
-
-        async private void OpenConfigDialog(object obj)
-        {
-            await MaterialDesignThemes.Wpf.DialogHost.Show(ConfigViewModel, "MainWindow");
-        }
 
         public int Selected
         {
@@ -58,30 +86,25 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-        public bool HymnalInputVisible
+        #endregion Public Properties
+
+        #region Private Methods
+
+        async private void OpenConfigDialog(object obj)
         {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
+            await MaterialDesignThemes.Wpf.DialogHost.Show(ConfigViewModel, "MainWindow");
         }
 
-        private readonly MainViewModel _gbData;
-        private readonly MainViewModel _cbData;
-        private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
-
-        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
-
-        public InfoViewModel InfoViewModel = new InfoViewModel();
-
-        public MinistryViewModel MinistryViewModel
+        async private void OpenInfoDialog(object obj)
         {
-            get { return GetValue<MinistryViewModel>(); }
-            set { SetValue(value); }
+            await MaterialDesignThemes.Wpf.DialogHost.Show(InfoViewModel, "MainWindow");
         }
 
-        public MainViewModel CurrentHymnalViewModel
+        private void UpdateMinistries(object sender, ObservableCollection<MinistryGridViewModel> e)
         {
-            get { return GetValue<MainViewModel>(); }
-            set { SetValue(value); }
+            MinistryViewModel.UpdateMinistries(e);
         }
+
+        #endregion Private Methods
     }
 }

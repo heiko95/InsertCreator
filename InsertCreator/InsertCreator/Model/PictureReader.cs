@@ -8,7 +8,13 @@ namespace Liedeinblendung.Model
 {
     public class PictureReader
     {
+        #region Private Fields
+
         private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public void LoadPicture()
         {
@@ -53,6 +59,10 @@ namespace Liedeinblendung.Model
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private Bitmap ResizePicture(Bitmap image, int size)
         {
             if (image.Width == image.Height)
@@ -69,5 +79,7 @@ namespace Liedeinblendung.Model
             ratio = (double)size / image.Width;
             return new Bitmap(image, size, Convert.ToInt32(image.Height * ratio));
         }
+
+        #endregion Private Methods
     }
 }

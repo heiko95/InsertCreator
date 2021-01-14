@@ -8,15 +8,25 @@ namespace Liedeinblendung.ViewModel
 {
     public class ObservableObject : INotifyPropertyChanged
     {
+        #region Private Fields
+
         /// <summary>
         /// Dictionary for property values
         /// </summary>
         private readonly Dictionary<string, object> _propertyValues = new Dictionary<string, object>();
 
+        #endregion Private Fields
+
+        #region Public Events
+
         /// <summary>
         /// Eventhandler for property change events
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion Public Events
+
+        #region Protected Methods
 
         /// <summary>
         /// Method to get a property value
@@ -29,6 +39,16 @@ namespace Liedeinblendung.ViewModel
         {
             string key = $"{typeof(TValue)}::{propertyName}";
             return _propertyValues.ContainsKey(key) ? (TValue)_propertyValues[key] : defaultValue;
+        }
+
+        /// <summary>
+        /// Notify Property Changed Invocator
+        /// </summary>
+        /// <param name="propertyName"></param>
+        [NotifyPropertyChangedInvocator]
+        protected virtual void InvokePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -71,14 +91,6 @@ namespace Liedeinblendung.ViewModel
             callback?.Invoke();
         }
 
-        /// <summary>
-        /// Notify Property Changed Invocator
-        /// </summary>
-        /// <param name="propertyName"></param>
-        [NotifyPropertyChangedInvocator]
-        protected virtual void InvokePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        #endregion Protected Methods
     }
 }

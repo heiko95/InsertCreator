@@ -3,10 +3,22 @@
 namespace Liedeinblendung.Model
 {
     /// <summary>
+    /// SettingsKeyEnum
+    /// </summary>
+    public enum KeyName
+    {
+        UseGreenscreen,
+        ShowComponistAndAutor,
+        UseLogo
+    }
+
+    /// <summary>
     /// Read and write App.config
     /// </summary>
     internal class AppSettingReaderWriter
     {
+        #region Public Methods
+
         /// <summary>
         /// Read setting in entered section
         /// </summary>
@@ -45,15 +57,7 @@ namespace Liedeinblendung.Model
             {
             }
         }
-    }
 
-    /// <summary>
-    /// SettingsKeyEnum
-    /// </summary>
-    public enum KeyName
-    {
-        UseGreenscreen,
-        ShowComponistAndAutor,
-        UseLogo
+        #endregion Public Methods
     }
 }

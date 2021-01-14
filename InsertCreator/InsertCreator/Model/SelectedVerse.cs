@@ -4,11 +4,17 @@ namespace Liedeinblendung.Model
 {
     public class SelectedVerse : ObservableObject
     {
+        #region Public Constructors
+
         public SelectedVerse(Verse verse)
         {
             Verse = verse;
             IsSelected = false;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public bool IsSelected
         {
@@ -21,5 +27,7 @@ namespace Liedeinblendung.Model
             get { return GetValue<Verse>(); }
             set { SetValue(value); }
         }
+
+        #endregion Public Properties
     }
 }

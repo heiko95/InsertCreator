@@ -7,12 +7,22 @@ namespace Liedeinblendung.Model
 {
     public class MinistryJsonReaderWriter
     {
+        #region Private Fields
+
         private string _path;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public MinistryJsonReaderWriter(string path)
         {
             _path = path;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public ObservableCollection<MinistryGridViewModel> LoadMinistryData()
         {
@@ -37,5 +47,7 @@ namespace Liedeinblendung.Model
         {
             File.WriteAllText(_path, JsonConvert.SerializeObject(ministries));
         }
+
+        #endregion Public Methods
     }
 }

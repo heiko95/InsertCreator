@@ -5,17 +5,21 @@ namespace Liedeinblendung.ViewModel
 {
     public class InfoViewModel : ObservableObject
     {
+        #region Public Constructors
+
         public InfoViewModel()
         {
             License = File.ReadAllText(($"{Directory.GetCurrentDirectory()}/License.txt"));
         }
 
-        public string Version
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public string License
         {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string PublishDate
@@ -26,10 +30,14 @@ namespace Liedeinblendung.ViewModel
             }
         }
 
-        public string License
+        public string Version
         {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
+            get
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
         }
+
+        #endregion Public Properties
     }
 }

@@ -15,16 +15,17 @@ namespace Liedeinblendung.ViewModel
         #region Private members
 
         /// <summary>
-        /// Creates a new command that can always execute.
-        /// </summary>
-        private readonly Action<object> execute;
-
-        /// <summary>
         /// True if command is executing, false otherwise
         /// </summary>
         private readonly Func<bool> canExecute;
 
+        /// <summary>
+        /// Creates a new command that can always execute.
+        /// </summary>
+        private readonly Action<object> execute;
         #endregion Private members
+
+        #region Public Constructors
 
         /// <summary>
         /// Initializes a new instance of <see cref="RelayCommand"/> that can always execute.
@@ -49,10 +50,18 @@ namespace Liedeinblendung.ViewModel
             this.canExecute = canExecute;
         }
 
+        #endregion Public Constructors
+
+        #region Public Events
+
         /// <summary>
         /// Raised when RaiseCanExecuteChanged is called.
         /// </summary>
         public event EventHandler CanExecuteChanged;
+
+        #endregion Public Events
+
+        #region Public Methods
 
         /// <summary>
         /// Determines whether this <see cref="RelayCommand"/> can execute in its current state.
@@ -90,5 +99,7 @@ namespace Liedeinblendung.ViewModel
                 handler(this, EventArgs.Empty);
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -4,7 +4,19 @@ namespace Liedeinblendung.ViewModel
 {
     public class MinistryGridViewModel : ObservableObject
     {
+        #region Public Events
+
         public event EventHandler<string> OnUpdateFunction;
+
+        #endregion Public Events
+
+        #region Public Properties
+
+        public string ForeName
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
         public string Function
         {
@@ -15,18 +27,15 @@ namespace Liedeinblendung.ViewModel
                 OnUpdateFunction?.Invoke(this, value);
             }
         }
-
-        public string ForeName
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
         public string SureName
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override bool Equals(object obj)
         {
@@ -38,5 +47,7 @@ namespace Liedeinblendung.ViewModel
             }
             return false;
         }
+
+        #endregion Public Methods
     }
 }

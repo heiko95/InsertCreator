@@ -6,6 +6,8 @@ namespace Liedeinblendung.Behaviors
 {
     public class TextBoxEnterKeyUpdateBehavior : Behavior<TextBox>
     {
+        #region Protected Methods
+
         protected override void OnAttached()
         {
             if (this.AssociatedObject != null)
@@ -23,6 +25,10 @@ namespace Liedeinblendung.Behaviors
                 base.OnDetaching();
             }
         }
+
+        #endregion Protected Methods
+
+        #region Private Methods
 
         private void AssociatedObject_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -43,5 +49,7 @@ namespace Liedeinblendung.Behaviors
                 }
             }
         }
+
+        #endregion Private Methods
     }
 }

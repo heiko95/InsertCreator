@@ -8,6 +8,18 @@ namespace Liedeinblendung.ViewModel
 {
     public class MainViewModel : ObservableObject
     {
+        #region Private Fields
+
+        private readonly string _bookname;
+
+        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
+
+        private List<Song> _currentHymnal = new List<Song>();
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public MainViewModel(List<Song> hymnalList, string bookname)
         {
             VerseList = new ObservableCollection<SelectedVerse>();
@@ -16,10 +28,11 @@ namespace Liedeinblendung.ViewModel
             _bookname = bookname;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
-
-        private readonly string _bookname;
-
         public string InputNumber
         {
             get { return GetValue<string>(); }
@@ -42,27 +55,15 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        public bool NumberFalidFlag
-        {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
-        }
-
-        public ObservableCollection<SelectedVerse> VerseList
-        {
-            get { return GetValue<ObservableCollection<SelectedVerse>>(); }
-            set { SetValue(value); }
-        }
-
         public string MelodieAutor
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
 
-        public string TextAutor
+        public bool NumberFalidFlag
         {
-            get { return GetValue<string>(); }
+            get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
@@ -72,9 +73,21 @@ namespace Liedeinblendung.ViewModel
             set { SetValue(value); }
         }
 
-        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
+        public string TextAutor
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
-        private List<Song> _currentHymnal = new List<Song>();
+        public ObservableCollection<SelectedVerse> VerseList
+        {
+            get { return GetValue<ObservableCollection<SelectedVerse>>(); }
+            set { SetValue(value); }
+        }
+
+        #endregion Public Properties
+
+        #region Private Methods
 
         private void CheckValid(string number)
         {
@@ -98,6 +111,40 @@ namespace Liedeinblendung.ViewModel
             VerseList.Clear();
             MelodieAutor = "";
             TextAutor = "";
+        }
+
+        private void ClearView()
+        {
+            InputNumber = "";
+            InputVers = "";
+        }
+
+        private void CreateFade(string number)
+        {
+            Song current = _currentHymnal.Find(x => x.Number == number);
+
+            VerseList.Clear();
+            InputText = current.Title;
+
+            foreach (var verse in current.Verses)
+            {
+                VerseList.Add(new SelectedVerse(verse));
+            }
+
+            if (current.Metadata.Exists(x => x.Key == "Text"))
+                TextAutor = $" Text: {current.Metadata.Find(x => x.Key == "Text").Value}";
+            else
+                TextAutor = "";
+
+            if (current.Metadata.Exists(x => x.Key == "Melodie"))
+                MelodieAutor = $" Melodie: {current.Metadata.Find(x => x.Key == "Melodie").Value}";
+            else if
+                 (current.Metadata.Exists(x => x.Key == "Musik"))
+                MelodieAutor = $" Musik: {current.Metadata.Find(x => x.Key == "Musik").Value}";
+            else
+                MelodieAutor = "";
+
+            //hymnal.SongVerses = InputVers;
         }
 
         private void OnAcceptPressed(object obj)
@@ -158,38 +205,6 @@ namespace Liedeinblendung.ViewModel
             InputVers = "";
         }
 
-        private void ClearView()
-        {
-            InputNumber = "";
-            InputVers = "";
-        }
-
-        private void CreateFade(string number)
-        {
-            Song current = _currentHymnal.Find(x => x.Number == number);
-
-            VerseList.Clear();
-            InputText = current.Title;
-
-            foreach (var verse in current.Verses)
-            {
-                VerseList.Add(new SelectedVerse(verse));
-            }
-
-            if (current.Metadata.Exists(x => x.Key == "Text"))
-                TextAutor = $" Text: {current.Metadata.Find(x => x.Key == "Text").Value}";
-            else
-                TextAutor = "";
-
-            if (current.Metadata.Exists(x => x.Key == "Melodie"))
-                MelodieAutor = $" Melodie: {current.Metadata.Find(x => x.Key == "Melodie").Value}";
-            else if
-                 (current.Metadata.Exists(x => x.Key == "Musik"))
-                MelodieAutor = $" Musik: {current.Metadata.Find(x => x.Key == "Musik").Value}";
-            else
-                MelodieAutor = "";
-
-            //hymnal.SongVerses = InputVers;
-        }
+        #endregion Private Methods
     }
 }
