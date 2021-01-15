@@ -130,16 +130,12 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #endregion Internal Methods
 
-        #region Private Methods
-
-        #endregion Private Methods
-
         public ICommand RowEditEndCommand => new RelayCommand(OnEditRowEnd);
 
         private void OnEditRowEnd(object obj)
         {
             var item = obj as MinistryGridViewModel;
-            if (item == null)
+            if (item.ForeName == "" && item.SureName == "")
             {
                 Ministries.Remove(item);
             }

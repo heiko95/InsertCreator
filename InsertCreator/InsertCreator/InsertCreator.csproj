@@ -120,6 +120,9 @@
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
+    <Compile Include="View\HymnalInputView.xaml.cs">
+      <DependentUpon>HymnalInputView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MinistryView.xaml.cs">
       <DependentUpon>MinistryView.xaml</DependentUpon>
     </Compile>
@@ -127,11 +130,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InfoView.xaml">
+    <Page Include="View\HymnalInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HymnalInputView.xaml">
+    <Page Include="View\InfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,9 +169,6 @@
     </Compile>
     <Compile Include="View\InfoView.xaml.cs">
       <DependentUpon>InfoView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HymnalInputView.xaml.cs">
-      <DependentUpon>HymnalInputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

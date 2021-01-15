@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using HgSoftware.InsertCreator.Model;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
-using HgSoftware.InsertCreator.Model;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {

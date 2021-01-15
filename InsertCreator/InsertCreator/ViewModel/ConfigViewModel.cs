@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HgSoftware.InsertCreator.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using HgSoftware.InsertCreator.Model;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {

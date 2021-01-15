@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HgSoftware.InsertCreator.ViewModel;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using HgSoftware.InsertCreator.ViewModel;
 
 namespace HgSoftware.InsertCreator.Converters
 {

@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using HgSoftware.InsertCreator.ViewModel;
+using System.Windows;
 using System.Windows.Controls;
-using HgSoftware.InsertCreator.ViewModel;
 
 namespace HgSoftware.InsertCreator
 {
