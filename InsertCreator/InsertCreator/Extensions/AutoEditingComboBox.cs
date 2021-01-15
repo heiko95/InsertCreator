@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Liedeinblendung.Extensions
+namespace HgSoftware.InsertCreator.Extensions
 {
     internal class AutoEditingComboBox : ComboBox
     {

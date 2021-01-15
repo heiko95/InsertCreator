@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class ObservableObject : INotifyPropertyChanged
     {

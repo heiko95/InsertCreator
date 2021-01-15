@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class MinistryGridViewModel : ObservableObject
     {

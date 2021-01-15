@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace Liedeinblendung.View
+namespace HgSoftware.InsertCreator.View
 {
     /// <summary>
     /// Interaktionslogik für InputView.xaml
     /// </summary>
-    public partial class InputView : UserControl
+    public partial class HymnalInputView : UserControl
     {
-        public InputView()
+        public HymnalInputView()
         {
             InitializeComponent();
         }

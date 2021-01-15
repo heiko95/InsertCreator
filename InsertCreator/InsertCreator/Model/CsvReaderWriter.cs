@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     public class CsvReaderWriter
     {

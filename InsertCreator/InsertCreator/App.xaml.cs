@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using Liedeinblendung.Model;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.Model;
+using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung
+namespace HgSoftware.InsertCreator
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"
@@ -19,9 +19,7 @@ namespace Liedeinblendung
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-            }
-            FileCreate("FadeText.txt", path);
-            FileCreate("FadeTextMeta.txt", path);
+            }       
             FileCreate("Ministry.json", path);
             fadeInWriter.LoadImages();
 

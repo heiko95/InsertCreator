@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Liedeinblendung.Extensions
+namespace HgSoftware.InsertCreator.Extensions
 {
     /// <summary>
     /// Includes extension methods

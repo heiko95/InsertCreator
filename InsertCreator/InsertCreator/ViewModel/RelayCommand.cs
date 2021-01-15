@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     /// <summary>
     /// A command whose sole purpose is to relay its functionality
