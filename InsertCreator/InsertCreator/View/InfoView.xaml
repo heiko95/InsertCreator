@@ -6,14 +6,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
-    d:DesignWidth="475"
+    d:DesignWidth="525"
     FontFamily="{materialDesign:MaterialDesignFont}"
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"
     mc:Ignorable="d">
     <Grid>
 
-        <DockPanel Width="475" Height="450">
+        <DockPanel Width="525" Height="450">
 
             <Label
                 Margin="10"

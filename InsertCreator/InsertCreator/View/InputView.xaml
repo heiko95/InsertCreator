@@ -11,7 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel"
     d:DesignHeight="450"
-    d:DesignWidth="415"
+    d:DesignWidth="465"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
     TextElement.FontSize="14"
