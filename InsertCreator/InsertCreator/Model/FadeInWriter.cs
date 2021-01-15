@@ -1,7 +1,7 @@
-﻿using System;
+﻿using HgSoftware.InsertCreator.ViewModel;
+using System;
 using System.Drawing;
 using System.IO;
-using HgSoftware.InsertCreator.ViewModel;
 
 namespace HgSoftware.InsertCreator.Model
 {
@@ -24,8 +24,7 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         public void WriteHymnalFade(HymnalData hymnalData)
-        {          
-
+        {
             var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
 
             if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor)))
@@ -123,7 +122,6 @@ namespace HgSoftware.InsertCreator.Model
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
-
         private void DrawLogo(Graphics drawingTool)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
@@ -134,7 +132,6 @@ namespace HgSoftware.InsertCreator.Model
                 const int x = 1425;
                 const int size = 150;
 
-
                 if (image.Width == image.Height)
                 {
                     drawingTool.DrawImage(image, new PointF(x, y));
@@ -142,17 +139,15 @@ namespace HgSoftware.InsertCreator.Model
                 }
                 if (image.Width > image.Height)
                 {
-                    drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2)+y));
+                    drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2) + y));
                     return;
-                   
                 }
                 if (image.Width < image.Height)
                 {
                     drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + x, y));
                     return;
-                    
                 }
-            }                
+            }
         }
 
         private Bitmap LoadFrame(bool transparent)

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using HgSoftware.InsertCreator.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using HgSoftware.InsertCreator.Model;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {

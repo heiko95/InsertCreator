@@ -33,7 +33,6 @@ namespace HgSoftware.InsertCreator.View
             foreach (var column in MGrid.Columns)
             {
                 column.IsReadOnly = false;
-          
             }
         }
 

@@ -60,20 +60,5 @@ namespace HgSoftware.InsertCreator.ViewModel
         }
 
         #endregion Public Properties
-
-        #region Public Methods
-
-        public override bool Equals(object obj)
-        {
-            if (obj is MinistryGridViewModel other)
-            {
-                return this.ForeName == other.ForeName &&
-                    this.SureName == other.SureName &&
-                    this.Function == other.Function;
-            }
-            return false;
-        }
-
-        #endregion Public Methods
     }
 }

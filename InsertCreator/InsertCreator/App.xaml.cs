@@ -1,8 +1,8 @@
-﻿using System;
+﻿using HgSoftware.InsertCreator.Model;
+using HgSoftware.InsertCreator.ViewModel;
+using System;
 using System.IO;
 using System.Windows;
-using HgSoftware.InsertCreator.Model;
-using HgSoftware.InsertCreator.ViewModel;
 
 namespace HgSoftware.InsertCreator
 {
@@ -19,7 +19,7 @@ namespace HgSoftware.InsertCreator
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-            }       
+            }
             FileCreate("Ministry.json", path);
             fadeInWriter.LoadImages();
 

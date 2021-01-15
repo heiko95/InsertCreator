@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
-using HgSoftware.InsertCreator.ViewModel;
+﻿using HgSoftware.InsertCreator.ViewModel;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace HgSoftware.InsertCreator.Model
 {
