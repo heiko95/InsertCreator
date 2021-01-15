@@ -115,6 +115,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\SelectedRowConverter.cs" />
+    <Compile Include="Extensions\AutoEditingComboBox.cs" />
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />

@@ -1,11 +1,11 @@
-﻿using Liedeinblendung.Model;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Liedeinblendung.Model;
 
 namespace Liedeinblendung.ViewModel
 {
@@ -127,12 +127,16 @@ namespace Liedeinblendung.ViewModel
 
         #endregion Internal Methods
 
+        public ICommand RowEditEndCommand => new RelayCommand(OnEditRowEnd);
+
+        private void OnEditRowEnd(object obj)
+        {
+        }
+
         #region Private Methods
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-
-
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 foreach (MinistryGridViewModel item in e.NewItems)

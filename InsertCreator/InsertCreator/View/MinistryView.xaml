@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:converters="clr-namespace:Liedeinblendung.Converters"
+    xmlns:extensions="clr-namespace:Liedeinblendung.Extensions"
     d:DesignHeight="450"
     d:DesignWidth="415"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -12,7 +14,12 @@
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="View">
+
+    <UserControl.Resources>
+        <converters:SelectedRowConverter x:Key="SelectedRowConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -41,29 +48,39 @@
             CanUserDeleteRows="True"
             ItemsSource="{Binding MinistryView, UpdateSourceTrigger=PropertyChanged}"
             RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
-            SelectedItem="{Binding SelectedItem}"
-            SelectionMode="Single">
+            SelectedItem="{Binding  Path=SelectedItem, Converter={StaticResource SelectedRowConverter}}"
+            SelectionMode="Single" PreviewMouseDoubleClick="MGrid_PreviewMouseDoubleClick" RowEditEnding="MGrid_RowEditEnding">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="RowEditEnding">
+                    <i:InvokeCommandAction Command="{Binding Mode=OneWay, Path=RowEditEndCommand}" CommandParameter="{Binding ElementName=SelectedRow, Path=SelectedItems}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <DataGrid.Columns>
                 <DataGridTextColumn
                     MinWidth="140"
                     Binding="{Binding ForeName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
-                    Header="Vorname" />
+                    Header="Vorname"
+                    IsReadOnly="True" />
                 <DataGridTextColumn
                     MinWidth="140"
                     Binding="{Binding SureName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
-                    Header="Nachname" />
+                    Header="Nachname"
+                    IsReadOnly="True" />
 
                 <DataGridTemplateColumn MinWidth="120" Header="Titel">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox
                                 IsEditable="True"
+
                                 ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.UsedFunctions}"
                                 Style="{StaticResource MaterialDesignDataGridComboBox}"
-                                Text="{Binding Function, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding Function, UpdateSourceTrigger=LostFocus}"
+                                StaysOpenOnEdit="True" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

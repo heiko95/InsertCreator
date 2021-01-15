@@ -1,6 +1,6 @@
-﻿using Liedeinblendung.ViewModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Liedeinblendung.ViewModel;
 
 namespace Liedeinblendung
 {

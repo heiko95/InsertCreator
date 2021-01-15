@@ -12,6 +12,13 @@ namespace Liedeinblendung.ViewModel
 
         #region Public Properties
 
+        public MinistryGridViewModel()
+        {
+            ForeName = "";
+            SureName = "";
+            Function = "";
+        }
+
         public string ForeName
         {
             get { return GetValue<string>(); }

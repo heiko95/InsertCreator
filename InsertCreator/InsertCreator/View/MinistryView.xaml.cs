@@ -12,19 +12,6 @@ namespace Liedeinblendung.View
         {
             InitializeComponent();
             this.MGrid.PreviewKeyDown += MoveCellOnEnterKey;
-            this.MGrid.MouseDoubleClick += GridMouseDoubleDown;
-        }
-
-        private void GridMouseDoubleDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender != null)
-            {
-                DataGrid grid = sender as DataGrid;
-                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
-                {
-                    DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
-                }
-            }
         }
 
         private void MoveCellOnEnterKey(object sender, KeyEventArgs e)
@@ -38,6 +25,22 @@ namespace Liedeinblendung.View
                   e.KeyboardDevice, e.InputSource, e.Timestamp, Key.Tab);
                 tabKeyEvent.RoutedEvent = Keyboard.KeyDownEvent;
                 InputManager.Current.ProcessInput(tabKeyEvent);
+            }
+        }
+
+        private void MGrid_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            foreach (var column in MGrid.Columns)
+            {
+                column.IsReadOnly = false;
+            }
+        }
+
+        private void MGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            foreach (var column in MGrid.Columns)
+            {
+                column.IsReadOnly = true;
             }
         }
     }
