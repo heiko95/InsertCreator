@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Liedeinblendung.View
+namespace HgSoftware.InsertCreator.View
 {
     /// <summary>
     /// Interaction logic for InfoView.xaml

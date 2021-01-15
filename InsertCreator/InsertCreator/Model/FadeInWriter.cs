@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     internal class FadeInWriter
     {
@@ -24,8 +24,7 @@ namespace Liedeinblendung.Model
         }
 
         public void WriteHymnalFade(HymnalData hymnalData)
-        {
-            CreateTextfiles(hymnalData);
+        {          
 
             var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
 
@@ -124,26 +123,36 @@ namespace Liedeinblendung.Model
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
-        private void CreateTextfiles(HymnalData hymnalData)
-        {
-            using (System.IO.StreamWriter file =
-           new System.IO.StreamWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/FadeText.txt"))
-            {
-                file.WriteLine($"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}");
-                file.WriteLine(hymnalData.Name);
-            }
-
-            using (System.IO.StreamWriter file =
-            new System.IO.StreamWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/FadeTextMeta.txt"))
-            {
-                file.WriteLine($"{hymnalData.TextAutor}{hymnalData.MelodieAutor}");
-            }
-        }
 
         private void DrawLogo(Graphics drawingTool)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
-                drawingTool.DrawImage(Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"), new PointF(1425, 825));
+            {
+                var image = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png");
+
+                const int y = 825;
+                const int x = 1425;
+                const int size = 150;
+
+
+                if (image.Width == image.Height)
+                {
+                    drawingTool.DrawImage(image, new PointF(x, y));
+                    return;
+                }
+                if (image.Width > image.Height)
+                {
+                    drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2)+y));
+                    return;
+                   
+                }
+                if (image.Width < image.Height)
+                {
+                    drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + x, y));
+                    return;
+                    
+                }
+            }                
         }
 
         private Bitmap LoadFrame(bool transparent)

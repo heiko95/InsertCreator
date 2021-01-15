@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class InfoViewModel : ObservableObject
     {

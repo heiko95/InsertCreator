@@ -2,11 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using Liedeinblendung.Model;
+using HgSoftware.InsertCreator.Model;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
-    public class MainViewModel : ObservableObject
+    public class HymnalInputViewModel : ObservableObject
     {
         #region Private Fields
 
@@ -20,7 +20,7 @@ namespace Liedeinblendung.ViewModel
 
         #region Public Constructors
 
-        public MainViewModel(List<Song> hymnalList, string bookname)
+        public HymnalInputViewModel(List<Song> hymnalList, string bookname)
         {
             VerseList = new ObservableCollection<SelectedVerse>();
 

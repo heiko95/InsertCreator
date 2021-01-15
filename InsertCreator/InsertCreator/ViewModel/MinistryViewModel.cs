@@ -1,4 +1,4 @@
-﻿using Liedeinblendung.Model;
+﻿using HgSoftware.InsertCreator.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -7,7 +7,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class MinistryViewModel : ObservableObject
     {
@@ -130,10 +130,19 @@ namespace Liedeinblendung.ViewModel
 
         #endregion Internal Methods
 
+        #region Private Methods
+
+        #endregion Private Methods
+
         public ICommand RowEditEndCommand => new RelayCommand(OnEditRowEnd);
 
         private void OnEditRowEnd(object obj)
         {
+            var item = obj as MinistryGridViewModel;
+            if (item == null)
+            {
+                Ministries.Remove(item);
+            }
         }
 
         #region Private Methods

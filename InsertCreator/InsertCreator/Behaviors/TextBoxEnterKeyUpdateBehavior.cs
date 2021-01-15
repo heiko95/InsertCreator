@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 
-namespace Liedeinblendung.Behaviors
+namespace HgSoftware.InsertCreator.Behaviors
 {
     public class TextBoxEnterKeyUpdateBehavior : Behavior<TextBox>
     {

@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung
+namespace HgSoftware.InsertCreator
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml

@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     internal class HymnalJsonReader
     {

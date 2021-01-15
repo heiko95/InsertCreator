@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung.Converters
+namespace HgSoftware.InsertCreator.Converters
 {
     public class SelectedRowConverter : IValueConverter
     {

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Liedeinblendung.View
+namespace HgSoftware.InsertCreator.View
 {
     /// <summary>
     /// Interaction logic for MinistryView.xaml

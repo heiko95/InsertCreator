@@ -1,4 +1,4 @@
-﻿namespace Liedeinblendung.Model
+﻿namespace HgSoftware.InsertCreator.Model
 {
     public class Metadata
     {

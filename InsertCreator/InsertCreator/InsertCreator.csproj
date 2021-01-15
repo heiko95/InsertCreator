@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D323AB68-F07A-478B-BC1F-F20ACC3A6CBB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Liedeinblendung</RootNamespace>
+    <RootNamespace>HgSoftware.InsertCreator</RootNamespace>
     <AssemblyName>InsertCreator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -131,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InputView.xaml">
+    <Page Include="View\HymnalInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,7 +156,7 @@
     <Compile Include="Model\Verse.cs" />
     <Compile Include="ViewModel\ConfigViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\HymnalInputViewModel.cs" />
     <Compile Include="ViewModel\MinistryViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -167,8 +167,8 @@
     <Compile Include="View\InfoView.xaml.cs">
       <DependentUpon>InfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InputView.xaml.cs">
-      <DependentUpon>InputView.xaml</DependentUpon>
+    <Compile Include="View\HymnalInputView.xaml.cs">
+      <DependentUpon>HymnalInputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -233,7 +233,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Logo.ico" />
-    <Resource Include="View\Logo.png" />
+    <Resource Include="DataSource\Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

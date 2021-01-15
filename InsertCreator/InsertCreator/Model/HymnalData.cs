@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     internal class HymnalData
     {

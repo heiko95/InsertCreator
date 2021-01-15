@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using Liedeinblendung.ViewModel;
+using HgSoftware.InsertCreator.ViewModel;
 using Newtonsoft.Json;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     public class MinistryJsonReaderWriter
     {

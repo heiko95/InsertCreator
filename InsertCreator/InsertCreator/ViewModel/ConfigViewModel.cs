@@ -5,9 +5,9 @@ using System.IO;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Liedeinblendung.Model;
+using HgSoftware.InsertCreator.Model;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class ConfigViewModel : ObservableObject
     {

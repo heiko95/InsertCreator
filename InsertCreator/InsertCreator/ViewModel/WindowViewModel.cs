@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
-using Liedeinblendung.Model;
+using HgSoftware.InsertCreator.Model;
 
-namespace Liedeinblendung.ViewModel
+namespace HgSoftware.InsertCreator.ViewModel
 {
     public class WindowViewModel : ObservableObject
     {
@@ -17,9 +17,9 @@ namespace Liedeinblendung.ViewModel
 
         #region Private Fields
 
-        private readonly MainViewModel _cbData;
+        private readonly HymnalInputViewModel _cbData;
 
-        private readonly MainViewModel _gbData;
+        private readonly HymnalInputViewModel _gbData;
 
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
 
@@ -29,8 +29,8 @@ namespace Liedeinblendung.ViewModel
 
         public WindowViewModel()
         {
-            _gbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
-            _cbData = new MainViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
+            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
+            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
             HymnalInputVisible = true;
             MinistryViewModel = new MinistryViewModel();
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
@@ -41,9 +41,9 @@ namespace Liedeinblendung.ViewModel
 
         #region Public Properties
 
-        public MainViewModel CurrentHymnalViewModel
+        public HymnalInputViewModel CurrentHymnalViewModel
         {
-            get { return GetValue<MainViewModel>(); }
+            get { return GetValue<HymnalInputViewModel>(); }
             set { SetValue(value); }
         }
 

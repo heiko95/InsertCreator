@@ -1,6 +1,6 @@
-﻿using Liedeinblendung.ViewModel;
+﻿using HgSoftware.InsertCreator.ViewModel;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     public class SelectedVerse : ObservableObject
     {

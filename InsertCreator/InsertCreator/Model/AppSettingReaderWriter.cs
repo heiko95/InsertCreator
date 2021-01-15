@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     /// <summary>
     /// SettingsKeyEnum

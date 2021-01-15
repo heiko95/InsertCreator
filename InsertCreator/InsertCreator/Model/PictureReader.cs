@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Liedeinblendung.Model
+namespace HgSoftware.InsertCreator.Model
 {
     public class PictureReader
     {
@@ -21,7 +21,7 @@ namespace Liedeinblendung.Model
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Environment.GetEnvironmentVariable("userprofile");
-                openFileDialog.Filter = "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg";
+                openFileDialog.Filter = "Files|*.jpg;*.jpeg;*.png;";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
                 openFileDialog.Multiselect = false;
