@@ -56,7 +56,7 @@
             Margin="20"
             VerticalAlignment="Center"
             materialDesign:HintAssist.Hint="Melodie"
-            IsEnabled="False"
+            IsEnabled="True"
             Text="{Binding MelodieAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <TextBox
@@ -64,7 +64,7 @@
             Margin="20"
             VerticalAlignment="Center"
             materialDesign:HintAssist.Hint="Text"
-            IsEnabled="False"
+            IsEnabled="True"
             Text="{Binding TextAutor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center">
