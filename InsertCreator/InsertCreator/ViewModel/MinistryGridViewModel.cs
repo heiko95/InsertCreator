@@ -25,7 +25,7 @@ namespace Liedeinblendung.ViewModel
             set
             {
                 SetValue(value);
-                OnUpdateFunction?.Invoke(this, value);
+                OnUpdateFunction?.Invoke(this, Function);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Liedeinblendung.ViewModel
             set
             {
                 SetValue(value);
-                OnUpdateFunction?.Invoke(this, value);
+                OnUpdateFunction?.Invoke(this, Function);
             }
         }
 

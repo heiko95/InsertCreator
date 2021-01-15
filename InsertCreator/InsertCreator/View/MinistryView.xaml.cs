@@ -33,6 +33,7 @@ namespace Liedeinblendung.View
             foreach (var column in MGrid.Columns)
             {
                 column.IsReadOnly = false;
+          
             }
         }
 

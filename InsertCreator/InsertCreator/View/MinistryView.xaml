@@ -2,20 +2,21 @@
     x:Class="Liedeinblendung.View.MinistryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:converters="clr-namespace:Liedeinblendung.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="clr-namespace:Liedeinblendung.Extensions"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="View"
     d:DesignHeight="450"
-    d:DesignWidth="415"
+    d:DesignWidth="465"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-    mc:Ignorable="d"
-    x:Name="View">
+    mc:Ignorable="d">
 
     <UserControl.Resources>
         <converters:SelectedRowConverter x:Key="SelectedRowConverter" />
@@ -47,9 +48,11 @@
             CanUserAddRows="True"
             CanUserDeleteRows="True"
             ItemsSource="{Binding MinistryView, UpdateSourceTrigger=PropertyChanged}"
+            PreviewMouseDoubleClick="MGrid_PreviewMouseDoubleClick"
+            RowEditEnding="MGrid_RowEditEnding"
             RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
-            SelectedItem="{Binding  Path=SelectedItem, Converter={StaticResource SelectedRowConverter}}"
-            SelectionMode="Single" PreviewMouseDoubleClick="MGrid_PreviewMouseDoubleClick" RowEditEnding="MGrid_RowEditEnding">
+            SelectedItem="{Binding Path=SelectedItem, Converter={StaticResource SelectedRowConverter}}"
+            SelectionMode="Single">
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="RowEditEnding">
@@ -59,28 +62,27 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    MinWidth="140"
+                    MinWidth="150"
                     Binding="{Binding ForeName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
                     Header="Vorname"
                     IsReadOnly="True" />
                 <DataGridTextColumn
-                    MinWidth="140"
+                    MinWidth="150"
                     Binding="{Binding SureName, UpdateSourceTrigger=LostFocus}"
                     CellStyle="{StaticResource MaterialDesignDataGridCell}"
                     Header="Nachname"
                     IsReadOnly="True" />
 
-                <DataGridTemplateColumn MinWidth="120" Header="Titel">
+                <DataGridTemplateColumn MinWidth="150" Header="Titel">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox
                                 IsEditable="True"
-
                                 ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.UsedFunctions}"
+                                StaysOpenOnEdit="True"
                                 Style="{StaticResource MaterialDesignDataGridComboBox}"
-                                Text="{Binding Function, UpdateSourceTrigger=LostFocus}"
-                                StaysOpenOnEdit="True" />
+                                Text="{Binding Function, UpdateSourceTrigger=LostFocus}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

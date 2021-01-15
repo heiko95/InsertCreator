@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Liedeinblendung.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Liedeinblendung.Model;
 
 namespace Liedeinblendung.ViewModel
 {
@@ -27,11 +27,7 @@ namespace Liedeinblendung.ViewModel
             if (_readerWriter.LoadMinistryData() != null)
                 Ministries = _readerWriter.LoadMinistryData();
 
-            foreach (var ministry in Ministries)
-            {
-                if (!UsedFunctions.Contains(ministry.Function))
-                    UsedFunctions.Add(ministry.Function);
-            }
+            UpdateFunctionList();
 
             MinistryViewSource.Source = Ministries;
             Ministries.CollectionChanged += CollectionChanged;
@@ -120,9 +116,16 @@ namespace Liedeinblendung.ViewModel
                     count++;
                 }
             }
-            MessageBox.Show($"{count} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            if (count == 1)
+                MessageBox.Show($"{count} Eintrag wurde zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show($"{count} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            UpdateFunctionList();
             MinistryViewSource.Source = Ministries;
             MinistryView.Refresh();
+            _readerWriter.WriteMinistryData(Ministries);
         }
 
         #endregion Internal Methods
@@ -155,6 +158,9 @@ namespace Liedeinblendung.ViewModel
                     item.OnUpdateFunction -= UpdateElement;
                     _readerWriter.WriteMinistryData(Ministries);
                 }
+
+                UpdateFunctionList();
+                MinistryView.Refresh();
 
                 return;
             }
@@ -200,11 +206,22 @@ namespace Liedeinblendung.ViewModel
         private void UpdateElement(object sender, string e)
         {
             var newFunction = e;
-            if (!UsedFunctions.Contains(newFunction))
+
+            if (!string.IsNullOrEmpty(e) && !UsedFunctions.Contains(newFunction))
             {
                 UsedFunctions.Add(newFunction);
             }
             _readerWriter.WriteMinistryData(Ministries);
+        }
+
+        private void UpdateFunctionList()
+        {
+            UsedFunctions.Clear();
+            foreach (var ministry in Ministries)
+            {
+                if (!string.IsNullOrEmpty(ministry.Function) && !UsedFunctions.Contains(ministry.Function))
+                    UsedFunctions.Add(ministry.Function);
+            }
         }
 
         #endregion Private Methods

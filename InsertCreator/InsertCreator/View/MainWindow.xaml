@@ -12,7 +12,7 @@
     xmlns:view="clr-namespace:Liedeinblendung.View"
     xmlns:viewModels="clr-namespace:Liedeinblendung.ViewModel"
     Title="Insert Creator"
-    Width="500"
+    Width="550"
     Height="550"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
