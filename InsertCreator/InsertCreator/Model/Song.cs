@@ -7,6 +7,7 @@ namespace HgSoftware.InsertCreator.Model
         #region Public Properties
 
         public List<Metadata> Metadata { get; set; } = new List<Metadata>();
+
         public string Number { get; set; }
 
         public string Title { get; set; }

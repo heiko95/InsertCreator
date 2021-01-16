@@ -65,36 +65,67 @@ namespace HgSoftware.InsertCreator.Model
 
         private ObservableCollection<MinistryGridViewModel> ReadCsv(string filepath)
         {
-            using (var reader = new StreamReader(filepath))
+            using var reader = new StreamReader(filepath);
+            var ministries = new ObservableCollection<MinistryGridViewModel>();
+
+            string headerLine = reader.ReadLine();
+
+            string line;
+
+            if (headerLine.StartsWith("Textbox40"))
             {
-                var ministries = new ObservableCollection<MinistryGridViewModel>();
-                while (!reader.EndOfStream)
+                while ((line = reader.ReadLine()) != null)
                 {
-                    var line = reader.ReadLine();
-                    var values = line.Split(';');
-
-                    ministries.Add(new MinistryGridViewModel() { ForeName = values[1], SureName = values[0], Function = values[2] });
+                    if (string.IsNullOrEmpty(line))
+                        break;
+                    var values = line.Split(',');
+                    var function = values[1].Split(' ')[0];
+                    var surename = values[4].TrimStart('"');
+                    var forename = values[5].TrimStart(' ').Split(' ')[0];
+                    ministries.Add(new MinistryGridViewModel() { ForeName = forename, SureName = surename, Function = function });
                 }
-
-                return ministries;
             }
+            else
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var values = line.Split(',');
+                    ministries.Add(new MinistryGridViewModel() { ForeName = values[2], SureName = values[1], Function = values[0] });
+                }
+            } 
+
+            return ministries;
         }
 
         private void SaveCsv(ObservableCollection<MinistryGridViewModel> ministries, string filepath)
         {
             StringBuilder sb = new StringBuilder();
+
+            sb.Append(Path.GetFileNameWithoutExtension(filepath));
+            sb.Append("\r\n");
+
+            var count = 0;
+
             for (int i = 0; i < ministries.Count; i++)
             {
-                string[] ministry = new string[] { ministries[i].SureName, ministries[i].ForeName, ministries[i].Function };
+                string[] ministry = new string[] {ministries[i].Function,ministries[i].SureName, ministries[i].ForeName};
+                
                 for (int j = 0; j < ministry.Length; j++)
                 {
-                    //Append data with separator.
-                    sb.Append(ministry[j] + ';');
+                    //Append data with separator.                
+                    sb.Append(ministry[j] + ",");
                 }
+
                 //Append new line character.
                 sb.Append("\r\n");
+                count ++;
             }
             File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));
+            
+            if (count == 1)
+                MessageBox.Show($"{count} Eintrag wurde exportiert", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show($"{count} Einträge wurden exportiert", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion Private Methods
