@@ -115,11 +115,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
     <Compile Include="Extensions\AutoEditingComboBox.cs" />
+    <Compile Include="Model\BibleBook.cs" />
+    <Compile Include="Model\BibleChapter.cs" />
+    <Compile Include="Model\BibleJsonReader.cs" />
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
+    <Compile Include="ViewModel\BibleViewModel.cs" />
     <Compile Include="View\BibleView.xaml.cs">
       <DependentUpon>BibleView.xaml</DependentUpon>
     </Compile>
@@ -204,6 +209,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSource\Bible_Data.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DataSource\CB.json" />
     <None Include="DataSource\CB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

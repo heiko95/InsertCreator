@@ -9,9 +9,6 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Public Fields
 
-        public ConfigViewModel ConfigViewModel = new ConfigViewModel();
-
-        public InfoViewModel InfoViewModel = new InfoViewModel();
 
         #endregion Public Fields
 
@@ -23,6 +20,8 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
 
+        private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -31,7 +30,9 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
             _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
+            BibleViewModel = new BibleViewModel(_bibleJsonReader.LoadBibleData(($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json")));
             HymnalInputVisible = true;
+            BibleInputVisible = false;
             MinistryViewModel = new MinistryViewModel();
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
             CurrentHymnalViewModel = _gbData;
@@ -47,12 +48,28 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+
+        public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
+
+        public InfoViewModel InfoViewModel { get; set; } = new InfoViewModel();
+
+        public BibleViewModel BibleViewModel { get; set; }
+
+
         public bool HymnalInputVisible
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
+        public bool BibleInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+
+        
         public MinistryViewModel MinistryViewModel
         {
             get { return GetValue<MinistryViewModel>(); }
@@ -70,13 +87,23 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 SetValue(value);
 
+                if (value == 3)
+                {
+                    HymnalInputVisible = false;
+                    BibleInputVisible = true;
+                    return;
+                }
+
                 if (value == 2)
                 {
                     HymnalInputVisible = false;
+                    BibleInputVisible = false;
                     return;
                 }
 
                 HymnalInputVisible = true;
+                BibleInputVisible = false;
+
                 if (value == 1)
                 {
                     CurrentHymnalViewModel = _cbData;

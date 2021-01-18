@@ -75,6 +75,9 @@
                         <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
                             <view:HymnalInputView DataContext="{Binding CurrentHymnalViewModel, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
+                        <Grid Visibility="{Binding Path=BibleInputVisible, Converter={StaticResource Converter}}">
+                            <view:BibleView DataContext="{Binding BibleViewModel, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
                     </Grid>
                 </materialDesign:Card>
 
@@ -99,6 +102,11 @@
                                 Width="100"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Bibelstelle" />
+                            
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
 
