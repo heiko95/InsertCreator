@@ -53,18 +53,20 @@ namespace HgSoftware.InsertCreator.ViewModel
             _fadeInWriter.OnInsertUpdate += UpdatePreview;
 
             CurrentHymnalViewModel = _gbData;
-            _previewWindow = new PreView();
-            _previewWindow.DataContext = _previewViewModel;
-            _previewWindow.ShowInTaskbar = false;
-            _previewWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
+
+
+            // Todo Abfangen wenn nur ein Bildschirm
 
             var screens = System.Windows.Forms.Screen.AllScreens.ToList();
             var secScreen = screens.Find(x => x.Primary == false);
             System.Drawing.Rectangle r = secScreen.WorkingArea;
-           
 
+            _previewWindow = new PreView();
+            _previewWindow.DataContext = _previewViewModel;
+            _previewWindow.ShowInTaskbar = false;
+            _previewWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;    
             _previewWindow.Top = r.Top;
-            _previewWindow.Left = r.Left;         
+            _previewWindow.Left = r.Left;
 
             if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)))                
                 _previewWindow.Show();
@@ -84,6 +86,15 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             if (e)
             {
+                //var screens = System.Windows.Forms.Screen.AllScreens.ToList();
+                //var secScreen = screens.Find(x => x.Primary == false);
+                //System.Drawing.Rectangle r = secScreen.WorkingArea;
+
+
+                //_previewWindow.Top = r.Top;
+                //_previewWindow.Left = r.Left;
+                //_previewWindow.WindowState = System.Windows.WindowState.Maximized;
+
                 _previewWindow.Show();
                 return;
             }
