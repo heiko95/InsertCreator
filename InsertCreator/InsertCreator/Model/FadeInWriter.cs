@@ -5,11 +5,13 @@ using System.IO;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    internal class FadeInWriter
+    public class FadeInWriter
     {
         #region Private Fields
 
         private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+
+        public event EventHandler<Bitmap> OnInsertUpdate;
 
         #endregion Private Fields
 
@@ -67,6 +69,7 @@ namespace HgSoftware.InsertCreator.Model
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            OnInsertUpdate?.Invoke(this, image);
         }
 
         private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent)
@@ -120,6 +123,7 @@ namespace HgSoftware.InsertCreator.Model
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            OnInsertUpdate?.Invoke(this, image);
         }
 
         private void DrawLogo(Graphics drawingTool)

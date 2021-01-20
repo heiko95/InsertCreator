@@ -14,15 +14,16 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Private Fields
 
-        private FadeInWriter _fadeInWriter = new FadeInWriter();
+        private FadeInWriter _fadeInWriter;
         private MinistryJsonReaderWriter _readerWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MinistryViewModel()
+        public MinistryViewModel( FadeInWriter fadeInWriter)
         {
+            _fadeInWriter = fadeInWriter;
             Ministries = new ObservableCollection<MinistryGridViewModel>();
 
             if (_readerWriter.LoadMinistryData() != null)

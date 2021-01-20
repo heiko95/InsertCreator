@@ -13,7 +13,7 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Public Constructors
 
-        public BibleViewModel(ObservableCollection<BibleBook> biblebooks)
+        public BibleViewModel(ObservableCollection<BibleBook> biblebooks, FadeInWriter fadeInWriter)
         {
             this.Errors = new Dictionary<string, List<string>>();
             Biblebooks = biblebooks;
@@ -37,11 +37,36 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ObservableCollection<BibleBook> Biblebooks { get; set; } = new ObservableCollection<BibleBook>();
         public CollectionView BibleBookView { get; private set; }
 
-        public BibleBook Selectedbook
+        public string Selectedbook
         {
-            get { return GetValue<BibleBook>(); }
-            set { SetValue(value); }
+            get { return GetValue<string>(); }
+            set
+            {
+                SetValue(value); 
+                if (!string.IsNullOrEmpty(value))
+                {                    
+                    _maxChapter = Biblebooks.First(x => x.Name == value).Chapters.Count();
+                    BookSelectedFlag = true;
+                    OnPropertyChanged("BookSelectedFlag");
+                    return;
+                }
+
+                BookSelectedFlag = false;
+                OnPropertyChanged("BookSelectedFlag");
+            }
         }
+
+
+        public bool BookSelectedFlag
+        {
+            get { return GetValue<bool>(); }
+            set 
+            { 
+                SetValue(value); 
+            }
+        }
+
+        private int _maxChapter  =0; 
 
         public string SelectedChapter
         {
@@ -49,7 +74,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
 
-                if (ValidateProperty(value, AlternativeValidation))
+                if (ValidateProperty(value, ChapterValidation))
                 {
                     SetValue(value);
                     return;
@@ -136,7 +161,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Private Methods
 
-        private (bool IsValid, IEnumerable<string> ErrorMessages) AlternativeValidation(string value)
+        private (bool IsValid, IEnumerable<string> ErrorMessages) ChapterValidation(string value)
         {
             if (string.IsNullOrEmpty(value))
                 return (true, new List<string>());
@@ -144,7 +169,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             int number;
             if (int.TryParse(value, out number))
             {
-                if (number == 0 || number > 27)
+                if (number == 0 || number > _maxChapter)
                 {
                     return (false, new List<string>() { "Ungültiger Wert" });
                 }
