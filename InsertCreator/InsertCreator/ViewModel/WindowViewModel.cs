@@ -1,5 +1,8 @@
 ﻿using HgSoftware.InsertCreator.Model;
+using HgSoftware.InsertCreator.View;
+using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Windows.Input;
 
@@ -22,20 +25,56 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
 
+        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
+
+        private readonly PreviewViewModel _previewViewModel = new PreviewViewModel();
+
+        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+
+
+        private readonly PreView _previewWindow;
+
         #endregion Private Fields
 
         #region Public Constructors
 
         public WindowViewModel()
         {
-            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch");
-            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch");
-            BibleViewModel = new BibleViewModel(_bibleJsonReader.LoadBibleData(($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json")));
+            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", _fadeInWriter);
+            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch", _fadeInWriter);
+            BibleViewModel = new BibleViewModel(_bibleJsonReader.LoadBibleData(($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json")), _fadeInWriter);
             HymnalInputVisible = true;
             BibleInputVisible = false;
-            MinistryViewModel = new MinistryViewModel();
+            MinistryViewModel = new MinistryViewModel(_fadeInWriter);
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
+            ConfigViewModel.OnUpdatePreviewMode += UpdatePreviewMode;
+            _fadeInWriter.OnInsertUpdate += UpdatePreview;
+
             CurrentHymnalViewModel = _gbData;
+            _previewWindow = new PreView();
+            _previewWindow.DataContext = _previewViewModel;
+            _previewWindow.ShowInTaskbar = false;
+
+            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)))
+                _previewWindow.Show();
+        }
+
+
+
+        private void UpdatePreview(object sender, Bitmap e)
+        {
+            _previewViewModel.SetPreview(e);
+        }
+
+        private void UpdatePreviewMode(object sender, bool e)
+        {
+            if (e)
+            {
+                _previewWindow.Show();
+                return;
+            }
+               
+            _previewWindow.Hide();
         }
 
         #endregion Public Constructors
@@ -79,6 +118,13 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
 
         public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
+
+        public ICommand CloseCommand => new RelayCommand(OnCloseWindow);
+        
+        private void OnCloseWindow(object obj)
+        {
+            _previewWindow.Close();
+        }
 
         public int Selected
         {

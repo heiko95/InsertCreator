@@ -27,6 +27,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             UseGreenScreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
             ShowMetaData = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor));
+            ShowPreviewPicture = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture));
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
                 Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
@@ -39,6 +40,8 @@ namespace HgSoftware.InsertCreator.ViewModel
         #region Public Events
 
         public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
+
+        public event EventHandler<bool> OnUpdatePreviewMode;
 
         #endregion Public Events
 
@@ -87,6 +90,23 @@ namespace HgSoftware.InsertCreator.ViewModel
                 }
             }
         }
+
+        public bool ShowPreviewPicture
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowPreviewPicture != value)
+                {
+                    SetValue(value);
+                    _appSetting.WriteAppSetting(KeyName.ShowPreviewPicture, value.ToString());
+                    OnUpdatePreviewMode?.Invoke(this, value);
+                }
+
+            }
+        }
+
+
 
         #endregion Public Properties
 

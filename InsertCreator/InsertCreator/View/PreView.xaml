@@ -1,0 +1,24 @@
+﻿<Window
+    x:Class="HgSoftware.InsertCreator.View.PreView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:HgSoftware.InsertCreator.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PreView"
+    Width="800"
+    Height="450"
+    BorderBrush="Transparent"
+    BorderThickness="0"
+    WindowState="Maximized"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <Image
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Source="{Binding PreviewImage}"
+            Stretch="Uniform" />
+
+    </Grid>
+</Window>

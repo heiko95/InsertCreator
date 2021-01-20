@@ -116,6 +116,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\PreviewViewModel.cs" />
     <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
     <Compile Include="Extensions\AutoEditingComboBox.cs" />
@@ -134,6 +135,9 @@
     </Compile>
     <Compile Include="View\MinistryView.xaml.cs">
       <DependentUpon>MinistryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PreView.xaml.cs">
+      <DependentUpon>PreView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValidationRules\MaxChapterValidation.cs" />
     <Page Include="View\BibleView.xaml">
@@ -189,6 +193,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\MinistryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
