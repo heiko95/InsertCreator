@@ -4,6 +4,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Management;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
@@ -54,14 +56,26 @@ namespace HgSoftware.InsertCreator.ViewModel
             _previewWindow = new PreView();
             _previewWindow.DataContext = _previewViewModel;
             _previewWindow.ShowInTaskbar = false;
+            _previewWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
 
-            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)))
+            var screens = System.Windows.Forms.Screen.AllScreens.ToList();
+            var secScreen = screens.Find(x => x.Primary == false);
+            System.Drawing.Rectangle r = secScreen.WorkingArea;
+           
+
+            _previewWindow.Top = r.Top;
+            _previewWindow.Left = r.Left;         
+
+            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)))                
                 _previewWindow.Show();
         }
 
 
+       
 
-        private void UpdatePreview(object sender, Bitmap e)
+
+
+    private void UpdatePreview(object sender, Bitmap e)
         {
             _previewViewModel.SetPreview(e);
         }
