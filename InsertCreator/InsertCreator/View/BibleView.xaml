@@ -55,12 +55,9 @@
             <TextBox  
                 Grid.Column="1"
                 Margin="20"
-                materialDesign:HintAssist.Hint="Kapitel">
-                <TextBox.Text>
-                    <Binding Path="SelectedChapter" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True" ValidatesOnNotifyDataErrors="True">
-                       
-                    </Binding>
-                </TextBox.Text>
+                materialDesign:HintAssist.Hint="Kapitel"
+                Text="{Binding SelectedChapter, ValidatesOnNotifyDataErrors=True}">
+               
                 
               
                
