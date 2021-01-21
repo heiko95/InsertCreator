@@ -8,7 +8,6 @@
     Title="PreView"
     BorderBrush="Transparent"
     BorderThickness="0"
-    
     WindowStyle="None"
     mc:Ignorable="d" Loaded="Window_Loaded">
     <Grid>
