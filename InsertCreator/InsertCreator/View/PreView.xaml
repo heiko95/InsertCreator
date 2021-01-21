@@ -6,13 +6,10 @@
     xmlns:local="clr-namespace:HgSoftware.InsertCreator.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="PreView"
-    Width="800"
-    Height="450"
     BorderBrush="Transparent"
     BorderThickness="0"
-    WindowState="Maximized"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Window_Loaded">
     <Grid>
         <Image
             HorizontalAlignment="Center"
