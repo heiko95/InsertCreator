@@ -13,8 +13,6 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Private Fields
 
-        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-
         private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
 
         private readonly PictureReader _pictureReader = new PictureReader();
@@ -25,10 +23,10 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public ConfigViewModel()
         {
-            UseGreenScreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
-            ShowMetaData = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor));
-            ShowInsertInFullscreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowInsertInFullscreen));
-            ShowPreviewPicture = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture));
+            UseGreenScreen = Properties.Settings.Default.UseGreenscreen;
+            ShowMetaData = Properties.Settings.Default.ShowComponistAndAutor;
+            ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
+            ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
                 Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
@@ -45,8 +43,6 @@ namespace HgSoftware.InsertCreator.ViewModel
         public event EventHandler<bool> OnUpdateFullscreenMode;
 
         public event EventHandler<bool> OnUpdatePreview;
-
-
 
         #endregion Public Events
 
@@ -70,8 +66,6 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-
-
         public bool ShowMetaData
         {
             get { return GetValue<bool>(); }
@@ -80,7 +74,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowMetaData != value)
                 {
                     SetValue(value);
-                    _appSetting.WriteAppSetting(KeyName.ShowComponistAndAutor, value.ToString());
+                    Properties.Settings.Default.ShowComponistAndAutor = value;
+                    //_appSetting.WriteAppSetting(KeyName.ShowComponistAndAutor, value.ToString());
                 }
             }
         }
@@ -93,7 +88,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (UseGreenScreen != value)
                 {
                     SetValue(value);
-                    _appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
+                    Properties.Settings.Default.UseGreenscreen = value;
+                    //_appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
                 }
             }
         }
@@ -106,10 +102,10 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowInsertInFullscreen != value)
                 {
                     SetValue(value);
-                    _appSetting.WriteAppSetting(KeyName.ShowInsertInFullscreen, value.ToString());
+                    Properties.Settings.Default.ShowInsertInFullscreen = value;
+                    //_appSetting.WriteAppSetting(KeyName.ShowInsertInFullscreen, value.ToString());
                     OnUpdateFullscreenMode?.Invoke(this, value);
                 }
-
             }
         }
 
@@ -121,14 +117,12 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (ShowPreviewPicture != value)
                 {
                     SetValue(value);
-                    _appSetting.WriteAppSetting(KeyName.ShowPreviewPicture, value.ToString());
+                    Properties.Settings.Default.ShowPreviewPicture = value;
+                    //_appSetting.WriteAppSetting(KeyName.ShowPreviewPicture, value.ToString());
                     OnUpdatePreview?.Invoke(this, value);
                 }
-
             }
         }
-
-
 
         #endregion Public Properties
 

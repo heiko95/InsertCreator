@@ -27,12 +27,11 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-
     <Window.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="Converter" />
             <DataTemplate DataType="{x:Type viewModels:ConfigViewModel}">
-                <materialDesign:DialogHost                     
+                <materialDesign:DialogHost
                     Background="{DynamicResource MaterialDesignCardBackground}"
                     BorderBrush="{DynamicResource MaterialDesignDivider}"
                     CloseOnClickAway="True"
@@ -53,7 +52,7 @@
                 <StackPanel>
                     <view:InfoView DataContext="{Binding}" />
                     <Button
-                        Margin="10"                        
+                        Margin="10"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                         Content="Schließen"
                         DockPanel.Dock="Top" />
@@ -68,8 +67,7 @@
             Background="{DynamicResource MaterialDesignCardBackground}"
             BorderBrush="{DynamicResource MaterialDesignDivider}"
             CloseOnClickAway="True"
-            Identifier="MainWindow"
-            >
+            Identifier="MainWindow">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -77,13 +75,11 @@
                     <RowDefinition Height="6*" />
                 </Grid.RowDefinitions>
 
-
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="540" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
 
                     <materialDesign:Card Margin="10">
                         <Grid>
@@ -99,8 +95,6 @@
                         </Grid>
                     </materialDesign:Card>
 
-
-
                     <materialDesign:Card
                         Grid.Column="1"
                         Margin="10"
@@ -111,7 +105,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="73" />
                                 <RowDefinition Height="*" />
-
                             </Grid.RowDefinitions>
 
                             <TextBlock
@@ -119,7 +112,6 @@
                                 Margin="20"
                                 Style="{StaticResource MaterialDesignTextBlock}"
                                 Text="Aktuelle Einblende:" />
-
 
                             <Image
                                 Grid.Row="1"
@@ -130,13 +122,8 @@
                                 Source="{Binding PreviewImage}"
                                 Stretch="Uniform" />
                         </Grid>
-
-
-
                     </materialDesign:Card>
-
                 </Grid>
-
 
                 <materialDesign:Card Grid.Row="0" Margin="10">
 
@@ -159,10 +146,10 @@
                                 Width="100"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
-                            <ListBoxItem
+                            <!--<ListBoxItem
                                 Width="100"
                                 HorizontalContentAlignment="Center"
-                                Content="Bibelstelle" />
+                                Content="Bibelstelle" />-->
 
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">

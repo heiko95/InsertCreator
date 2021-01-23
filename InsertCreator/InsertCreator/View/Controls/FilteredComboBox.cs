@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,7 +21,7 @@ namespace HgSoftware.InsertCreator.View.Controls
         /// The search string treshold length.
         /// </summary>
         /// <remarks>
-        /// It's implemented as a Dependency Property, so you can set it in a XAML template 
+        /// It's implemented as a Dependency Property, so you can set it in a XAML template
         /// </remarks>
         public static readonly DependencyProperty MinimumSearchLengthProperty =
             DependencyProperty.Register(
@@ -37,7 +32,7 @@ namespace HgSoftware.InsertCreator.View.Controls
 
         ////
         // Private Fields
-        //// 
+        ////
 
         /// <summary>
         /// Caches the previous value of the filter.
@@ -51,7 +46,7 @@ namespace HgSoftware.InsertCreator.View.Controls
 
         ////
         // Constructors
-        //// 
+        ////
 
         /// <summary>
         /// Initializes a new instance of the FilteredComboBox class.
@@ -66,7 +61,7 @@ namespace HgSoftware.InsertCreator.View.Controls
 
         ////
         // Properties
-        //// 
+        ////
 
         /// <summary>
         /// Gets or sets the search string treshold length.
@@ -107,7 +102,7 @@ namespace HgSoftware.InsertCreator.View.Controls
 
         ////
         // Event Raiser Overrides
-        //// 
+        ////
 
         /// <summary>
         /// Keep the filter if the ItemsSource is explicitly changed.
@@ -132,7 +127,7 @@ namespace HgSoftware.InsertCreator.View.Controls
         }
 
         /// <summary>
-        /// Confirm or cancel the selection when Tab, Enter, or Escape are hit. 
+        /// Confirm or cancel the selection when Tab, Enter, or Escape are hit.
         /// Open the DropDown when the Down Arrow is hit.
         /// </summary>
         /// <param name="e">Key Event Args.</param>
@@ -175,7 +170,7 @@ namespace HgSoftware.InsertCreator.View.Controls
         /// </summary>
         /// <param name="e">Key Event Args.</param>
         /// <remarks>
-        /// Alternatively, you could react on 'OnTextChanged', but navigating through 
+        /// Alternatively, you could react on 'OnTextChanged', but navigating through
         /// the DropDown will also change the text.
         /// </remarks>
         protected override void OnKeyUp(KeyEventArgs e)

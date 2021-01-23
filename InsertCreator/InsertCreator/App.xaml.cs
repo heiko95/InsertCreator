@@ -11,6 +11,11 @@ namespace HgSoftware.InsertCreator
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Logfield
+        /// </summary>
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
+
         protected override void OnStartup(StartupEventArgs e)
         {
             string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
@@ -20,10 +25,16 @@ namespace HgSoftware.InsertCreator
             {
                 Directory.CreateDirectory(path);
             }
+            _log.Info("Create Ministry.json");
             FileCreate("Ministry.json", path);
+
+            _log.Info("Load Images");
             fadeInWriter.LoadImages();
 
+            _log.Info("Create ViewModel");
             var vm = new WindowViewModel();
+
+            _log.Info("Open Window");
             var window = new MainWindow(vm);
             window.Show();
         }

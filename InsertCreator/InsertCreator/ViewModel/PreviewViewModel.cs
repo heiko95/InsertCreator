@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -12,18 +7,17 @@ namespace HgSoftware.InsertCreator.ViewModel
 {
     public class PreviewViewModel : ObservableObject
     {
-
         public PreviewViewModel(Bitmap startimage)
         {
             PreviewImage = BitmapToImageSource(startimage);
         }
 
         public void SetPreview(Bitmap image)
-        {           
-          PreviewImage = BitmapToImageSource(image);      
+        {
+            PreviewImage = BitmapToImageSource(image);
         }
 
-        public ImageSource PreviewImage 
+        public ImageSource PreviewImage
         {
             get { return GetValue<ImageSource>(); }
             set
@@ -48,7 +42,5 @@ namespace HgSoftware.InsertCreator.ViewModel
                 return bitmapimage;
             }
         }
-
-
     }
 }

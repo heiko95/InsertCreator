@@ -97,12 +97,11 @@
                     </Grid>
                 </materialDesign:Card>
 
-
                 <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="200">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="35*" />
-                            <ColumnDefinition Width="258*"/>
+                            <ColumnDefinition Width="258*" />
                             <ColumnDefinition Width="195*" />
                         </Grid.ColumnDefinitions>
 
@@ -187,8 +186,6 @@
                         </Grid>
                     </Grid>
                 </materialDesign:Card>
-
-
             </DockPanel>
         </ScrollViewer>
     </DockPanel>

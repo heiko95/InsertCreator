@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HgSoftware.InsertCreator.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
-using HgSoftware.InsertCreator.Model;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {
@@ -42,9 +42,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             get { return GetValue<string>(); }
             set
             {
-                SetValue(value); 
+                SetValue(value);
                 if (!string.IsNullOrEmpty(value))
-                {                    
+                {
                     _maxChapter = Biblebooks.First(x => x.Name == value).Chapters.Count();
                     BookSelectedFlag = true;
                     OnPropertyChanged("BookSelectedFlag");
@@ -56,33 +56,28 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-
         public bool BookSelectedFlag
         {
             get { return GetValue<bool>(); }
-            set 
-            { 
-                SetValue(value); 
+            set
+            {
+                SetValue(value);
             }
         }
 
-        private int _maxChapter  =0; 
+        private int _maxChapter = 0;
 
         public string SelectedChapter
         {
             get { return GetValue<string>(); }
             set
             {
-
                 if (ValidateProperty(value, ChapterValidation))
                 {
                     SetValue(value);
                     return;
                 }
                 SetValue("");
-
-
-
             }
         }
 
@@ -108,7 +103,6 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                 }
-
             }
         }
 
@@ -176,8 +170,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 return (true, new List<string>());
             }
 
-            return (false, new List<string>() {"Wert muss eine Zahl sein"});
-
+            return (false, new List<string>() { "Wert muss eine Zahl sein" });
         }
 
         #endregion Private Methods
@@ -222,7 +215,9 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             return validationResult.IsValid;
         }
+
         #endregion INotifyDataErrorInfo implementation
+
         private void BibleViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
         }
