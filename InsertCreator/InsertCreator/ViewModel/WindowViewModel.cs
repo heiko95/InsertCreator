@@ -1,104 +1,97 @@
 ﻿using HgSoftware.InsertCreator.Model;
-using HgSoftware.InsertCreator.View;
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Management;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {
     public class WindowViewModel : ObservableObject
     {
-        #region Public Fields
-
-
-        #endregion Public Fields
-
         #region Private Fields
 
+        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
+        private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
         private readonly HymnalInputViewModel _cbData;
 
+        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
         private readonly HymnalInputViewModel _gbData;
 
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
-
-        private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
-
-        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
-
-        private readonly PreviewViewModel _previewViewModel = new PreviewViewModel();
-
-        private readonly AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-
         private readonly PreviewWindowController _previewWindow;
-
-
-        
-
+        public PreviewViewModel PreviewViewModel { get; set; }
         #endregion Private Fields
 
         #region Public Constructors
 
         public WindowViewModel()
         {
+            SetPreview(Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)));
             _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", _fadeInWriter);
             _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch", _fadeInWriter);
             BibleViewModel = new BibleViewModel(_bibleJsonReader.LoadBibleData(($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json")), _fadeInWriter);
             HymnalInputVisible = true;
             BibleInputVisible = false;
             MinistryViewModel = new MinistryViewModel(_fadeInWriter);
+            PreviewViewModel = new PreviewViewModel(_fadeInWriter.CurrentFade);
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
-            ConfigViewModel.OnUpdatePreviewMode += UpdatePreviewMode;
+            ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
+            ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
             _fadeInWriter.OnInsertUpdate += UpdatePreview;
             CurrentHymnalViewModel = _gbData;
-            _previewWindow = new PreviewWindowController(_previewViewModel);
+            _previewWindow = new PreviewWindowController(PreviewViewModel);
 
-            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture)))
+            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowInsertInFullscreen)))
                 _previewWindow.Show();
-
         }
 
-
-       
-
-
-
-    private void UpdatePreview(object sender, Bitmap e)
-        {
-            _previewViewModel.SetPreview(e);
-        }
-
-        private void UpdatePreviewMode(object sender, bool e)
-        {
-            _previewWindow.Update(e);           
-        }
-
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public HymnalInputViewModel CurrentHymnalViewModel
-        {
-            get { return GetValue<HymnalInputViewModel>(); }
-            set { SetValue(value); }
-        }
-
-
-        public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
-
-        public InfoViewModel InfoViewModel { get; set; } = new InfoViewModel();
-
-        public BibleViewModel BibleViewModel { get; set; }
-
-
-        public bool HymnalInputVisible
+        public bool PrviewVisibleFlag
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
+
+        public string With
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        private void SetPreview(bool state)
+        {
+            if (state)
+            {
+                With = "1200";
+                PrviewVisibleFlag = true;
+                OnPropertyChanged("With");
+                OnPropertyChanged("PrviewVisibleFlag");
+                return;
+            }
+            PrviewVisibleFlag = false;
+            With = "550";
+            OnPropertyChanged("With");
+            OnPropertyChanged("PrviewVisibleFlag");
+            return;
+        }
+
+        private void UpdateFullscreenMode(object sender, bool e)
+        {
+            _previewWindow.Update(e);
+        }
+
+        private void UpdatePreview(object sender, Bitmap e)
+        {
+            PreviewViewModel.SetPreview(e);
+        }
+
+        private void UpdatePreviewMode(object sender, bool e)
+        {
+            SetPreview(e);
+        }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public bool BibleInputVisible
         {
@@ -106,8 +99,24 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public BibleViewModel BibleViewModel { get; set; }
 
-        
+        public ICommand CloseCommand => new RelayCommand(OnCloseWindow);
+
+        public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
+
+        public HymnalInputViewModel CurrentHymnalViewModel
+        {
+            get { return GetValue<HymnalInputViewModel>(); }
+            set { SetValue(value); }
+        }
+        public bool HymnalInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public InfoViewModel InfoViewModel { get; set; } = new InfoViewModel();
         public MinistryViewModel MinistryViewModel
         {
             get { return GetValue<MinistryViewModel>(); }
@@ -117,14 +126,6 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
 
         public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
-
-        public ICommand CloseCommand => new RelayCommand(OnCloseWindow);
-        
-        private void OnCloseWindow(object obj)
-        {
-            _previewWindow.Close(); 
-        }
-
         public int Selected
         {
             get { return GetValue<int>(); }
@@ -158,6 +159,10 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        private void OnCloseWindow(object obj)
+        {
+            _previewWindow.Close();
+        }
         #endregion Public Properties
 
         #region Private Methods

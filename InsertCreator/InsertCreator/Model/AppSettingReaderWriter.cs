@@ -10,7 +10,8 @@ namespace HgSoftware.InsertCreator.Model
         UseGreenscreen,
         ShowComponistAndAutor,
         UseLogo,
-        ShowPreviewPicture
+        ShowPreviewPicture,
+        ShowInsertInFullscreen
     }
 
     /// <summary>
