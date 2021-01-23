@@ -92,10 +92,12 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -115,17 +117,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\PreviewWindowController.cs" />
+    <Compile Include="ViewModel\PreviewViewModel.cs" />
+    <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
     <Compile Include="Extensions\AutoEditingComboBox.cs" />
+    <Compile Include="Model\BibleBook.cs" />
+    <Compile Include="Model\BibleChapter.cs" />
+    <Compile Include="Model\BibleJsonReader.cs" />
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
+    <Compile Include="ViewModel\BibleViewModel.cs" />
+    <Compile Include="View\BibleView.xaml.cs">
+      <DependentUpon>BibleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HymnalInputView.xaml.cs">
       <DependentUpon>HymnalInputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MinistryView.xaml.cs">
       <DependentUpon>MinistryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PreView.xaml.cs">
+      <DependentUpon>PreView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ValidationRules\MaxChapterValidation.cs" />
+    <Page Include="View\BibleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +198,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -197,6 +221,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSource\Bible_Data.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DataSource\CB.json" />
     <None Include="DataSource\CB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

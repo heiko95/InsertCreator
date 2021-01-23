@@ -1,0 +1,80 @@
+﻿<UserControl
+    x:Class="HgSoftware.InsertCreator.View.BibleView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:HgSoftware.InsertCreator.View.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rules="clr-namespace:HgSoftware.InsertCreator.View.ValidationRules"
+    d:DesignHeight="450"
+    d:DesignWidth="465"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
+
+    <UserControl.Resources />
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1.2*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <controls:FilteredComboBox
+                Grid.Column="0"
+                Height="33"
+                Margin="20"
+                materialDesign:HintAssist.Hint="Buch"
+                IsEditable="True"
+                IsTextSearchCaseSensitive="False"
+                IsTextSearchEnabled="false"
+                ItemsSource="{Binding BiblebookNames}"
+                MinimumSearchLength="2"
+                SelectedItem="{Binding Selectedbook, UpdateSourceTrigger=LostFocus}"
+                Style="{StaticResource MaterialDesignComboBox}" />
+
+            <TextBox
+                Grid.Column="1"
+                Margin="20"
+                materialDesign:HintAssist.Hint="Kapitel"
+                IsEnabled="{Binding BookSelectedFlag, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding SelectedChapter, ValidatesOnNotifyDataErrors=True}" />
+
+            <TextBox
+                Grid.Column="3"
+                Margin="20"
+                materialDesign:HintAssist.Hint="Vers"
+                IsEnabled="{Binding BookSelectedFlag, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Path=SelectedVerses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <StackPanel
+            Grid.Row="5"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Margin="20"
+                Command="{Binding AcceptCommand}"
+                Content="Übernehmen"
+                IsEnabled="{Binding BookSelectedFlag, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

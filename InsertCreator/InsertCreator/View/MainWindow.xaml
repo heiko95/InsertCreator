@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:HgSoftware.InsertCreator.View"
-    xmlns:viewModels="clr-namespace:HgSoftware.InsertCreator.ViewModel"
+    xmlns:viewModels="clr-namespace:HgSoftware.InsertCreator.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     Title="Insert Creator"
     Width="550"
     Height="550"
@@ -19,6 +19,13 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction  Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers> 
+    
 
     <Window.Resources>
         <ResourceDictionary>
@@ -75,6 +82,9 @@
                         <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
                             <view:HymnalInputView DataContext="{Binding CurrentHymnalViewModel, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
+                        <Grid Visibility="{Binding Path=BibleInputVisible, Converter={StaticResource Converter}}">
+                            <view:BibleView DataContext="{Binding BibleViewModel, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
                     </Grid>
                 </materialDesign:Card>
 
@@ -99,6 +109,11 @@
                                 Width="100"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Bibelstelle" />
+                            
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
 
