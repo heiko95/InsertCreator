@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    internal class HymnalData
+    public class HymnalData
     {
         #region Public Constructors
 

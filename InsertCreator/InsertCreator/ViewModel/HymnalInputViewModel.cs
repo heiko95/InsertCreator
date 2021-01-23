@@ -12,7 +12,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly string _bookname;
 
-        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
+        private readonly FadeInWriter _fadeInWriter;
 
         private List<Song> _currentHymnal = new List<Song>();
 
@@ -20,10 +20,10 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Constructors
 
-        public HymnalInputViewModel(List<Song> hymnalList, string bookname)
+        public HymnalInputViewModel(List<Song> hymnalList, string bookname, FadeInWriter fadeInWriter)
         {
             VerseList = new ObservableCollection<SelectedVerse>();
-
+            _fadeInWriter = fadeInWriter;
             _currentHymnal = hymnalList;
             _bookname = bookname;
         }

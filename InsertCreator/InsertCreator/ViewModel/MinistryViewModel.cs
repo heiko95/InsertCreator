@@ -1,5 +1,6 @@
 ﻿using HgSoftware.InsertCreator.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -13,15 +14,16 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Private Fields
 
-        private FadeInWriter _fadeInWriter = new FadeInWriter();
+        private FadeInWriter _fadeInWriter;
         private MinistryJsonReaderWriter _readerWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MinistryViewModel()
+        public MinistryViewModel( FadeInWriter fadeInWriter)
         {
+            _fadeInWriter = fadeInWriter;
             Ministries = new ObservableCollection<MinistryGridViewModel>();
 
             if (_readerWriter.LoadMinistryData() != null)
@@ -108,9 +110,13 @@ namespace HgSoftware.InsertCreator.ViewModel
         internal void UpdateMinistries(ObservableCollection<MinistryGridViewModel> ministryList)
         {
             var count = 0;
+
+            var tmpMinistryList = new List<MinistryGridViewModel>();
+            tmpMinistryList.AddRange(Ministries);
+
             foreach (var item in ministryList)
             {
-                if (!Ministries.Contains(item))
+                if (!tmpMinistryList.Exists(x=>x.FullName == item.FullName) && (!tmpMinistryList.Exists(x => x.Function == item.Function)))
                 {
                     Ministries.Add(item);
                     count++;
