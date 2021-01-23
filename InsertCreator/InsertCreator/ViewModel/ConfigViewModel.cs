@@ -27,6 +27,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             UseGreenScreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
             ShowMetaData = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor));
+            ShowInsertInFullscreen = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowInsertInFullscreen));
             ShowPreviewPicture = Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowPreviewPicture));
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
@@ -41,7 +42,11 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
 
-        public event EventHandler<bool> OnUpdatePreviewMode;
+        public event EventHandler<bool> OnUpdateFullscreenMode;
+
+        public event EventHandler<bool> OnUpdatePreview;
+
+
 
         #endregion Public Events
 
@@ -64,6 +69,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 SetValue(value);
             }
         }
+
+
 
         public bool ShowMetaData
         {
@@ -91,6 +98,21 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        public bool ShowInsertInFullscreen
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowInsertInFullscreen != value)
+                {
+                    SetValue(value);
+                    _appSetting.WriteAppSetting(KeyName.ShowInsertInFullscreen, value.ToString());
+                    OnUpdateFullscreenMode?.Invoke(this, value);
+                }
+
+            }
+        }
+
         public bool ShowPreviewPicture
         {
             get { return GetValue<bool>(); }
@@ -100,7 +122,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                     _appSetting.WriteAppSetting(KeyName.ShowPreviewPicture, value.ToString());
-                    OnUpdatePreviewMode?.Invoke(this, value);
+                    OnUpdatePreview?.Invoke(this, value);
                 }
 
             }
