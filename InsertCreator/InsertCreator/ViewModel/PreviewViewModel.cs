@@ -13,9 +13,9 @@ namespace HgSoftware.InsertCreator.ViewModel
     public class PreviewViewModel : ObservableObject
     {
 
-        public PreviewViewModel()
+        public PreviewViewModel(Bitmap startimage)
         {
-            PreviewImage = null;
+            PreviewImage = BitmapToImageSource(startimage);
         }
 
         public void SetPreview(Bitmap image)
