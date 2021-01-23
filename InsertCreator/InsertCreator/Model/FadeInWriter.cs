@@ -13,6 +13,15 @@ namespace HgSoftware.InsertCreator.Model
 
         public event EventHandler<Bitmap> OnInsertUpdate;
 
+        public Bitmap CurrentFade { get; private set; }
+
+        public FadeInWriter()
+        {
+            CurrentFade = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
+            var drawingTool = Graphics.FromImage(CurrentFade);
+            DrawLogo(drawingTool);
+        }
+
         #endregion Private Fields
 
         #region Public Methods
@@ -20,6 +29,8 @@ namespace HgSoftware.InsertCreator.Model
         public void LoadImages()
         {
             Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
+            var drawingTool = Graphics.FromImage(image);
+            DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -69,6 +80,7 @@ namespace HgSoftware.InsertCreator.Model
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            CurrentFade = image;
             OnInsertUpdate?.Invoke(this, image);
         }
 
@@ -101,6 +113,7 @@ namespace HgSoftware.InsertCreator.Model
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            CurrentFade = image;
         }
 
         private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)
@@ -123,6 +136,7 @@ namespace HgSoftware.InsertCreator.Model
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            CurrentFade = image;
             OnInsertUpdate?.Invoke(this, image);
         }
 
