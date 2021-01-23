@@ -21,7 +21,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Constructors
 
-        public MinistryViewModel( FadeInWriter fadeInWriter)
+        public MinistryViewModel(FadeInWriter fadeInWriter)
         {
             _fadeInWriter = fadeInWriter;
             Ministries = new ObservableCollection<MinistryGridViewModel>();
@@ -116,7 +116,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             foreach (var item in ministryList)
             {
-                if (!tmpMinistryList.Exists(x=>x.FullName == item.FullName) && (!tmpMinistryList.Exists(x => x.Function == item.Function)))
+                if (!tmpMinistryList.Exists(x => x.FullName == item.FullName) && (!tmpMinistryList.Exists(x => x.Function == item.Function)))
                 {
                     Ministries.Add(item);
                     count++;

@@ -8,12 +8,6 @@ namespace HgSoftware.InsertCreator.Model
 {
     public class PictureReader
     {
-        #region Private Fields
-
-        private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-
-        #endregion Private Fields
-
         #region Public Methods
 
         public void LoadPicture()
@@ -35,7 +29,8 @@ namespace HgSoftware.InsertCreator.Model
                     Bitmap bigImage = ResizePicture(new Bitmap(openFileDialog.FileName), 240);
                     bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png", System.Drawing.Imaging.ImageFormat.Png);
 
-                    _appSetting.WriteAppSetting(KeyName.UseLogo, "true");
+                    Properties.Settings.Default.UseLogo = true;
+                    //_appSetting.WriteAppSetting(KeyName.UseLogo, "true");
                 }
             }
         }
@@ -48,7 +43,8 @@ namespace HgSoftware.InsertCreator.Model
                 $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"
             };
 
-            _appSetting.WriteAppSetting(KeyName.UseLogo, "false");
+            Properties.Settings.Default.UseLogo = false;
+            //_appSetting.WriteAppSetting(KeyName.UseLogo, "false");
 
             foreach (var file in files)
             {

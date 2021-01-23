@@ -16,6 +16,5 @@
             VerticalAlignment="Center"
             Source="{Binding PreviewImage}"
             Stretch="Uniform" />
-
     </Grid>
 </Window>

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HgSoftware.InsertCreator.View;
+﻿using HgSoftware.InsertCreator.View;
 using HgSoftware.InsertCreator.ViewModel;
+using System.Linq;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    class PreviewWindowController
+    internal class PreviewWindowController
     {
-
         private readonly PreView _window = new PreView();
         private readonly PreviewViewModel _previewViewModel;
-
 
         public PreviewWindowController(PreviewViewModel vm)
         {
@@ -30,7 +24,6 @@ namespace HgSoftware.InsertCreator.Model
             _window.DataContext = _previewViewModel;
             _window.ShowInTaskbar = false;
             _window.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
-
 
             var secScreen = screens.First(x => x.Primary == false);
             //var secScreen = screens[0];

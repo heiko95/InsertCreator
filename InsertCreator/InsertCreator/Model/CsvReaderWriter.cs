@@ -92,7 +92,7 @@ namespace HgSoftware.InsertCreator.Model
                     var values = line.Split(',');
                     ministries.Add(new MinistryGridViewModel() { ForeName = values[2], SureName = values[1], Function = values[0] });
                 }
-            } 
+            }
 
             return ministries;
         }
@@ -108,20 +108,20 @@ namespace HgSoftware.InsertCreator.Model
 
             for (int i = 0; i < ministries.Count; i++)
             {
-                string[] ministry = new string[] {ministries[i].Function,ministries[i].SureName, ministries[i].ForeName};
-                
+                string[] ministry = new string[] { ministries[i].Function, ministries[i].SureName, ministries[i].ForeName };
+
                 for (int j = 0; j < ministry.Length; j++)
                 {
-                    //Append data with separator.                
+                    //Append data with separator.
                     sb.Append(ministry[j] + ",");
                 }
 
                 //Append new line character.
                 sb.Append("\r\n");
-                count ++;
+                count++;
             }
             File.WriteAllBytes(filepath, Encoding.UTF8.GetBytes(sb.ToString()));
-            
+
             if (count == 1)
                 MessageBox.Show($"{count} Eintrag wurde exportiert", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else

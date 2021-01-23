@@ -22,5 +22,65 @@ namespace HgSoftware.InsertCreator.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseGreenscreen {
+            get {
+                return ((bool)(this["UseGreenscreen"]));
+            }
+            set {
+                this["UseGreenscreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowComponistAndAutor {
+            get {
+                return ((bool)(this["ShowComponistAndAutor"]));
+            }
+            set {
+                this["ShowComponistAndAutor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseLogo {
+            get {
+                return ((bool)(this["UseLogo"]));
+            }
+            set {
+                this["UseLogo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowPreviewPicture {
+            get {
+                return ((bool)(this["ShowPreviewPicture"]));
+            }
+            set {
+                this["ShowPreviewPicture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowInsertInFullscreen {
+            get {
+                return ((bool)(this["ShowInsertInFullscreen"]));
+            }
+            set {
+                this["ShowInsertInFullscreen"] = value;
+            }
+        }
     }
 }

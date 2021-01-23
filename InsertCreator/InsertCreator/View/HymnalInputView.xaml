@@ -109,7 +109,6 @@
             </ListBox>
         </StackPanel>
 
-
         <StackPanel
             Grid.Row="5"
             HorizontalAlignment="Center"

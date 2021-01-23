@@ -9,15 +9,13 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
-        private AppSettingReaderWriter _appSetting = new AppSettingReaderWriter();
-
         public event EventHandler<Bitmap> OnInsertUpdate;
 
         public Bitmap CurrentFade { get; private set; }
 
         public FadeInWriter()
         {
-            CurrentFade = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
+            CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen);
             var drawingTool = Graphics.FromImage(CurrentFade);
             DrawLogo(drawingTool);
         }
@@ -28,7 +26,7 @@ namespace HgSoftware.InsertCreator.Model
 
         public void LoadImages()
         {
-            Bitmap image = LoadFrame(!Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen)));
+            Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen);
             var drawingTool = Graphics.FromImage(image);
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -38,9 +36,9 @@ namespace HgSoftware.InsertCreator.Model
 
         public void WriteHymnalFade(HymnalData hymnalData)
         {
-            var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
+            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
 
-            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor)))
+            if (Properties.Settings.Default.ShowComponistAndAutor)
                 CreateHymnalInsertPictureMeta(hymnalData, greenScreen);
             else
                 CreateHymnalInsertPicture(hymnalData, greenScreen);
@@ -48,12 +46,8 @@ namespace HgSoftware.InsertCreator.Model
 
         public void WriteMinistryFade(MinistryGridViewModel ministry)
         {
-            var greenScreen = !Convert.ToBoolean(_appSetting.ReadSetting(KeyName.UseGreenscreen));
-
-            if (Convert.ToBoolean(_appSetting.ReadSetting(KeyName.ShowComponistAndAutor)))
-                CreateMinistrieInsert(ministry, greenScreen);
-            else
-                CreateMinistrieInsert(ministry, greenScreen);
+            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
+            CreateMinistrieInsert(ministry, greenScreen);
         }
 
         #endregion Public Methods
@@ -114,6 +108,7 @@ namespace HgSoftware.InsertCreator.Model
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
             CurrentFade = image;
+            OnInsertUpdate?.Invoke(this, image);
         }
 
         private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)

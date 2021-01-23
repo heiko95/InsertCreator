@@ -1,27 +1,15 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    class BibleJsonReader
+    internal class BibleJsonReader
     {
-        #region Private Fields
-
-
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public BibleJsonReader()
         {
-
         }
 
         #endregion Public Constructors

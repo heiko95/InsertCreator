@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace HgSoftware.InsertCreator.View.ValidationRules
 {
-    class MaxChapterValidation : ValidationRule
+    internal class MaxChapterValidation : ValidationRule
     {
-
         public string MustEndWith { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
@@ -26,9 +20,6 @@ namespace HgSoftware.InsertCreator.View.ValidationRules
                 return new ValidationResult(false, String.Format("Text must end with '{0}'", MustEndWith));
             }
             return new ValidationResult(true, null);
-
         }
-
-
     }
 }
