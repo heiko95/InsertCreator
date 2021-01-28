@@ -76,6 +76,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoCompleteTextBox, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoCompleteTextBox.1.1.0.1\lib\net472\AutoCompleteTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.2020.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
@@ -111,6 +114,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTextBoxAutoComplete, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFTextBoxAutoComplete.1.0.5\lib\net40\WPFTextBoxAutoComplete.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -118,10 +124,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\PreviewWindowController.cs" />
+    <Compile Include="Providers\BibleSuggestionProvider.cs" />
     <Compile Include="ViewModel\PreviewViewModel.cs" />
-    <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
-    <Compile Include="Extensions\AutoEditingComboBox.cs" />
     <Compile Include="Model\BibleBook.cs" />
     <Compile Include="Model\BibleChapter.cs" />
     <Compile Include="Model\BibleJsonReader.cs" />
@@ -142,6 +147,10 @@
       <DependentUpon>PreView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValidationRules\MaxChapterValidation.cs" />
+    <Page Include="Styles\CustomStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BibleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
