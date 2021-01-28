@@ -25,8 +25,8 @@ namespace HgSoftware.InsertCreator.View
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Maximized;
+        {         
+             WindowState = WindowState.Maximized;
         }
     }
 }
