@@ -82,5 +82,29 @@ namespace HgSoftware.InsertCreator.Properties {
                 this["ShowInsertInFullscreen"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogoAsCornerlogo {
+            get {
+                return ((bool)(this["LogoAsCornerlogo"]));
+            }
+            set {
+                this["LogoAsCornerlogo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LogoOnLefthand {
+            get {
+                return ((bool)(this["LogoOnLefthand"]));
+            }
+            set {
+                this["LogoOnLefthand"] = value;
+            }
+        }
     }
 }

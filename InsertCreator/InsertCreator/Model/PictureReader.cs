@@ -23,8 +23,12 @@ namespace HgSoftware.InsertCreator.Model
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     RemovePicture();
-                    Bitmap smallImage = ResizePicture(new Bitmap(openFileDialog.FileName), 150);
-                    smallImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png", System.Drawing.Imaging.ImageFormat.Png);
+
+                    Bitmap tinyImage = ResizePicture(new Bitmap(openFileDialog.FileName), 100);
+                    tinyImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png", System.Drawing.Imaging.ImageFormat.Png);
+
+                    Bitmap smallImage = ResizePicture(new Bitmap(openFileDialog.FileName), 160);
+                    smallImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png", System.Drawing.Imaging.ImageFormat.Png);                  
 
                     Bitmap bigImage = ResizePicture(new Bitmap(openFileDialog.FileName), 240);
                     bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -40,7 +44,8 @@ namespace HgSoftware.InsertCreator.Model
             List<string> files = new List<string>()
             {
                 $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png",
-                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"
+                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png",
+                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png"
             };
 
             Properties.Settings.Default.UseLogo = false;

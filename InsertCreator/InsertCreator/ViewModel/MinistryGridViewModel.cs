@@ -29,6 +29,16 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        public string FullName
+        {
+            get { return $"{ForeName} {SureName}"; }
+        }
+
+        public string FullName2
+        {
+            get { return $"{SureName}, {ForeName}"; }
+        }
+
         public string Function
         {
             get { return GetValue<string>(); }
@@ -48,17 +58,6 @@ namespace HgSoftware.InsertCreator.ViewModel
                 OnUpdateFunction?.Invoke(this, Function);
             }
         }
-
-        public string FullName
-        {
-            get { return $"{ForeName} {SureName}"; }
-        }
-
-        public string FullName2
-        {
-            get { return $"{SureName}, {ForeName}"; }
-        }
-
         #endregion Public Properties
     }
 }
