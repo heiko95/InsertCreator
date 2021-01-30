@@ -17,10 +17,13 @@
         <ScrollViewer>
             <DockPanel Margin="5,10,5,10">
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="50">
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.7*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -37,10 +40,13 @@
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="50">
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.7*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -57,10 +63,13 @@
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="50">
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.7*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -77,10 +86,13 @@
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="50">
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.7*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -97,7 +109,12 @@
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="200">
+
+
+                <materialDesign:Card
+                    Height="200"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="35*" />
@@ -107,10 +124,11 @@
 
                         <Label
                             Grid.Column="0"
+                            Grid.ColumnSpan="2"
                             Margin="5,88,0,88"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Content="Logo in Bauchbinde:" Grid.ColumnSpan="2" />
+                            Content="Logo in Bauchbinde:" />
 
                         <Grid Grid.Column="2">
                             <Grid.ColumnDefinitions>
@@ -152,22 +170,75 @@
                     </Grid>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="5" DockPanel.Dock="Top" Height="50">
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.7*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Content="Logo Links" />
+                        <ToggleButton
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsChecked="{Binding LogoOnLeftSide}" />
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Height="50"
+                    Margin="5"
+                    DockPanel.Dock="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.7*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Content="Logo als Cornerbug" />
+                        <ToggleButton
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            IsChecked="{Binding LogoAsCornerbug}" />
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Height="100"
+                    Margin="5"
+                    DockPanel.Dock="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.7*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
                         <Label
-                            Grid.Row="3"
+                            Grid.RowSpan="2"
                             Grid.Column="0"
                             Margin="5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Content="Amtsträgerverzeichnis:" />
 
-                        <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -184,6 +255,12 @@
                                 Command="{Binding OnSaveCsv}"
                                 Content="Export " />
                         </Grid>
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="5,0,5,5"
+                            Command="{Binding OnDeleteList}"
+                            Content="Verzeichnis löschen" />
                     </Grid>
                 </materialDesign:Card>
             </DockPanel>

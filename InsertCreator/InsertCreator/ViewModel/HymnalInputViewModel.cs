@@ -90,6 +90,8 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Private Methods
 
+        public ICommand ResetCommand => new RelayCommand(OnResetPressed);
+
         private void CheckValid(string number)
         {
             if (_currentHymnal.Exists(x => x.Number == number))
@@ -156,6 +158,10 @@ namespace HgSoftware.InsertCreator.ViewModel
             ClearView();
         }
 
+        private void OnResetPressed(object obj)
+        {
+            _fadeInWriter.ResetFade();
+        }
         private void WriteInputVers()
         {
             string state = "";

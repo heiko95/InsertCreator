@@ -97,13 +97,24 @@
             Grid.Row="5"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
-            <!--<Button Margin="20" Content="Zurücksetzen">
-            </Button>-->
-            <Button
-                Margin="20"
-                Command="{Binding AcceptCommand}"
-                Content="Übernehmen"
-                IsEnabled="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Width="181"
+                    Margin="20"
+                    Command="{Binding ResetCommand}"
+                    Content="Zurücksetzen " />
+                <Button
+                    Grid.Column="1"
+                    Margin="20"
+                    Command="{Binding AcceptCommand}"
+                    Content="Erstellen und Anzeigen "
+                    IsEnabled="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

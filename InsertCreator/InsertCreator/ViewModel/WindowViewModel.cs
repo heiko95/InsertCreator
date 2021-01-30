@@ -1,4 +1,5 @@
 ﻿using HgSoftware.InsertCreator.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -49,6 +50,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             PreviewViewModel = new PreviewViewModel(_fadeInWriter.CurrentFade);
 
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
+            ConfigViewModel.OnResetMinistries += ResetMinistries;
             ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
             ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
             _fadeInWriter.OnInsertUpdate += UpdatePreview;
@@ -60,6 +62,8 @@ namespace HgSoftware.InsertCreator.ViewModel
             if (Properties.Settings.Default.ShowInsertInFullscreen)
                 _previewWindow.Show();
         }
+
+
 
         public bool PrviewVisibleFlag
         {
@@ -201,6 +205,11 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void UpdateMinistries(object sender, ObservableCollection<MinistryGridViewModel> e)
         {
             MinistryViewModel.UpdateMinistries(e);
+        }
+
+        private void ResetMinistries(object sender, EventArgs e)
+        {
+            MinistryViewModel.Reset();
         }
 
         #endregion Private Methods

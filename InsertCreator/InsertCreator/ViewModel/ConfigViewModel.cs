@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,6 +28,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             ShowMetaData = Properties.Settings.Default.ShowComponistAndAutor;
             ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
             ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
+            LogoAsCornerbug = Properties.Settings.Default.LogoAsCornerlogo;
+            LogoOnLeftSide = Properties.Settings.Default.LogoOnLefthand;
+
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
                 Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
@@ -39,6 +43,8 @@ namespace HgSoftware.InsertCreator.ViewModel
         #region Public Events
 
         public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
+
+        public event EventHandler<EventArgs> OnResetMinistries;
 
         public event EventHandler<bool> OnUpdateFullscreenMode;
 
@@ -55,6 +61,18 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
 
         public ICommand OnUpload => new RelayCommand(LoadLogo);
+
+        public ICommand OnDeleteList => new RelayCommand(DeleteMinistryList);
+
+        private void DeleteMinistryList(object obj)
+        {
+            var result = MessageBox.Show("Möchten sie die Amtsträgerliste unwiderruflich löschen", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                ObservableCollection<MinistryGridViewModel> EmptyList = new ObservableCollection<MinistryGridViewModel>();
+                OnResetMinistries?.Invoke(this, new EventArgs());
+            }           
+        }
 
         public ImageSource PreviewLogo
         {
@@ -90,6 +108,32 @@ namespace HgSoftware.InsertCreator.ViewModel
                     SetValue(value);
                     Properties.Settings.Default.UseGreenscreen = value;
                     //_appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
+                }
+            }
+        }
+
+        public bool LogoOnLeftSide
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (LogoOnLeftSide != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.LogoOnLefthand = value;
+                }
+            }
+        }
+
+        public bool LogoAsCornerbug
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (LogoAsCornerbug != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.LogoAsCornerlogo = value;
                 }
             }
         }

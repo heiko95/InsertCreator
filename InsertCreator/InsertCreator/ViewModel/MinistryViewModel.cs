@@ -42,6 +42,13 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
 
+        public ICommand ResetCommand => new RelayCommand(OnResetPressed);
+
+        private void OnResetPressed(object obj)
+        {
+            _fadeInWriter.ResetFade();
+        }
+
         public string FilterText
         {
             get { return GetValue<string>(); }
@@ -129,6 +136,13 @@ namespace HgSoftware.InsertCreator.ViewModel
                 MessageBox.Show($"{count} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             UpdateFunctionList();
+            MinistryViewSource.Source = Ministries;
+            MinistryView.Refresh();
+            _readerWriter.WriteMinistryData(Ministries);
+        }
+        internal void Reset()
+        {
+            Ministries.Clear();
             MinistryViewSource.Source = Ministries;
             MinistryView.Refresh();
             _readerWriter.WriteMinistryData(Ministries);
@@ -234,6 +248,10 @@ namespace HgSoftware.InsertCreator.ViewModel
                     UsedFunctions.Add(ministry.Function);
             }
         }
+
+
+
+
 
         #endregion Private Methods
     }

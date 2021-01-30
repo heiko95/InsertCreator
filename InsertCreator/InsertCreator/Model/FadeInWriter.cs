@@ -13,11 +13,21 @@ namespace HgSoftware.InsertCreator.Model
 
         public Bitmap CurrentFade { get; private set; }
 
+
+        public float TextPositionX()
+        {
+            if (Properties.Settings.Default.LogoOnLefthand)
+                return 280;
+            return 70 ;
+        }
+
+
+
         public FadeInWriter()
         {
-            CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen);
-            var drawingTool = Graphics.FromImage(CurrentFade);
-            DrawLogo(drawingTool);
+            CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
+            //var drawingTool = Graphics.FromImage(CurrentFade);
+            //DrawLogo(drawingTool);
         }
 
         #endregion Private Fields
@@ -26,7 +36,7 @@ namespace HgSoftware.InsertCreator.Model
 
         public void LoadImages()
         {
-            Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen);
+            Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
             var drawingTool = Graphics.FromImage(image);
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -37,39 +47,56 @@ namespace HgSoftware.InsertCreator.Model
         public void WriteHymnalFade(HymnalData hymnalData)
         {
             var greenScreen = !Properties.Settings.Default.UseGreenscreen;
+            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
 
             if (Properties.Settings.Default.ShowComponistAndAutor)
-                CreateHymnalInsertPictureMeta(hymnalData, greenScreen);
+                CreateHymnalInsertPictureMeta(hymnalData, greenScreen, cornerbug);
             else
-                CreateHymnalInsertPicture(hymnalData, greenScreen);
+                CreateHymnalInsertPicture(hymnalData, greenScreen, cornerbug);
         }
+
+        public void ResetFade()
+        {  
+            Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            CurrentFade = image;
+            OnInsertUpdate?.Invoke(this, image);
+        }
+
 
         public void WriteMinistryFade(MinistryGridViewModel ministry)
         {
             var greenScreen = !Properties.Settings.Default.UseGreenscreen;
-            CreateMinistrieInsert(ministry, greenScreen);
+            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
+
+            CreateMinistrieInsert(ministry, greenScreen, cornerbug);
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
-        private void CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true)
+        private void CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true, bool useCornerBug = false)
         {
-            Bitmap image = LoadFrame(transparent);
+            Bitmap image = LoadFrame(transparent, useCornerBug);
 
             var drawingTool = Graphics.FromImage(image);
+
+            DrawRectangle(drawingTool);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
              new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(90, 840));
+             new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
 
             drawingTool.DrawString(
                 hymnalData.Name,
                 new Font("Calibri", 44, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Black), new PointF(90, 910));
+                new SolidBrush(Color.Black), new PointF(TextPositionX(), 900));
 
+            
             DrawLogo(drawingTool);
 
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -78,31 +105,34 @@ namespace HgSoftware.InsertCreator.Model
             OnInsertUpdate?.Invoke(this, image);
         }
 
-        private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent)
+        private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent, bool useCornerBug)
         {
-            Bitmap image = LoadFrame(transparent);
+            Bitmap image = LoadFrame(transparent, useCornerBug);
 
             var drawingTool = Graphics.FromImage(image);
+
+            DrawRectangle(drawingTool);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
              new Font("Calibri", 44, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(90, 810));
+             new SolidBrush(Color.Black), new PointF(TextPositionX(), 820));
 
             drawingTool.DrawString(
                 hymnalData.Name,
                 new Font("Calibri", 40, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Black), new PointF(90, 865));
+                new SolidBrush(Color.Black), new PointF(TextPositionX(), 868));
 
             drawingTool.DrawString(
                hymnalData.TextAutor,
                new Font("Calibri", 24, GraphicsUnit.Pixel),
-               new SolidBrush(Color.Black), new PointF(90, 926));
+               new SolidBrush(Color.Black), new PointF(TextPositionX(), 917));
 
             drawingTool.DrawString(
                hymnalData.MelodieAutor,
                new Font("Calibri", 24, GraphicsUnit.Pixel),
-               new SolidBrush(Color.Black), new PointF(90, 956));
+               new SolidBrush(Color.Black), new PointF(TextPositionX(), 947));
+
 
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -111,22 +141,23 @@ namespace HgSoftware.InsertCreator.Model
             OnInsertUpdate?.Invoke(this, image);
         }
 
-        private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true)
+        private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true, bool useCornerBug = false)
         {
-            Bitmap image = LoadFrame(transparent);
+            Bitmap image = LoadFrame(transparent, useCornerBug);
 
             var drawingTool = Graphics.FromImage(image);
+            DrawRectangle(drawingTool);
 
             // TODO Pos Anpassen
             drawingTool.DrawString(
              $"{ministry.ForeName} {ministry.SureName}",
              new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(90, 840));
+             new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
 
             drawingTool.DrawString(
              ministry.Function,
              new Font("Calibri", 44, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(90, 910));
+             new SolidBrush(Color.Black), new PointF(TextPositionX(), 900));
 
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -135,35 +166,58 @@ namespace HgSoftware.InsertCreator.Model
             OnInsertUpdate?.Invoke(this, image);
         }
 
+
+
+        private void DrawRectangle(Graphics drawingTool)
+        {
+            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+            drawingTool.FillRectangle(myBrush, new Rectangle(0, 800, 1700, 200));
+            myBrush.Dispose();
+
+        }
+
+
+
         private void DrawLogo(Graphics drawingTool)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
             {
                 var image = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png");
+                               
+                int y = 820;
+                int x = 1520;
 
-                const int y = 825;
-                const int x = 1425;
-                const int size = 150;
+                if (Properties.Settings.Default.LogoOnLefthand)                                 
+                    x = 20;         
 
-                if (image.Width == image.Height)
-                {
-                    drawingTool.DrawImage(image, new PointF(x, y));
-                    return;
-                }
-                if (image.Width > image.Height)
-                {
-                    drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2) + y));
-                    return;
-                }
-                if (image.Width < image.Height)
-                {
-                    drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + x, y));
-                    return;
-                }
+                const int size = 160;
+                LogoWriter(drawingTool, image, x, y, size);
             }
         }
 
-        private Bitmap LoadFrame(bool transparent)
+
+        private void LogoWriter(Graphics drawingTool, Image image, float x, float y, float size)
+        {
+            if (image.Width == image.Height)
+            {
+                drawingTool.DrawImage(image, new PointF(x, y));
+                return;
+            }
+            if (image.Width > image.Height)
+            {
+                drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2) + y));
+                return;
+            }
+            if (image.Width < image.Height)
+            {
+                drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + x, y));
+                return;
+            }
+        }
+
+
+
+        private Bitmap LoadFrame(bool transparent, bool useCornerBug)
         {
             var transparentFrame = $"{Directory.GetCurrentDirectory()}/DataSource/InsertFrameTrans.png";
             var greenFrame = $"{Directory.GetCurrentDirectory()}/DataSource/InsertFrameGreen.png";
@@ -174,7 +228,14 @@ namespace HgSoftware.InsertCreator.Model
             else
                 image = new Bitmap(greenFrame);
 
-            return image;
+            if (useCornerBug && File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png"))
+            {
+                var drawingTool = Graphics.FromImage(image);
+                var logoImage = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png");
+                LogoWriter(drawingTool, logoImage, 1800, 20, 100);
+
+            }
+                return image;
         }
 
         #endregion Private Methods
