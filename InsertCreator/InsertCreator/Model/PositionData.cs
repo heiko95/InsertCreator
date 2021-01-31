@@ -6,100 +6,99 @@ namespace HgSoftware.InsertCreator.Model
     public class PositionData
     {
         #region Private Fields
+        
+        #region Positions
+        [JsonProperty("Position Cornerbug")]
+        private Point _cornerbugPosition = new Point();
 
-        [JsonProperty]
+        [JsonProperty("Position Einblendefeld")]
+        private Point _rectanglePosition = new Point();
+
+        [JsonProperty("Position Logo Links")]
+        private Point _leftLogoPosition = new Point();
+
+        [JsonProperty("1.Position Text-einrehig (Logo Links)")]
+        private Point _leftTextOneRowFirstLine = new Point();
+
+        [JsonProperty("1.Position Text-zweirehig (Logo Links)")]
+        private Point _leftTextTwoRowFirstLine = new Point();
+
+        [JsonProperty("2.Position Text-zweirehig (Logo Links)")]
+        private Point _leftTextTwoRowSecondLine = new Point();
+
+        [JsonProperty("1.Position Text-vierrehig (Logo Links)")]
+        private Point _leftTextFourRowFirstLine = new Point();
+
+        [JsonProperty("2.Position Text-vierrehig (Logo Links)")]
+        private Point _leftTextFourRowSecondLine = new Point();
+
+        [JsonProperty("3.Position Text-vierrehig (Logo Links)")]
+        private Point _leftTextFourRowThirdLine = new Point();
+
+        [JsonProperty("4.Position Text-vierrehig (Logo Links)")]
+        private Point _leftTextFourRowFourthLine = new Point();
+
+        [JsonProperty("Position Logo Rechts")]
+        private Point _rightLogoPosition = new Point();
+
+        [JsonProperty("1.Position Text-einrehig (Logo Rechts)")]
+        private Point _rightTextOneRowFirstLine = new Point();
+
+        [JsonProperty("1.Position Text-zweirehig (Logo Rechts)")]
+        private Point _rightTextTwoRowFirstLine = new Point();
+
+        [JsonProperty("2.Position Text-zweirehig (Logo Rechts)")]
+        private Point _rightTextTwoRowSecondLine = new Point();
+
+        [JsonProperty("1.Position Text-vierrehig (Logo Rechts)")]
+        private Point _rightTextFourRowFirstLine = new Point();
+
+        [JsonProperty("2.Position Text-vierrehig (Logo Rechts)")]
+        private Point _rightTextFourRowSecondLine = new Point();
+
+        [JsonProperty("3.Position Text-vierrehig (Logo Rechts)")]
+        private Point _rightTextFourRowThirdLine = new Point();
+
+        [JsonProperty("4.Position Text-vierrehig (Logo Rechts)")]
+        private Point _rightTextFourRowFourthLine = new Point();
+
+
+
+        #endregion Positions
+
+        #region FontSize
+        [JsonProperty("Schriftsatz 1.Position Text-einrehig")]
         private Font _fontTextOneRowFirstLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 1.Position Text-zweirehig")]
         private Font _fontTextTwoRowFirstLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 2.Position Text-zweirehig")]
         private Font _fontTextTwoRowSecondLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 1.Position Text-vierrehig")]
         private Font _fontTextFourRowFirstLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 2.Position Text-vierrehig")]
         private Font _fontTextFourRowSecondLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 3.Position Text-vierrehig")]
         private Font _fontTextFourRowThirdLine;
 
-        [JsonProperty]
+        [JsonProperty("Schriftsatz 4.Position Text-vierrehig")]
         private Font _fontTextFourRowFourthLine;
         #endregion FontSize
 
         #region ObjectSize
-        [JsonProperty]
+        [JsonProperty("Objektgröße Einblendefeld")]
         private Size _sizeRectangle = new Size();
 
-        [JsonProperty]
+        [JsonProperty("Objektgröße Cornerbug")]
         private int _sizeCornerbug;
 
-        [JsonProperty]
+        [JsonProperty("Objektgröße Logo")]
         private int _sizeLogo;
         #endregion ObjectSize
-
-
-        #region Positions
-        [JsonProperty]
-        private PointF _cornerbugPosition = new PointF();
-
-        [JsonProperty]
-        private Point _rectanglePosition = new Point();
-
-        [JsonProperty]
-        private PointF _leftTextFourRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextFourRowFourthLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextFourRowSecondLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextFourRowThirdLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextOneRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextTwoRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftTextTwoRowSecondLine = new PointF();
-
-        [JsonProperty]
-        private PointF _leftLogoPosition = new PointF();
-
-        [JsonProperty]
-        private PointF _rightLogoPosition = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextFourRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextFourRowFourthLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextFourRowSecondLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextFourRowThirdLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextOneRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextTwoRowFirstLine = new PointF();
-
-        [JsonProperty]
-        private PointF _rightTextTwoRowSecondLine = new PointF();
-        #endregion Positions
-
-        #region FontSize
-
-       
 
         public PositionData()
         {
@@ -121,22 +120,22 @@ namespace HgSoftware.InsertCreator.Model
             _leftTextOneRowFirstLine.Y = 845;
 
             _leftTextTwoRowFirstLine.X = 310;
-            _leftTextTwoRowFirstLine.Y = 808;
+            _leftTextTwoRowFirstLine.Y = 800;
 
             _leftTextTwoRowSecondLine.X = 310;
-            _leftTextTwoRowSecondLine.Y = 899;
+            _leftTextTwoRowSecondLine.Y = 891;
 
             _leftTextFourRowFirstLine.X = 310;
-            _leftTextFourRowFirstLine.Y = 806;
+            _leftTextFourRowFirstLine.Y = 798;
 
             _leftTextFourRowSecondLine.X = 310;
-            _leftTextFourRowSecondLine.Y = 855;
+            _leftTextFourRowSecondLine.Y = 847;
             
             _leftTextFourRowThirdLine.X = 310;
-            _leftTextFourRowThirdLine.Y = 916;
+            _leftTextFourRowThirdLine.Y = 908;
 
             _leftTextFourRowFourthLine.X = 310;
-            _leftTextFourRowFourthLine.Y = 946;
+            _leftTextFourRowFourthLine.Y = 938;
 
             // Logo on Righthand Side
 
@@ -147,22 +146,22 @@ namespace HgSoftware.InsertCreator.Model
             _rightTextOneRowFirstLine.Y = 845;
 
             _rightTextTwoRowFirstLine.X = 70;
-            _rightTextTwoRowFirstLine.Y = 808;
+            _rightTextTwoRowFirstLine.Y = 800;
 
             _rightTextTwoRowSecondLine.X = 70;
-            _rightTextTwoRowSecondLine.Y = 899;
+            _rightTextTwoRowSecondLine.Y = 891;
 
             _rightTextFourRowFirstLine.X = 70;
-            _rightTextFourRowFirstLine.Y = 806;
+            _rightTextFourRowFirstLine.Y = 798;
 
             _rightTextFourRowSecondLine.X = 70;
-            _rightTextFourRowSecondLine.Y = 855;
+            _rightTextFourRowSecondLine.Y = 847;
 
             _rightTextFourRowThirdLine.X = 70;
-            _rightTextFourRowThirdLine.Y = 916;
+            _rightTextFourRowThirdLine.Y = 908;
 
             _rightTextFourRowFourthLine.X = 70;
-            _rightTextFourRowFourthLine.Y = 946;
+            _rightTextFourRowFourthLine.Y = 938;
             #endregion Positions
 
             #region FontSize
@@ -356,6 +355,7 @@ namespace HgSoftware.InsertCreator.Model
             get { return _sizeLogo; }
         }
         #endregion ObjectSize
+
         #endregion Private Fields
     }
 }
