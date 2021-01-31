@@ -51,6 +51,7 @@ namespace HgSoftware.InsertCreator.Model
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/CustomInsert.png", System.Drawing.Imaging.ImageFormat.Png);
             CurrentFade = image;
             OnInsertUpdate?.Invoke(this, image);
         }
