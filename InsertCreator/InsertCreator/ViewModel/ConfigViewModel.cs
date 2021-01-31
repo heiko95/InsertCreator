@@ -35,9 +35,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             else
                 LogoPositionSelection = 1;
 
-            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
+            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
+                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
                 PreviewLogo = BitmapToImageSource(image);
             }
         }
@@ -210,9 +210,9 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             _pictureReader.LoadPicture();
 
-            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
+            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png");
+                Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
                 PreviewLogo = BitmapToImageSource(image);
             }
         }

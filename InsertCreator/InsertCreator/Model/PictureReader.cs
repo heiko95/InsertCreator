@@ -24,47 +24,28 @@ namespace HgSoftware.InsertCreator.Model
                 {
                     RemovePicture();
 
-                    Bitmap tinyImage = ResizePicture(new Bitmap(openFileDialog.FileName), 100);
-                    tinyImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png", System.Drawing.Imaging.ImageFormat.Png);
-
-                    Bitmap smallImage = ResizePicture(new Bitmap(openFileDialog.FileName), 160);
-                    smallImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png", System.Drawing.Imaging.ImageFormat.Png);                  
-
-                    Bitmap bigImage = ResizePicture(new Bitmap(openFileDialog.FileName), 240);
-                    bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png", System.Drawing.Imaging.ImageFormat.Png);
-
-                    Properties.Settings.Default.UseLogo = true;
-                    //_appSetting.WriteAppSetting(KeyName.UseLogo, "true");
+                    Bitmap bigImage = new Bitmap(openFileDialog.FileName);
+                    bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png", System.Drawing.Imaging.ImageFormat.Png);
+               
+                    Properties.Settings.Default.UseLogo = true;                   
                 }
             }
         }
 
         public void RemovePicture()
         {
-            List<string> files = new List<string>()
+            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png",
-                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png",
-                $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png"
-            };
-
-            Properties.Settings.Default.UseLogo = false;
-            //_appSetting.WriteAppSetting(KeyName.UseLogo, "false");
-
-            foreach (var file in files)
-            {
-                if (File.Exists(file))
-                {
-                    File.Delete(file);
-                }
+                File.Delete($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
             }
+            Properties.Settings.Default.UseLogo = false; 
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
-        private Bitmap ResizePicture(Bitmap image, int size)
+        public Bitmap ResizePicture(Bitmap image, int size)
         {
             if (image.Width == image.Height)
             {
