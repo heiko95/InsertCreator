@@ -27,7 +27,7 @@ namespace HgSoftware.InsertCreator.Model
 
         #region Public Methods
 
-        public PositionData LoadMinistryData()
+        public PositionData LoadPositionData()
         {
             var positionData = new PositionData();
 
@@ -42,7 +42,7 @@ namespace HgSoftware.InsertCreator.Model
         }
 
 
-        public void WriteMinistryData(PositionData positionData)
+        public void WritePositionData(PositionData positionData)
         {
             File.WriteAllText(_path, JsonConvert.SerializeObject(positionData));
         }

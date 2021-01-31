@@ -19,7 +19,23 @@ namespace HgSoftware.InsertCreator
         protected override void OnStartup(StartupEventArgs e)
         {
             string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
-            FadeInWriter fadeInWriter = new FadeInWriter();
+            string positionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Position.Json";
+
+            PositionJsonReaderWriter positionDatajsonReaderWriter = new PositionJsonReaderWriter(positionPath);
+            
+            PositionData positionData = new PositionData();
+
+            if (!File.Exists(positionPath))
+            {
+                var file = File.Create(positionPath, 1024);
+                file.Close();
+                positionDatajsonReaderWriter.WritePositionData(positionData);
+            }
+            else
+                positionData = positionDatajsonReaderWriter.LoadPositionData();
+
+            FadeInWriter fadeInWriter = new FadeInWriter(positionData);
+
 
             if (!Directory.Exists(path))
             {
@@ -33,7 +49,7 @@ namespace HgSoftware.InsertCreator
             fadeInWriter.LoadImages();
 
             _log.Info("Create ViewModel");
-            var vm = new WindowViewModel();
+            var vm = new WindowViewModel(positionData);
 
             _log.Info("Open Window");
             var window = new MainWindow(vm);

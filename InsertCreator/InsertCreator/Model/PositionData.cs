@@ -11,6 +11,9 @@ namespace HgSoftware.InsertCreator.Model
         private PointF _cornerbugPosition = new PointF();
 
         [JsonProperty]
+        private Point _rectanglePosition = new Point();
+
+        [JsonProperty]
         private PointF _leftTextFourRowFirstLine = new PointF();
 
         [JsonProperty]
@@ -60,62 +63,75 @@ namespace HgSoftware.InsertCreator.Model
 
         public PositionData()
         {
-            _cornerbugPosition.X = 1;
-            _cornerbugPosition.Y = 1;
+            _cornerbugPosition.X = 1766;
+            _cornerbugPosition.Y = 44;
 
-            _leftLogoPosition.X = 1;
-            _leftLogoPosition.Y = 1;
+            _rectanglePosition.X = 0;
+            _rectanglePosition.Y = 782;
 
-            _leftTextOneRowFirstLine.X = 1;
-            _leftTextOneRowFirstLine.Y = 1;
+            /// Logo on Lefthand Side
 
-            _leftTextTwoRowFirstLine.X = 1;
-            _leftTextTwoRowFirstLine.Y = 1;
+            _leftLogoPosition.X = 50;
+            _leftLogoPosition.Y = 802;        
 
-            _leftTextTwoRowSecondLine.X = 1;
-            _leftTextTwoRowSecondLine.Y = 1;
+            _leftTextOneRowFirstLine.X = 310;
+            _leftTextOneRowFirstLine.Y = 853;
 
-            _leftTextFourRowFirstLine.X = 1;
-            _leftTextFourRowFirstLine.Y = 1;
+            _leftTextTwoRowFirstLine.X = 310;
+            _leftTextTwoRowFirstLine.Y = 808;
 
-            _leftTextFourRowSecondLine.X = 1;
-            _leftTextFourRowSecondLine.Y = 1;
+            _leftTextTwoRowSecondLine.X = 310;
+            _leftTextTwoRowSecondLine.Y = 899;
+
+            _leftTextFourRowFirstLine.X = 310;
+            _leftTextFourRowFirstLine.Y = 806;
+
+            _leftTextFourRowSecondLine.X = 310;
+            _leftTextFourRowSecondLine.Y = 855;
             
-            _leftTextFourRowThirdLine.X = 1;
-            _leftTextFourRowThirdLine.Y = 1;
+            _leftTextFourRowThirdLine.X = 310;
+            _leftTextFourRowThirdLine.Y = 916;
 
-            _leftTextFourRowFourthLine.X = 1;
-            _leftTextFourRowFourthLine.Y = 1;
+            _leftTextFourRowFourthLine.X = 310;
+            _leftTextFourRowFourthLine.Y = 946;
 
-            _rightLogoPosition.X = 1;
-            _rightLogoPosition.Y = 1;
+            /// Logo on Righthand Side
 
-            _rightTextOneRowFirstLine.X = 1;
-            _rightTextOneRowFirstLine.Y = 1;
+            _rightLogoPosition.X = 1450;
+            _rightLogoPosition.Y = 802;
 
-            _rightTextTwoRowFirstLine.X = 1;
-            _rightTextTwoRowFirstLine.Y = 1;
+            _rightTextOneRowFirstLine.X = 70;
+            _rightTextOneRowFirstLine.Y = 853;
 
-            _rightTextTwoRowSecondLine.X = 1;
-            _rightTextTwoRowSecondLine.Y = 1;
+            _rightTextTwoRowFirstLine.X = 70;
+            _rightTextTwoRowFirstLine.Y = 808;
 
-            _rightTextFourRowFirstLine.X = 1;
-            _rightTextFourRowFirstLine.Y = 1;
+            _rightTextTwoRowSecondLine.X = 70;
+            _rightTextTwoRowSecondLine.Y = 899;
 
-            _rightTextFourRowSecondLine.X = 1;
-            _rightTextFourRowSecondLine.Y = 1;
+            _rightTextFourRowFirstLine.X = 70;
+            _rightTextFourRowFirstLine.Y = 806;
 
-            _rightTextFourRowThirdLine.X = 1;
-            _rightTextFourRowThirdLine.Y = 1;
+            _rightTextFourRowSecondLine.X = 70;
+            _rightTextFourRowSecondLine.Y = 855;
 
-            _rightTextFourRowFourthLine.X = 1;
-            _rightTextFourRowFourthLine.Y = 1;
+            _rightTextFourRowThirdLine.X = 70;
+            _rightTextFourRowThirdLine.Y = 916;
+
+            _rightTextFourRowFourthLine.X = 70;
+            _rightTextFourRowFourthLine.Y = 946;
         }
 
         [JsonIgnore]
         public PointF CornerbugPosition
         {
             get { return _cornerbugPosition; } 
+        }
+
+        [JsonIgnore]
+        public Point RectanglePosition
+        {            
+            get { return _rectanglePosition; }
         }
 
         [JsonIgnore]

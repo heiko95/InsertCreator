@@ -9,12 +9,12 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Public Constructors
 
-        public FadeInWriter()
+        private PositionData _positionData;
+
+        public FadeInWriter(PositionData positionData)
         {
-            PositionData _positionData = new PositionData();
-
+            _positionData = positionData;           
             CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
-
 
         }
 
@@ -103,6 +103,8 @@ namespace HgSoftware.InsertCreator.Model
 
         #endregion Public Methods
 
+
+
         #region Private Methods
 
         private void CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true, bool useCornerBug = false)
@@ -116,12 +118,12 @@ namespace HgSoftware.InsertCreator.Model
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
              new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
+             new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
             drawingTool.DrawString(
                 hymnalData.Name,
                 new Font("Calibri", 44, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Black), new PointF(TextPositionX(), 900));
+                new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
 
@@ -142,22 +144,22 @@ namespace HgSoftware.InsertCreator.Model
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
              new Font("Calibri", 44, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(TextPositionX(), 820));
+             new SolidBrush(Color.Black), _positionData.TextFourRowFirstLinePosition);
 
             drawingTool.DrawString(
                 hymnalData.Name,
                 new Font("Calibri", 40, GraphicsUnit.Pixel),
-                new SolidBrush(Color.Black), new PointF(TextPositionX(), 868));
+                new SolidBrush(Color.Black), _positionData.TextFourRowSecondLinePosition);
 
             drawingTool.DrawString(
                hymnalData.TextAutor,
                new Font("Calibri", 24, GraphicsUnit.Pixel),
-               new SolidBrush(Color.Black), new PointF(TextPositionX(), 917));
+               new SolidBrush(Color.Black),_positionData.TextFourRowThirdLinePosition);
 
             drawingTool.DrawString(
                hymnalData.MelodieAutor,
                new Font("Calibri", 24, GraphicsUnit.Pixel),
-               new SolidBrush(Color.Black), new PointF(TextPositionX(), 947));
+               new SolidBrush(Color.Black), _positionData.TextFourRowFourthLinePosition);
 
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -175,12 +177,12 @@ namespace HgSoftware.InsertCreator.Model
             drawingTool.DrawString(
             textLaneOne,
             new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-            new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
+            new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
             drawingTool.DrawString(
              textLaneTwo,
              new Font("Calibri", 44, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(TextPositionX(), 900));
+             new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -198,7 +200,7 @@ namespace HgSoftware.InsertCreator.Model
             drawingTool.DrawString(
             text,
             new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-            new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
+            new SolidBrush(Color.Black), _positionData.TextOneRowFirstLinePosition);
           
 
             DrawLogo(drawingTool);
@@ -219,12 +221,12 @@ namespace HgSoftware.InsertCreator.Model
             drawingTool.DrawString(
              $"{ministry.ForeName} {ministry.SureName}",
              new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(TextPositionX(), 830));
+             new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
             drawingTool.DrawString(
              ministry.Function,
              new Font("Calibri", 44, GraphicsUnit.Pixel),
-             new SolidBrush(Color.Black), new PointF(TextPositionX(), 900));
+             new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
@@ -239,23 +241,18 @@ namespace HgSoftware.InsertCreator.Model
             {
                 var image = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png");
 
-                int y = 820;
-                int x = 1520;
-
-                if (Properties.Settings.Default.LogoOnLefthand)
-                    x = 20;
-
                 const int size = 160;
-                LogoWriter(drawingTool, image, x, y, size);
+                LogoWriter(drawingTool, image, _positionData.LogoPosition, size);
             }
         }
 
         private void DrawRectangle(Graphics drawingTool)
         {
             System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-            drawingTool.FillRectangle(myBrush, new Rectangle(0, 800, 1700, 200));
+            drawingTool.FillRectangle(myBrush, new Rectangle(_positionData.RectanglePosition.X, _positionData.RectanglePosition.Y, 1650, 220));
             myBrush.Dispose();
         }
+
 
         private Bitmap LoadFrame(bool transparent, bool useCornerBug)
         {
@@ -272,26 +269,26 @@ namespace HgSoftware.InsertCreator.Model
             {
                 var drawingTool = Graphics.FromImage(image);
                 var logoImage = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png");
-                LogoWriter(drawingTool, logoImage, 1800, 20, 100);
+                LogoWriter(drawingTool, logoImage, _positionData.CornerbugPosition, 100);
             }
             return image;
         }
 
-        private void LogoWriter(Graphics drawingTool, Image image, float x, float y, float size)
+        private void LogoWriter(Graphics drawingTool, Image image, PointF position, float size)
         {
             if (image.Width == image.Height)
             {
-                drawingTool.DrawImage(image, new PointF(x, y));
+                drawingTool.DrawImage(image, new PointF(position.X, position.Y));
                 return;
             }
             if (image.Width > image.Height)
             {
-                drawingTool.DrawImage(image, new PointF(x, ((size - image.Height) / 2) + y));
+                drawingTool.DrawImage(image, new PointF(position.X, ((size - image.Height) / 2) + position.Y));
                 return;
             }
             if (image.Width < image.Height)
             {
-                drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + x, y));
+                drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + position.X, position.Y));
                 return;
             }
         }
