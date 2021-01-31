@@ -19,7 +19,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
         private readonly HymnalInputViewModel _cbData;
 
-        private readonly FadeInWriter _fadeInWriter = new FadeInWriter();
+        private readonly FadeInWriter _fadeInWriter;
         private readonly HymnalInputViewModel _gbData;
 
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
@@ -30,10 +30,15 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Constructors
 
-        public WindowViewModel()
+        public WindowViewModel(PositionData positionData)
         {
+            _fadeInWriter = new FadeInWriter(positionData);
+
+
             _log.Info("Create Preview");
             SetPreview(Properties.Settings.Default.ShowPreviewPicture);
+
+
 
             _log.Info("Load Data");
             _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", _fadeInWriter);
