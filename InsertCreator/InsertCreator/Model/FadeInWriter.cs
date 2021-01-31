@@ -11,9 +11,11 @@ namespace HgSoftware.InsertCreator.Model
 
         public FadeInWriter()
         {
+            PositionData _positionData = new PositionData();
+
             CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
-            //var drawingTool = Graphics.FromImage(CurrentFade);
-            //DrawLogo(drawingTool);
+
+
         }
 
         #endregion Public Constructors
