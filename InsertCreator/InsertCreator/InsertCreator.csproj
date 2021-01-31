@@ -123,7 +123,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LogHelper.cs" />
+    <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
+    <Compile Include="Model\PositionData.cs" />
     <Compile Include="Model\PreviewWindowController.cs" />
+    <Compile Include="ViewModel\CustomizedInsertViewModel.cs" />
+    <Compile Include="ViewModel\CustomListViewModel.cs" />
     <Compile Include="ViewModel\PreviewViewModel.cs" />
     <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
@@ -137,6 +141,9 @@
     <Compile Include="ViewModel\BibleViewModel.cs" />
     <Compile Include="View\BibleView.xaml.cs">
       <DependentUpon>BibleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomizedInsertView.xaml.cs">
+      <DependentUpon>CustomizedInsertView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HymnalInputView.xaml.cs">
       <DependentUpon>HymnalInputView.xaml</DependentUpon>
@@ -153,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomizedInsertView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

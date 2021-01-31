@@ -27,6 +27,7 @@ namespace HgSoftware.InsertCreator
             }
             _log.Info("Create Ministry.json");
             FileCreate("Ministry.json", path);
+            FileCreate("Insert.json", path);
 
             _log.Info("Load Images");
             fadeInWriter.LoadImages();
