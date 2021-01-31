@@ -7,6 +7,40 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
+        [JsonProperty]
+        private Font _fontTextOneRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextTwoRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextTwoRowSecondLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowSecondLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowThirdLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowFourthLine;
+        #endregion FontSize
+
+        #region ObjectSize
+        [JsonProperty]
+        private Size _sizeRectangle = new Size();
+
+        [JsonProperty]
+        private int _sizeCornerbug;
+
+        [JsonProperty]
+        private int _sizeLogo;
+        #endregion ObjectSize
+
+
         #region Positions
         [JsonProperty]
         private PointF _cornerbugPosition = new PointF();
@@ -65,38 +99,7 @@ namespace HgSoftware.InsertCreator.Model
 
         #region FontSize
 
-        [JsonProperty]
-        private Font _fontTextOneRowFirstLine;
-
-        [JsonProperty]
-        private Font _fontTextTwoRowFirstLine;
-
-        [JsonProperty]
-        private Font _fontTextTwoRowSecondLine;
-
-        [JsonProperty]
-        private Font _fontTextFourRowFirstLine;
-
-        [JsonProperty]
-        private Font _fontTextFourRowSecondLine;
-
-        [JsonProperty]
-        private Font _fontTextFourRowThirdLine;
-
-        [JsonProperty]
-        private Font _fontTextFourRowFourthLine;
-        #endregion FontSize
-
-        #region ObjectSize
-        [JsonProperty]
-        private Size _sizeRectangle = new Size();
-
-        [JsonProperty]
-        private int _sizeCornerbug;
-
-        [JsonProperty]
-        private int _sizeLogo;
-        #endregion ObjectSize
+       
 
         public PositionData()
         {
@@ -115,7 +118,7 @@ namespace HgSoftware.InsertCreator.Model
             _leftLogoPosition.Y = 802;        
 
             _leftTextOneRowFirstLine.X = 310;
-            _leftTextOneRowFirstLine.Y = 853;
+            _leftTextOneRowFirstLine.Y = 845;
 
             _leftTextTwoRowFirstLine.X = 310;
             _leftTextTwoRowFirstLine.Y = 808;
@@ -135,13 +138,13 @@ namespace HgSoftware.InsertCreator.Model
             _leftTextFourRowFourthLine.X = 310;
             _leftTextFourRowFourthLine.Y = 946;
 
-            /// Logo on Righthand Side
+            // Logo on Righthand Side
 
             _rightLogoPosition.X = 1450;
             _rightLogoPosition.Y = 802;
 
             _rightTextOneRowFirstLine.X = 70;
-            _rightTextOneRowFirstLine.Y = 853;
+            _rightTextOneRowFirstLine.Y = 845;
 
             _rightTextTwoRowFirstLine.X = 70;
             _rightTextTwoRowFirstLine.Y = 808;
