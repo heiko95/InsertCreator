@@ -45,6 +45,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             _log.Info("Load Ministry");
             MinistryViewModel = new MinistryViewModel(_fadeInWriter);
+            CustomizedViewModel = new CustomizedInsertViewModel(_fadeInWriter);
 
             _log.Info("Load PreviewMode");
             PreviewViewModel = new PreviewViewModel(_fadeInWriter.CurrentFade);
@@ -137,6 +138,14 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public bool CustomInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public CustomizedInsertViewModel CustomizedViewModel { get; set; } 
+
         public InfoViewModel InfoViewModel { get; set; } = new InfoViewModel();
 
         public MinistryViewModel MinistryViewModel
@@ -156,22 +165,33 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 SetValue(value);
 
-                //if (value == 3)
+                //if (value == 4)
                 //{
                 //    HymnalInputVisible = false;
                 //    BibleInputVisible = true;
+                //    CustomInputVisible = false;
                 //    return;
                 //}
+
+                if (value == 3)
+                {
+                    HymnalInputVisible = false;
+                    BibleInputVisible = false;
+                    CustomInputVisible = true;
+                    return;
+                }
 
                 if (value == 2)
                 {
                     HymnalInputVisible = false;
                     BibleInputVisible = false;
+                    CustomInputVisible = false;
                     return;
                 }
 
                 HymnalInputVisible = true;
                 BibleInputVisible = false;
+                CustomInputVisible = false;
 
                 if (value == 1)
                 {
@@ -184,6 +204,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void OnCloseWindow(object obj)
         {
+            CustomizedViewModel.SaveInserts();
             Properties.Settings.Default.Save();
             _previewWindow.Close();
         }

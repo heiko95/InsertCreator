@@ -185,11 +185,23 @@
                             Margin="5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Content="Logo Links" />
-                        <ToggleButton
-                            Grid.Row="1"
+                            Content="Logoposition" />
+                        <ComboBox                           
                             Grid.Column="1"
-                            IsChecked="{Binding LogoOnLeftSide}" />
+                            SelectedIndex="{Binding LogoPositionSelection}"
+                            Margin="5,0,5,10"
+                            VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Left">
+                            <ComboBoxItem>
+                                <TextBlock Text="Links"></TextBlock>                                
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="Rechts"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+
+
+
                     </Grid>
                 </materialDesign:Card>
 

@@ -92,6 +92,9 @@
                             <Grid Visibility="{Binding Path=BibleInputVisible, Converter={StaticResource Converter}}">
                                 <view:BibleView DataContext="{Binding BibleViewModel, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
+                            <Grid Visibility="{Binding Path=CustomInputVisible, Converter={StaticResource Converter}}">
+                                <view:CustomizedInsertView DataContext="{Binding CustomizedViewModel, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
                         </Grid>
                     </materialDesign:Card>
 
@@ -146,6 +149,10 @@
                                 Width="100"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
+                            <ListBoxItem
+                                Width="100"
+                                HorizontalContentAlignment="Center"
+                                Content="Individuell" />
                             <!--<ListBoxItem
                                 Width="100"
                                 HorizontalContentAlignment="Center"

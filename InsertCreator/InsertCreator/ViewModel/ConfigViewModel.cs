@@ -29,7 +29,11 @@ namespace HgSoftware.InsertCreator.ViewModel
             ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
             ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
             LogoAsCornerbug = Properties.Settings.Default.LogoAsCornerlogo;
-            LogoOnLeftSide = Properties.Settings.Default.LogoOnLefthand;
+
+            if (Properties.Settings.Default.LogoOnLefthand)
+                LogoPositionSelection = 0;
+            else
+                LogoPositionSelection = 1;
 
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoBig.png"))
             {
@@ -112,18 +116,25 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-        public bool LogoOnLeftSide
+        public int LogoPositionSelection
         {
-            get { return GetValue<bool>(); }
+            get { return GetValue<int>(); }            
             set
             {
-                if (LogoOnLeftSide != value)
+                if (LogoPositionSelection != value)
                 {
                     SetValue(value);
-                    Properties.Settings.Default.LogoOnLefthand = value;
+                    if (value == 1)
+                    {
+                        Properties.Settings.Default.LogoOnLefthand = false;
+                        return;
+                    }                    
+                    Properties.Settings.Default.LogoOnLefthand = true;               
+
                 }
             }
         }
+
 
         public bool LogoAsCornerbug
         {
