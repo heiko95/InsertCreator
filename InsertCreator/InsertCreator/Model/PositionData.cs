@@ -7,6 +7,7 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
+        #region Positions
         [JsonProperty]
         private PointF _cornerbugPosition = new PointF();
 
@@ -60,16 +61,55 @@ namespace HgSoftware.InsertCreator.Model
 
         [JsonProperty]
         private PointF _rightTextTwoRowSecondLine = new PointF();
+        #endregion Positions
+
+        #region FontSize
+
+        [JsonProperty]
+        private Font _fontTextOneRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextTwoRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextTwoRowSecondLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowFirstLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowSecondLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowThirdLine;
+
+        [JsonProperty]
+        private Font _fontTextFourRowFourthLine;
+        #endregion FontSize
+
+        #region ObjectSize
+        [JsonProperty]
+        private Size _sizeRectangle = new Size();
+
+        [JsonProperty]
+        private int _sizeCornerbug;
+
+        [JsonProperty]
+        private int _sizeLogo;
+        #endregion ObjectSize
 
         public PositionData()
         {
+            #region Positions
+            //Positions
+
             _cornerbugPosition.X = 1766;
             _cornerbugPosition.Y = 44;
 
             _rectanglePosition.X = 0;
             _rectanglePosition.Y = 782;
 
-            /// Logo on Lefthand Side
+            // Logo on Lefthand Side
 
             _leftLogoPosition.X = 50;
             _leftLogoPosition.Y = 802;        
@@ -120,8 +160,35 @@ namespace HgSoftware.InsertCreator.Model
 
             _rightTextFourRowFourthLine.X = 70;
             _rightTextFourRowFourthLine.Y = 946;
+            #endregion Positions
+
+            #region FontSize
+
+            _fontTextOneRowFirstLine = new Font("Calibri", 76, FontStyle.Bold, GraphicsUnit.Pixel);
+            _fontTextTwoRowFirstLine = new Font("Calibri", 76, FontStyle.Bold, GraphicsUnit.Pixel);
+            _fontTextTwoRowSecondLine = new Font("Calibri", 72, FontStyle.Regular, GraphicsUnit.Pixel);
+            _fontTextFourRowFirstLine = new Font("Calibri", 48, FontStyle.Bold, GraphicsUnit.Pixel);
+            _fontTextFourRowSecondLine = new Font("Calibri", 48, FontStyle.Regular, GraphicsUnit.Pixel);
+            _fontTextFourRowThirdLine = new Font("Calibri", 24, FontStyle.Regular, GraphicsUnit.Pixel);
+            _fontTextFourRowFourthLine = new Font("Calibri", 24, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            #endregion FontSize
+
+            #region ObjectSize
+
+            _sizeCornerbug = 110;
+
+            _sizeLogo = 180;
+
+            _sizeRectangle.Height = 220;
+            _sizeRectangle.Width = 1650;
+
+            #endregion ObjectSize
         }
 
+
+
+        #region Positions       
         [JsonIgnore]
         public PointF CornerbugPosition
         {
@@ -221,6 +288,71 @@ namespace HgSoftware.InsertCreator.Model
                 return _rightTextFourRowFourthLine;
             }
         }
+        #endregion Positions
+
+        #region FontSize
+        [JsonIgnore]
+        public Font FontTextOneRowFirstLine
+        {
+            get { return _fontTextOneRowFirstLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextTwoRowFirstLine
+        {
+            get { return _fontTextTwoRowFirstLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextTwoRowSecondLine
+        {
+            get { return _fontTextTwoRowSecondLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextFourRowFirstLine
+        {
+            get { return _fontTextFourRowFirstLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextFourRowSecondLine
+        {
+            get { return _fontTextFourRowSecondLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextFourRowThirdLine
+        {
+            get { return _fontTextFourRowThirdLine; }
+        }
+
+        [JsonIgnore]
+        public Font FontTextFourRowFourthLine
+        {
+            get { return _fontTextFourRowFourthLine; }
+        }
+        #endregion FontSize
+
+        #region ObjectSize
+        [JsonIgnore]
+        public Size SizeRectangle
+        {
+            get { return _sizeRectangle; }
+        }
+
+        [JsonIgnore]
+        public int SizeCornerbug
+        {
+            get { return _sizeCornerbug; }
+        }
+
+        [JsonIgnore]
+        public int SizeLogo
+        {
+            get { return _sizeLogo; }
+        }
+        #endregion ObjectSize
         #endregion Private Fields
     }
 }
