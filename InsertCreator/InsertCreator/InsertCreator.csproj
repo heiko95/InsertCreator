@@ -123,6 +123,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LogHelper.cs" />
+    <Compile Include="Model\PositionJsonReaderWriter.cs" />
     <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
     <Compile Include="Model\PositionData.cs" />
     <Compile Include="Model\PreviewWindowController.cs" />
