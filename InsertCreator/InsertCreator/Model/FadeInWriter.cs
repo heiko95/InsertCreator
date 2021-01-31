@@ -17,6 +17,7 @@ namespace HgSoftware.InsertCreator.Model
             CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
 
         }
+        private PictureReader _pictureReader = new PictureReader();
 
         #endregion Public Constructors
 
@@ -237,10 +238,9 @@ namespace HgSoftware.InsertCreator.Model
 
         private void DrawLogo(Graphics drawingTool)
         {
-            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png"))
+            if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                var image = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoSmall.png");
-
+                var image = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), 160);
                 const int size = 160;
                 LogoWriter(drawingTool, image, _positionData.LogoPosition, size);
             }
@@ -265,10 +265,11 @@ namespace HgSoftware.InsertCreator.Model
             else
                 image = new Bitmap(greenFrame);
 
-            if (useCornerBug && File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png"))
+            if (useCornerBug && File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
                 var drawingTool = Graphics.FromImage(image);
-                var logoImage = Image.FromFile($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/LogoTiny.png");
+
+                var logoImage = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), 100);                
                 LogoWriter(drawingTool, logoImage, _positionData.CornerbugPosition, 100);
             }
             return image;
