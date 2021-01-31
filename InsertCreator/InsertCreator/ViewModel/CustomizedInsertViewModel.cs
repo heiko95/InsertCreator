@@ -149,6 +149,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 CustomInsertView.Refresh();
                 TextLaneOne = "";
                 TextLaneTwo = "";
+                SelectedIndex = -1;
                 return;
             }
 
@@ -162,6 +163,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 CustomInserts.Remove(SelectedItem);
                 CustomInsertView.Refresh();
+                SelectedIndex = -1;
                 TextLaneOne = "";
                 TextLaneTwo = "";                
             }
@@ -169,6 +171,10 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void OnResetPressed(object obj)
         {
             _fadeInWriter.ResetFade();
+            SelectedIndex = -1;
+            TextLaneOne = "";
+            TextLaneTwo = "";
+            
         }
 
         #endregion Private Methods
