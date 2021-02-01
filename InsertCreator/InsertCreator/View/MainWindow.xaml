@@ -138,21 +138,21 @@
                             SelectionMode="Single"
                             Style="{StaticResource MaterialDesignToolToggleFlatListBox}">
                             <ListBoxItem
-                                Width="100"
+                                Width="95"
                                 HorizontalContentAlignment="Center"
                                 Content="Gesangbuch" />
                             <ListBoxItem
-                                Width="100"
+                                Width="95"
                                 HorizontalContentAlignment="Center"
                                 Content="Chorbuch" />
                             <ListBoxItem
-                                Width="100"
+                                Width="95"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
                             <ListBoxItem
-                                Width="100"
+                                Width="95"
                                 HorizontalContentAlignment="Center"
-                                Content="Individuell" />
+                                Content="Freitext" />
                             <!--<ListBoxItem
                                 Width="100"
                                 HorizontalContentAlignment="Center"
