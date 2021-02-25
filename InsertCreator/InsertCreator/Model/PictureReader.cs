@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -26,8 +25,8 @@ namespace HgSoftware.InsertCreator.Model
 
                     Bitmap bigImage = new Bitmap(openFileDialog.FileName);
                     bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png", System.Drawing.Imaging.ImageFormat.Png);
-               
-                    Properties.Settings.Default.UseLogo = true;                   
+                    bigImage.Dispose();
+                    Properties.Settings.Default.UseLogo = true;
                 }
             }
         }
@@ -38,12 +37,8 @@ namespace HgSoftware.InsertCreator.Model
             {
                 File.Delete($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
             }
-            Properties.Settings.Default.UseLogo = false; 
+            Properties.Settings.Default.UseLogo = false;
         }
-
-        #endregion Public Methods
-
-        #region Private Methods
 
         public Bitmap ResizePicture(Bitmap image, int size)
         {
@@ -62,6 +57,6 @@ namespace HgSoftware.InsertCreator.Model
             return new Bitmap(image, size, Convert.ToInt32(image.Height * ratio));
         }
 
-        #endregion Private Methods
+        #endregion Public Methods
     }
 }

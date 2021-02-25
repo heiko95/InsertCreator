@@ -12,7 +12,7 @@ namespace HgSoftware.InsertCreator.ViewModel
     /// </summary>
     public class RelayCommand : ICommand
     {
-        #region Private members
+        #region Private Fields
 
         /// <summary>
         /// True if command is executing, false otherwise
@@ -24,7 +24,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         /// </summary>
         private readonly Action<object> execute;
 
-        #endregion Private members
+        #endregion Private Fields
 
         #region Public Constructors
 

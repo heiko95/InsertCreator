@@ -58,84 +58,6 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Properties
 
-        public ICommand OnLoadCsv => new RelayCommand(LoadCSV);
-
-        public ICommand OnReset => new RelayCommand(RemoveLogo);
-
-        public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
-
-        public ICommand OnUpload => new RelayCommand(LoadLogo);
-
-        public ICommand OnDeleteList => new RelayCommand(DeleteMinistryList);
-
-        private void DeleteMinistryList(object obj)
-        {
-            var result = MessageBox.Show("Möchten sie die Amtsträgerliste unwiderruflich löschen", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                ObservableCollection<MinistryGridViewModel> EmptyList = new ObservableCollection<MinistryGridViewModel>();
-                OnResetMinistries?.Invoke(this, new EventArgs());
-            }           
-        }
-
-        public ImageSource PreviewLogo
-        {
-            get { return GetValue<ImageSource>(); }
-            set
-            {
-                SetValue(string.Empty);
-                SetValue(value);
-            }
-        }
-
-        public bool ShowMetaData
-        {
-            get { return GetValue<bool>(); }
-            set
-            {
-                if (ShowMetaData != value)
-                {
-                    SetValue(value);
-                    Properties.Settings.Default.ShowComponistAndAutor = value;
-                    //_appSetting.WriteAppSetting(KeyName.ShowComponistAndAutor, value.ToString());
-                }
-            }
-        }
-
-        public bool UseGreenScreen
-        {
-            get { return GetValue<bool>(); }
-            set
-            {
-                if (UseGreenScreen != value)
-                {
-                    SetValue(value);
-                    Properties.Settings.Default.UseGreenscreen = value;
-                    //_appSetting.WriteAppSetting(KeyName.UseGreenscreen, value.ToString());
-                }
-            }
-        }
-
-        public int LogoPositionSelection
-        {
-            get { return GetValue<int>(); }            
-            set
-            {
-                if (LogoPositionSelection != value)
-                {
-                    SetValue(value);
-                    if (value == 1)
-                    {
-                        Properties.Settings.Default.LogoOnLefthand = false;
-                        return;
-                    }                    
-                    Properties.Settings.Default.LogoOnLefthand = true;               
-
-                }
-            }
-        }
-
-
         public bool LogoAsCornerbug
         {
             get { return GetValue<bool>(); }
@@ -149,6 +71,43 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        public int LogoPositionSelection
+        {
+            get { return GetValue<int>(); }
+            set
+            {
+                if (LogoPositionSelection != value)
+                {
+                    SetValue(value);
+                    if (value == 1)
+                    {
+                        Properties.Settings.Default.LogoOnLefthand = false;
+                        return;
+                    }
+                    Properties.Settings.Default.LogoOnLefthand = true;
+                }
+            }
+        }
+
+        public ICommand OnDeleteList => new RelayCommand(DeleteMinistryList);
+        public ICommand OnLoadCsv => new RelayCommand(LoadCSV);
+
+        public ICommand OnReset => new RelayCommand(RemoveLogo);
+
+        public ICommand OnSaveCsv => new RelayCommand(SaveCSV);
+
+        public ICommand OnUpload => new RelayCommand(LoadLogo);
+
+        public ImageSource PreviewLogo
+        {
+            get { return GetValue<ImageSource>(); }
+            set
+            {
+                SetValue(string.Empty);
+                SetValue(value);
+            }
+        }
+
         public bool ShowInsertInFullscreen
         {
             get { return GetValue<bool>(); }
@@ -158,8 +117,20 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                     Properties.Settings.Default.ShowInsertInFullscreen = value;
-                    //_appSetting.WriteAppSetting(KeyName.ShowInsertInFullscreen, value.ToString());
                     OnUpdateFullscreenMode?.Invoke(this, value);
+                }
+            }
+        }
+
+        public bool ShowMetaData
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (ShowMetaData != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.ShowComponistAndAutor = value;
                 }
             }
         }
@@ -173,8 +144,20 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                     Properties.Settings.Default.ShowPreviewPicture = value;
-                    //_appSetting.WriteAppSetting(KeyName.ShowPreviewPicture, value.ToString());
                     OnUpdatePreview?.Invoke(this, value);
+                }
+            }
+        }
+
+        public bool UseGreenScreen
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (UseGreenScreen != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.UseGreenscreen = value;
                 }
             }
         }
@@ -196,6 +179,15 @@ namespace HgSoftware.InsertCreator.ViewModel
                 bitmapimage.EndInit();
 
                 return bitmapimage;
+            }
+        }
+
+        private void DeleteMinistryList(object obj)
+        {
+            var result = MessageBox.Show("Möchten sie die Amtsträgerliste unwiderruflich löschen", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                OnResetMinistries?.Invoke(this, new EventArgs());
             }
         }
 

@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HgSoftware.InsertCreator.Model
 {
@@ -12,7 +7,7 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
-        private string _path;
+        private readonly string _path;
 
         #endregion Private Fields
 
@@ -35,20 +30,17 @@ namespace HgSoftware.InsertCreator.Model
 
             if (!string.IsNullOrEmpty(positionListText))
             {
-                 positionData = JsonConvert.DeserializeObject<PositionData>(positionListText);                              
+                positionData = JsonConvert.DeserializeObject<PositionData>(positionListText);
             }
 
             return positionData;
         }
-
 
         public void WritePositionData(PositionData positionData)
         {
             File.WriteAllText(_path, JsonConvert.SerializeObject(positionData));
         }
 
-
         #endregion Public Methods
-
     }
 }

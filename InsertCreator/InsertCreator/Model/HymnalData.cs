@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using HgSoftware.InsertCreator.Extensions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    public class HymnalData
+    public class HymnalData : IInsertData
     {
         #region Public Constructors
 
@@ -22,14 +24,16 @@ namespace HgSoftware.InsertCreator.Model
 
         #region Public Properties
 
-        public string Book { get; set; } = "";
+        public string Book { get; set; }
 
-        public string MelodieAutor { get; set; } = "";
-        public string Name { get; set; } = "";
-        public string Number { get; set; } = "";
+        public string FirstLine => $"{Book} {Number}";
+        public string MelodieAutor { get; set; }
+        public string Name { get; set; }
+        public string Number { get; set; }
 
-        public string SongVerses { get; set; } = "";
-        public string TextAutor { get; set; } = "";
+        public string SecondLine => Name.LimitString(20);
+        public string SongVerses { get; set; }
+        public string TextAutor { get; set; }
 
         #endregion Public Properties
 
@@ -37,21 +41,21 @@ namespace HgSoftware.InsertCreator.Model
 
         private string WriteInputVers(ObservableCollection<SelectedVerse> verses)
         {
-            string state = "";
+            StringBuilder state = new StringBuilder("");
 
             string inputVerse = "";
 
             foreach (var verse in verses)
             {
                 if (verse.IsSelected)
-                    state += "T";
+                    state.Append("T");
                 else
-                    state += "F";
+                    state.Append("F");
             }
 
             List<Match> matches = new List<Match>();
 
-            foreach (Match match in Regex.Matches(state, "[T]{1,}"))
+            foreach (Match match in Regex.Matches(state.ToString(), "[T]{1,}"))
             {
                 matches.Add(match);
             }

@@ -1,54 +1,56 @@
 ﻿using HgSoftware.InsertCreator.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {
-   public class CustomizedInsertViewModel : ObservableObject
+    public class CustomizedInsertViewModel : ObservableObject
     {
         #region Private Fields
 
-        private FadeInWriter _fadeInWriter;
+        private readonly FadeInWriter _fadeInWriter;
 
-        private CustomInsertJasonReaderWriter _readerWriter = new CustomInsertJasonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.json");
+        private readonly HistoryViewModel _historyViewModel;
+        private readonly CustomInsertJasonReaderWriter _readerWriter = new CustomInsertJasonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.json");
+        private bool _studioMode;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public CustomizedInsertViewModel(FadeInWriter fadeInWriter)
+        public CustomizedInsertViewModel(FadeInWriter fadeInWriter, HistoryViewModel historyViewModel)
         {
             _fadeInWriter = fadeInWriter;
+            _historyViewModel = historyViewModel;
             CustomInserts = new List<CustomListViewModel>();
-            LoadInserts();            
+            LoadInserts();
             CustomInsertViewSource.Source = CustomInserts;
         }
-
-        public void LoadInserts()
-        {
-            CustomInserts = _readerWriter.LoadMinistryData();
-        }
-
-        public void SaveInserts()
-        {
-            _readerWriter.WriteMinistryData(CustomInserts);
-        }
-
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
+        public string ButtonLeft
+        {
+            get
+            {
+                if (_studioMode) return "Erstellen";
+                else return "Zurücksetzen";
+            }
+        }
 
-
+        public string ButtonRight
+        {
+            get
+            {
+                if (_studioMode) return "Anzeigen";
+                else return "Erstellen und Anzeigen";
+            }
+        }
 
         public List<CustomListViewModel> CustomInserts
         {
@@ -70,9 +72,11 @@ namespace HgSoftware.InsertCreator.ViewModel
             get { return CustomInsertViewSource.View; }
         }
 
+        public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
+
         public ICommand ListKeyDownCommand => new RelayCommand(OnListKeyDown);
 
-        public ICommand ResetCommand => new RelayCommand(OnResetPressed);
+        public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
 
         public int SelectedIndex
         {
@@ -104,6 +108,8 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
+                OnPropertyChanged("ValidFlagLeft");
+                OnPropertyChanged("ValidFlagRight");
             }
         }
 
@@ -113,6 +119,32 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
+                OnPropertyChanged("ValidFlagLeft");
+                OnPropertyChanged("ValidFlagRight");
+            }
+        }
+
+        public bool ValidFlagLeft
+        {
+            get
+            {
+                if (!_studioMode)
+                {
+                    return true;
+                }
+                if (string.IsNullOrEmpty(TextLaneOne) && string.IsNullOrEmpty(TextLaneTwo))
+                    return false;
+                return true;
+            }
+        }
+
+        public bool ValidFlagRight
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TextLaneOne) && string.IsNullOrEmpty(TextLaneTwo))
+                    return false;
+                return true;
             }
         }
 
@@ -124,7 +156,45 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #endregion Internal Properties
 
+        #region Public Methods
+
+        public void LoadInserts()
+        {
+            CustomInserts = _readerWriter.LoadMinistryData();
+        }
+
+        public void SaveInserts()
+        {
+            _readerWriter.WriteMinistryData(CustomInserts);
+        }
+
+        public void UpdateButtons(bool studioMode)
+        {
+            _studioMode = studioMode;
+            OnPropertyChanged("ButtonLeft");
+            OnPropertyChanged("ButtonRight");
+            OnPropertyChanged("ValidFlagLeft");
+            OnPropertyChanged("ValidFlagRight");
+        }
+
+        #endregion Public Methods
+
         #region Private Methods
+
+        private void AddFade()
+        {
+            if (SelectedItem != null)
+            {
+                SelectedItem.TextLaneOne = TextLaneOne;
+                SelectedItem.TextLaneTwo = TextLaneTwo;
+                CustomInsertView.Refresh();
+                TextLaneOne = "";
+                TextLaneTwo = "";
+                SelectedIndex = -1;
+                return;
+            }
+            AddToList();
+        }
 
         private void AddToList()
         {
@@ -138,25 +208,37 @@ namespace HgSoftware.InsertCreator.ViewModel
             TextLaneTwo = "";
         }
 
-        private void OnAcceptPressed(object obj)
+        private void OnButtonLeft(object obj)
         {
-            _fadeInWriter.WriteCustom(TextLaneOne, TextLaneTwo);
-
-            if (SelectedItem != null)
+            if (_studioMode)
             {
-                SelectedItem.TextLaneOne = TextLaneOne;
-                SelectedItem.TextLaneTwo = TextLaneTwo;
-                CustomInsertView.Refresh();
-                TextLaneOne = "";
-                TextLaneTwo = "";
-                SelectedIndex = -1;
+                var fade = new CustomInsert(TextLaneOne, TextLaneTwo);
+                _historyViewModel.AddToHistory(fade);
+                AddFade();
                 return;
             }
 
-            AddToList();
-
-
+            _fadeInWriter.ResetFade();
+            SelectedIndex = -1;
+            _historyViewModel.SelectedIndex = -1;
+            TextLaneOne = "";
+            TextLaneTwo = "";
         }
+
+        private void OnButtonRight(object obj)
+        {
+            var fade = new CustomInsert(TextLaneOne, TextLaneTwo);
+
+            if (!_studioMode)
+            {
+                _historyViewModel.AddToHistory(fade);
+            }
+            _fadeInWriter.WriteFade(fade);
+            _historyViewModel.SelectFade(fade);
+
+            AddFade();
+        }
+
         private void OnListKeyDown(object obj)
         {
             if (SelectedItem != null)
@@ -165,16 +247,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 CustomInsertView.Refresh();
                 SelectedIndex = -1;
                 TextLaneOne = "";
-                TextLaneTwo = "";                
+                TextLaneTwo = "";
             }
-        }
-        private void OnResetPressed(object obj)
-        {
-            _fadeInWriter.ResetFade();
-            SelectedIndex = -1;
-            TextLaneOne = "";
-            TextLaneTwo = "";
-            
         }
 
         #endregion Private Methods

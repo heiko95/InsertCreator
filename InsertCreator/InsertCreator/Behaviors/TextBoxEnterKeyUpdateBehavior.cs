@@ -33,20 +33,12 @@ namespace HgSoftware.InsertCreator.Behaviors
         private void AssociatedObject_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            if (textBox != null)
+            if (textBox != null && e.Key == Key.Return && e.Key == Key.Enter)
             {
-                if (e.Key == Key.Return)
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        //textBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-
-                        // Kill logical focus
-                        FocusManager.SetFocusedElement(FocusManager.GetFocusScope(textBox), null);
-                        // Kill keyboard focus
-                        Keyboard.ClearFocus();
-                    }
-                }
+                // Kill logical focus
+                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(textBox), null);
+                // Kill keyboard focus
+                Keyboard.ClearFocus();
             }
         }
 

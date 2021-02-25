@@ -3,11 +3,11 @@
 namespace HgSoftware.InsertCreator.View
 {
     /// <summary>
-    /// Interaction logic for BibleView.xaml
+    /// Interaction logic for HistoryView.xaml
     /// </summary>
-    public partial class BibleView : UserControl
+    public partial class HistoryView : UserControl
     {
-        public BibleView()
+        public HistoryView()
         {
             InitializeComponent();
         }

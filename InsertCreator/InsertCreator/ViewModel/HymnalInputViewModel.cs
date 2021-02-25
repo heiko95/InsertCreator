@@ -1,7 +1,6 @@
 ﻿using HgSoftware.InsertCreator.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
@@ -12,17 +11,20 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly string _bookname;
 
+        private readonly List<Song> _currentHymnal;
         private readonly FadeInWriter _fadeInWriter;
+        private readonly HistoryViewModel _historyViewModel;
 
-        private List<Song> _currentHymnal = new List<Song>();
+        private bool _studioMode;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public HymnalInputViewModel(List<Song> hymnalList, string bookname, FadeInWriter fadeInWriter)
+        public HymnalInputViewModel(List<Song> hymnalList, string bookname, FadeInWriter fadeInWriter, HistoryViewModel historyViewModel)
         {
             VerseList = new ObservableCollection<SelectedVerse>();
+            _historyViewModel = historyViewModel;
             _fadeInWriter = fadeInWriter;
             _currentHymnal = hymnalList;
             _bookname = bookname;
@@ -32,7 +34,23 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Properties
 
-        public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
+        public string ButtonLeft
+        {
+            get
+            {
+                if (_studioMode) return "Erstellen";
+                else return "Zurücksetzen";
+            }
+        }
+
+        public string ButtonRight
+        {
+            get
+            {
+                if (_studioMode) return "Anzeigen";
+                else return "Erstellen und Anzeigen";
+            }
+        }
 
         public string InputNumber
         {
@@ -56,17 +74,21 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
+
         public string MelodieAutor
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
 
-        public bool NumberFalidFlag
+        public bool NumberValidFlag
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
+
+        public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
 
         public List<int> SelectedVerses
         {
@@ -80,6 +102,12 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public bool ValidFlag
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
         public ObservableCollection<SelectedVerse> VerseList
         {
             get { return GetValue<ObservableCollection<SelectedVerse>>(); }
@@ -88,28 +116,41 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #endregion Public Properties
 
-        #region Private Methods
+        #region Public Methods
 
-        public ICommand ResetCommand => new RelayCommand(OnResetPressed);
+        public void UpdateButtons(bool studioMode)
+        {
+            _studioMode = studioMode;
+            OnPropertyChanged("ButtonLeft");
+            OnPropertyChanged("ButtonRight");
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void CheckValid(string number)
         {
             if (_currentHymnal.Exists(x => x.Number == number))
             {
-                NumberFalidFlag = true;
+                NumberValidFlag = true;
+                ValidFlag = true;
+
                 CreateFade(number);
                 return;
             }
 
             if (_currentHymnal.Exists(x => x.Number == $"{number}a"))
             {
-                NumberFalidFlag = true;
+                NumberValidFlag = true;
+                ValidFlag = true;
                 InputNumber = $"{number}a";
                 CreateFade(InputNumber);
                 return;
             }
 
-            NumberFalidFlag = false;
+            ValidFlag = !_studioMode;
+            NumberValidFlag = false;
             InputText = "";
             VerseList.Clear();
             MelodieAutor = "";
@@ -146,70 +187,32 @@ namespace HgSoftware.InsertCreator.ViewModel
                 MelodieAutor = $" Musik: {current.Metadata.Find(x => x.Key == "Musik").Value}";
             else
                 MelodieAutor = "";
-
-            //hymnal.SongVerses = InputVers;
         }
 
-        private void OnAcceptPressed(object obj)
+        private void OnButtonLeft(object obj)
         {
-            //WriteInputVers();
-            var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
-            _fadeInWriter.WriteHymnalFade(hymnal);
-            ClearView();
-        }
-
-        private void OnResetPressed(object obj)
-        {
-            _fadeInWriter.ResetFade();
-        }
-        private void WriteInputVers()
-        {
-            string state = "";
-
-            foreach (var verse in VerseList)
+            if (_studioMode)
             {
-                if (verse.IsSelected)
-                    state += "T";
-                else
-                    state += "F";
-            }
-
-            List<Match> matches = new List<Match>();
-
-            foreach (Match match in Regex.Matches(state, "[T]{1,}"))
-            {
-                matches.Add(match);
-            }
-
-            if (matches.Count > 0)
-            {
-                InputVers = " / ";
-
-                foreach (var match in matches)
-                {
-                    switch (match.Length)
-                    {
-                        case 1:
-                            InputVers = $"{InputVers}{match.Index + 1}";
-                            break;
-
-                        case 2:
-                            InputVers = $"{InputVers}{match.Index + 1}-{match.Index + match.Length}";
-                            break;
-
-                        default:
-                            InputVers = $"{InputVers}{match.Index + 1}-{match.Index + match.Length}";
-                            break;
-                    }
-
-                    InputVers = $"{InputVers} + ";
-                }
-
-                char[] charsToTrim = { ' ', '+' };
-                InputVers = InputVers.TrimEnd(charsToTrim);
+                var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
+                _historyViewModel.AddToHistory(hymnal);
+                ClearView();
                 return;
             }
-            InputVers = "";
+            _fadeInWriter.ResetFade();
+            _historyViewModel.SelectedIndex = -1;
+        }
+
+        private void OnButtonRight(object obj)
+        {
+            var hymnal = new HymnalData(_bookname, InputNumber, InputText, MelodieAutor, TextAutor, VerseList);
+
+            if (!_studioMode)
+            {
+                _historyViewModel.AddToHistory(hymnal);
+            }
+            _fadeInWriter.WriteFade(hymnal);
+            _historyViewModel.SelectFade(hymnal);
+            ClearView();
         }
 
         #endregion Private Methods
