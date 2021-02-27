@@ -14,11 +14,8 @@ Contains the song numbers and titles of the German hymnal as well as the German 
 ## Getting Started
 
 - Download Last Release
-!(Release)[wiki/Images/Release.PNG)
 
-
-
-
+![Release](wiki/Images/Release.PNG)
 - Execute Setupexe
 - Follow Installer Instruction
 
