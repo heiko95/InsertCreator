@@ -56,12 +56,6 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
-                if (value != -1)
-                {
-                    ValidFlag = true;
-                    return;
-                }
-                ValidFlag = false;
             }
         }
 
@@ -71,13 +65,20 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
+                OnPropertyChanged("ValidFlag");
             }
         }
 
         public bool ValidFlag
         {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
+            get
+            {
+                if (SelectedItem != null)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
         #endregion Public Properties
