@@ -15,7 +15,7 @@ See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
 
 ## Getting Started
 
-- Download Last Release
+- [Download](/releases/latest) Last Release 
 
 ![Release](wiki/Images/Release.PNG)
 - Execute Setupexe
