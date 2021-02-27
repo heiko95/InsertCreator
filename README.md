@@ -11,7 +11,7 @@ See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
 - Create ministrie Inserts
 - Create custom Inserts
 - Default mode for creating inserts directly 
-- Studio mode with preview window and historyview
+- [Studio mode](https://github.com/heiko95/InsertCreator/wiki/05.-Studio-Modus) with preview window and historyview
 
 ## Getting Started
 
