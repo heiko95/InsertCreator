@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HgSoftware.InsertCreator.ViewModel
+﻿namespace HgSoftware.InsertCreator.ViewModel
 {
     public class CustomListViewModel : ObservableObject
     {
+        #region Public Constructors
 
         public CustomListViewModel()
         {
             TextLaneOne = "";
             TextLaneTwo = "";
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public string TextLaneOne
         {
@@ -33,10 +32,6 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-
-
-
-
-
+        #endregion Public Properties
     }
 }

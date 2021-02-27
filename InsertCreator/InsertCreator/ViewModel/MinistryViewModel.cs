@@ -14,15 +14,18 @@ namespace HgSoftware.InsertCreator.ViewModel
     {
         #region Private Fields
 
-        private FadeInWriter _fadeInWriter;
-        private MinistryJsonReaderWriter _readerWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
+        private readonly FadeInWriter _fadeInWriter;
+        private readonly HistoryViewModel _historyViewModel;
+        private readonly MinistryJsonReaderWriter _readerWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
+        private bool _studioMode;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MinistryViewModel(FadeInWriter fadeInWriter)
+        public MinistryViewModel(FadeInWriter fadeInWriter, HistoryViewModel historyViewModel)
         {
+            _historyViewModel = historyViewModel;
             _fadeInWriter = fadeInWriter;
             Ministries = new ObservableCollection<MinistryGridViewModel>();
 
@@ -40,13 +43,46 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Properties
 
-        public ICommand AcceptCommand => new RelayCommand(OnAcceptPressed);
-
-        public ICommand ResetCommand => new RelayCommand(OnResetPressed);
-
-        private void OnResetPressed(object obj)
+        public bool ValidFlagRight
         {
-            _fadeInWriter.ResetFade();
+            get
+            {
+                if (SelectedItem == null)
+                    return false;
+                return true;
+            }
+        }
+
+        public bool ValidFlagLeft
+        {
+            get
+            {
+                if (!_studioMode)
+                {
+                    return true;
+                }
+                if (SelectedItem == null)
+                    return false;
+                return true;
+            }
+        }
+
+        public string ButtonLeft
+        {
+            get
+            {
+                if (_studioMode) return "Erstellen";
+                else return "Zurücksetzen";
+            }
+        }
+
+        public string ButtonRight
+        {
+            get
+            {
+                if (_studioMode) return "Anzeigen";
+                else return "Erstellen und Anzeigen";
+            }
         }
 
         public string FilterText
@@ -57,17 +93,13 @@ namespace HgSoftware.InsertCreator.ViewModel
                 SetValue(value);
                 if (MinistryView != null)
                 {
-                    try
-                    {
-                        MinistryView.Refresh();
-                        MinistryView.MoveCurrentToFirst();
-                    }
-                    catch
-                    {
-                    }
+                    MinistryView.Refresh();
+                    MinistryView.MoveCurrentToFirst();
                 }
             }
         }
+
+        public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
 
         public ObservableCollection<MinistryGridViewModel> Ministries
         {
@@ -89,16 +121,20 @@ namespace HgSoftware.InsertCreator.ViewModel
             get { return MinistryViewSource.View; }
         }
 
+        public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
+        public ICommand RowEditEndCommand => new RelayCommand(OnEditRowEnd);
+
         public MinistryGridViewModel SelectedItem
         {
             get { return GetValue<MinistryGridViewModel>(); }
             set
             {
                 SetValue(value);
+                OnPropertyChanged("ValidFlagLeft");
+                OnPropertyChanged("ValidFlagRight");
             }
         }
 
-        //}
         public ObservableCollection<string> UsedFunctions { get; set; } = new ObservableCollection<string>();
 
         #endregion Public Properties
@@ -112,7 +148,28 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #endregion Internal Properties
 
+        #region Public Methods
+
+        public void UpdateButtons(bool studioMode)
+        {
+            _studioMode = studioMode;
+            OnPropertyChanged("ButtonLeft");
+            OnPropertyChanged("ButtonRight");
+            OnPropertyChanged("ValidFlagLeft");
+            OnPropertyChanged("ValidFlagRight");
+        }
+
+        #endregion Public Methods
+
         #region Internal Methods
+
+        internal void Reset()
+        {
+            Ministries.Clear();
+            MinistryViewSource.Source = Ministries;
+            MinistryView.Refresh();
+            _readerWriter.WriteMinistryData(Ministries);
+        }
 
         internal void UpdateMinistries(ObservableCollection<MinistryGridViewModel> ministryList)
         {
@@ -140,26 +197,8 @@ namespace HgSoftware.InsertCreator.ViewModel
             MinistryView.Refresh();
             _readerWriter.WriteMinistryData(Ministries);
         }
-        internal void Reset()
-        {
-            Ministries.Clear();
-            MinistryViewSource.Source = Ministries;
-            MinistryView.Refresh();
-            _readerWriter.WriteMinistryData(Ministries);
-        }
 
         #endregion Internal Methods
-
-        public ICommand RowEditEndCommand => new RelayCommand(OnEditRowEnd);
-
-        private void OnEditRowEnd(object obj)
-        {
-            var item = obj as MinistryGridViewModel;
-            if (item.ForeName == "" && item.SureName == "")
-            {
-                Ministries.Remove(item);
-            }
-        }
 
         #region Private Methods
 
@@ -186,8 +225,6 @@ namespace HgSoftware.InsertCreator.ViewModel
 
                 UpdateFunctionList();
                 MinistryView.Refresh();
-
-                return;
             }
         }
 
@@ -202,29 +239,58 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 MinistryGridViewModel p = (MinistryGridViewModel)e.Item;
 
-                if (!string.IsNullOrEmpty(p.ForeName) && !string.IsNullOrEmpty(p.SureName))
-                {
-                    if (p.SureName.ToLower().StartsWith(FilterText.ToLower())
+                if (!string.IsNullOrEmpty(p.ForeName) && !string.IsNullOrEmpty(p.SureName) &&
+                    p.SureName.ToLower().StartsWith(FilterText.ToLower())
                         || p.ForeName.ToLower().StartsWith(FilterText.ToLower())
                         || p.FullName.ToLower().StartsWith(FilterText.ToLower())
                         || p.FullName2.ToLower().StartsWith(FilterText.ToLower())
                         || p.FullName2.ToLower().Replace(",", "").StartsWith(FilterText.ToLower())
                         )
-                    {
-                        e.Accepted = true;
-                        return;
-                    }
+                {
+                    e.Accepted = true;
+                    return;
                 }
+
                 e.Accepted = false;
             }
         }
 
-        private void OnAcceptPressed(object obj)
+        private void OnButtonLeft(object obj)
+        {
+            if (_studioMode)
+            {
+                _historyViewModel.AddToHistory(SelectedItem);
+                FilterText = "";
+                SelectedItem = null;
+                return;
+            }
+
+            _fadeInWriter.ResetFade();
+            _historyViewModel.SelectedIndex = -1;
+            SelectedItem = null;
+        }
+
+        private void OnButtonRight(object obj)
         {
             if (SelectedItem != null)
             {
-                _fadeInWriter.WriteMinistryFade(SelectedItem);
+                if (!_studioMode)
+                {
+                    _historyViewModel.AddToHistory(SelectedItem);
+                }
+                _fadeInWriter.WriteFade(SelectedItem);
+                _historyViewModel.SelectFade(SelectedItem);
                 FilterText = "";
+                SelectedItem = null;
+            }
+        }
+
+        private void OnEditRowEnd(object obj)
+        {
+            var item = obj as MinistryGridViewModel;
+            if (item.ForeName == "" && item.SureName == "")
+            {
+                Ministries.Remove(item);
             }
         }
 
@@ -248,10 +314,6 @@ namespace HgSoftware.InsertCreator.ViewModel
                     UsedFunctions.Add(ministry.Function);
             }
         }
-
-
-
-
 
         #endregion Private Methods
     }

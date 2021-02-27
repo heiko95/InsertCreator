@@ -75,7 +75,6 @@
 
                     <Label Content="Mischa Schumacher" DockPanel.Dock="Top" />
                     <Label Content="Günter Siegele" />
-
                 </DockPanel>
 
                 <Label

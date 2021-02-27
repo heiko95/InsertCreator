@@ -123,28 +123,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="LogHelper.cs" />
+    <Compile Include="Model\CustomInsert.cs" />
+    <Compile Include="Model\IInsertData.cs" />
     <Compile Include="Model\PositionJsonReaderWriter.cs" />
     <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
     <Compile Include="Model\PositionData.cs" />
     <Compile Include="Model\PreviewWindowController.cs" />
     <Compile Include="ViewModel\CustomizedInsertViewModel.cs" />
     <Compile Include="ViewModel\CustomListViewModel.cs" />
+    <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\PreviewViewModel.cs" />
     <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
-    <Compile Include="Extensions\AutoEditingComboBox.cs" />
-    <Compile Include="Model\BibleBook.cs" />
-    <Compile Include="Model\BibleChapter.cs" />
-    <Compile Include="Model\BibleJsonReader.cs" />
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
-    <Compile Include="ViewModel\BibleViewModel.cs" />
-    <Compile Include="View\BibleView.xaml.cs">
-      <DependentUpon>BibleView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\CustomizedInsertView.xaml.cs">
       <DependentUpon>CustomizedInsertView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HistoryView.xaml.cs">
+      <DependentUpon>HistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HymnalInputView.xaml.cs">
       <DependentUpon>HymnalInputView.xaml</DependentUpon>
@@ -156,15 +154,15 @@
       <DependentUpon>PreView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValidationRules\MaxChapterValidation.cs" />
-    <Page Include="View\BibleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CustomizedInsertView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,15 +239,12 @@
     <None Include="DataSource\Bible_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DataSource\CB.json" />
     <None Include="DataSource\CB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DataSource\GB.json" />
     <None Include="DataSource\GB_Data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DataSource\liste-neues-gesangbuch-20041209.csv" />
     <None Include="InsertCreator_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />

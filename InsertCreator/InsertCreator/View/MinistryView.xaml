@@ -1,12 +1,12 @@
 ﻿<UserControl
     x:Class="HgSoftware.InsertCreator.View.MinistryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:HgSoftware.InsertCreator.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:HgSoftware.InsertCreator.Converters"
     x:Name="View"
     d:DesignHeight="450"
     d:DesignWidth="465"
@@ -50,7 +50,7 @@
             PreviewMouseDoubleClick="MGrid_PreviewMouseDoubleClick"
             RowEditEnding="MGrid_RowEditEnding"
             RowHeaderStyle="{StaticResource MaterialDesignDataGridRowHeader}"
-            SelectedItem="{Binding Path=SelectedItem, Converter={StaticResource SelectedRowConverter}}"
+            SelectedItem="{Binding Path=SelectedItem, Converter={StaticResource SelectedRowConverter}, Mode=TwoWay}"
             SelectionMode="Single">
 
             <i:Interaction.Triggers>
@@ -106,14 +106,16 @@
                     Grid.Column="0"
                     Width="181"
                     Margin="20"
-                    Command="{Binding ResetCommand}"
-                    Content="Zurücksetzen " />
+                    Command="{Binding LeftButtonCommand}"
+                    Content="{Binding ButtonLeft, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding ValidFlagLeft, UpdateSourceTrigger=PropertyChanged}" />
                 <Button
                     Grid.Column="1"
+                    Width="181"
                     Margin="20"
-                    Command="{Binding AcceptCommand}"
-                    Content="Erstellen und Anzeigen "
-                    IsEnabled="{Binding NumberFalidFlag, UpdateSourceTrigger=PropertyChanged}" />
+                    Command="{Binding RightButtonCommand}"
+                    Content="{Binding ButtonRight, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding ValidFlagRight, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </StackPanel>
     </Grid>

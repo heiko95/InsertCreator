@@ -11,7 +11,7 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
-        private MinistryJsonReaderWriter _ministryJsonReaderWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
+        private readonly MinistryJsonReaderWriter _ministryJsonReaderWriter = new MinistryJsonReaderWriter($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Ministry.json");
 
         #endregion Private Fields
 
@@ -39,7 +39,7 @@ namespace HgSoftware.InsertCreator.Model
                     }
                 }
             }
-            return null;
+            return new ObservableCollection<MinistryGridViewModel>();
         }
 
         public void SaveCsv()
@@ -58,8 +58,6 @@ namespace HgSoftware.InsertCreator.Model
                 SaveCsv(ministries, saveFileDialog1.FileName);
             }
         }
-
-       
 
         #endregion Public Methods
 

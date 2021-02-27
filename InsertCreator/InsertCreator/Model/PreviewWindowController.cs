@@ -6,33 +6,23 @@ namespace HgSoftware.InsertCreator.Model
 {
     internal class PreviewWindowController
     {
-        private readonly PreView _window = new PreView();
+        #region Private Fields
+
         private readonly PreviewViewModel _previewViewModel;
+        private readonly PreView _window = new PreView();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public PreviewWindowController(PreviewViewModel vm)
         {
             _previewViewModel = vm;
         }
 
-        private bool SetWindow()
-        {
-            var screens = System.Windows.Forms.Screen.AllScreens.ToList();
+        #endregion Public Constructors
 
-            if (screens.Count < 2)
-                return false;
-
-            _window.DataContext = _previewViewModel;
-            _window.ShowInTaskbar = false;
-            _window.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
-
-            var secScreen = screens.First(x => x.Primary == false);
-            //var secScreen = screens[0];
-            System.Drawing.Rectangle r = secScreen.WorkingArea;
-
-            _window.Top = r.Top;
-            _window.Left = r.Left;
-            return true;
-        }
+        #region Public Methods
 
         public void Show()
         {
@@ -40,6 +30,15 @@ namespace HgSoftware.InsertCreator.Model
             {
                 _window.Show();
             }
+        }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        internal void Close()
+        {
+            _window.Close();
         }
 
         internal void Update(bool state)
@@ -53,9 +52,29 @@ namespace HgSoftware.InsertCreator.Model
             _window.Hide();
         }
 
-        internal void Close()
+        #endregion Internal Methods
+
+        #region Private Methods
+
+        private bool SetWindow()
         {
-            _window.Close();
+            var screens = System.Windows.Forms.Screen.AllScreens.ToList();
+
+            if (screens.Count < 2)
+                return false;
+
+            _window.DataContext = _previewViewModel;
+            _window.ShowInTaskbar = false;
+            _window.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
+
+            var secScreen = screens.First(x => !x.Primary);
+            System.Drawing.Rectangle r = secScreen.WorkingArea;
+
+            _window.Top = r.Top;
+            _window.Left = r.Left;
+            return true;
         }
+
+        #endregion Private Methods
     }
 }

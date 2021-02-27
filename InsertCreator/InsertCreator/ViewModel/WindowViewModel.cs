@@ -16,15 +16,13 @@ namespace HgSoftware.InsertCreator.ViewModel
         /// </summary>
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
-        private readonly BibleJsonReader _bibleJsonReader = new BibleJsonReader();
         private readonly HymnalInputViewModel _cbData;
 
-        private readonly FadeInWriter _fadeInWriter;
         private readonly HymnalInputViewModel _gbData;
 
         private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
+
         private readonly PreviewWindowController _previewWindow;
-        public PreviewViewModel PreviewViewModel { get; set; }
 
         #endregion Private Fields
 
@@ -32,87 +30,38 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public WindowViewModel(PositionData positionData)
         {
-            _fadeInWriter = new FadeInWriter(positionData);
-
-
-            _log.Info("Create Preview");
-            SetPreview(Properties.Settings.Default.ShowPreviewPicture);
-
-
+            var fadeInWriter = new FadeInWriter(positionData);
+            HistoryViewModel = new HistoryViewModel(fadeInWriter);
 
             _log.Info("Load Data");
-            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", _fadeInWriter);
-            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch", _fadeInWriter);
-            BibleViewModel = new BibleViewModel(_bibleJsonReader.LoadBibleData(($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json")), _fadeInWriter);
+            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", fadeInWriter, HistoryViewModel);
+            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch", fadeInWriter, HistoryViewModel);
 
             HymnalInputVisible = true;
             BibleInputVisible = false;
 
             _log.Info("Load Ministry");
-            MinistryViewModel = new MinistryViewModel(_fadeInWriter);
-            CustomizedViewModel = new CustomizedInsertViewModel(_fadeInWriter);
+            MinistryViewModel = new MinistryViewModel(fadeInWriter, HistoryViewModel);
+            CustomizedViewModel = new CustomizedInsertViewModel(fadeInWriter, HistoryViewModel);
 
             _log.Info("Load PreviewMode");
-            PreviewViewModel = new PreviewViewModel(_fadeInWriter.CurrentFade);
+            PreviewViewModel = new PreviewViewModel(fadeInWriter.CurrentFade);
 
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
             ConfigViewModel.OnResetMinistries += ResetMinistries;
             ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
             ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
-            _fadeInWriter.OnInsertUpdate += UpdatePreview;
+            fadeInWriter.OnInsertUpdate += UpdatePreview;
 
             CurrentHymnalViewModel = _gbData;
 
             _previewWindow = new PreviewWindowController(PreviewViewModel);
 
+            _log.Info("Create Preview");
+            SetPreview(Properties.Settings.Default.ShowPreviewPicture);
+
             if (Properties.Settings.Default.ShowInsertInFullscreen)
                 _previewWindow.Show();
-        }
-
-
-
-        public bool PrviewVisibleFlag
-        {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
-        }
-
-        public string With
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        private void SetPreview(bool state)
-        {
-            if (state)
-            {
-                With = "1200";
-                PrviewVisibleFlag = true;
-                OnPropertyChanged("With");
-                OnPropertyChanged("PrviewVisibleFlag");
-                return;
-            }
-            PrviewVisibleFlag = false;
-            With = "550";
-            OnPropertyChanged("With");
-            OnPropertyChanged("PrviewVisibleFlag");
-            return;
-        }
-
-        private void UpdateFullscreenMode(object sender, bool e)
-        {
-            _previewWindow.Update(e);
-        }
-
-        private void UpdatePreview(object sender, Bitmap e)
-        {
-            PreviewViewModel.SetPreview(e);
-        }
-
-        private void UpdatePreviewMode(object sender, bool e)
-        {
-            SetPreview(e);
         }
 
         #endregion Public Constructors
@@ -125,21 +74,12 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
-        public BibleViewModel BibleViewModel { get; set; }
-
         public ICommand CloseCommand => new RelayCommand(OnCloseWindow);
-
         public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
 
         public HymnalInputViewModel CurrentHymnalViewModel
         {
             get { return GetValue<HymnalInputViewModel>(); }
-            set { SetValue(value); }
-        }
-
-        public bool HymnalInputVisible
-        {
-            get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
@@ -149,7 +89,21 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
-        public CustomizedInsertViewModel CustomizedViewModel { get; set; } 
+        public CustomizedInsertViewModel CustomizedViewModel { get; set; }
+
+        public string Hight
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public HistoryViewModel HistoryViewModel { get; set; }
+
+        public bool HymnalInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
 
         public InfoViewModel InfoViewModel { get; set; } = new InfoViewModel();
 
@@ -160,8 +114,14 @@ namespace HgSoftware.InsertCreator.ViewModel
         }
 
         public ICommand OnShowConfig => new RelayCommand(OpenConfigDialog);
-
         public ICommand OnShowInfo => new RelayCommand(OpenInfoDialog);
+        public PreviewViewModel PreviewViewModel { get; set; }
+
+        public bool PrviewVisibleFlag
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
 
         public int Selected
         {
@@ -169,14 +129,6 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
-
-                //if (value == 4)
-                //{
-                //    HymnalInputVisible = false;
-                //    BibleInputVisible = true;
-                //    CustomInputVisible = false;
-                //    return;
-                //}
 
                 if (value == 3)
                 {
@@ -207,16 +159,22 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        public string With
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        #endregion Public Properties
+
+        #region Private Methods
+
         private void OnCloseWindow(object obj)
         {
             CustomizedViewModel.SaveInserts();
             Properties.Settings.Default.Save();
             _previewWindow.Close();
         }
-
-        #endregion Public Properties
-
-        #region Private Methods
 
         async private void OpenConfigDialog(object obj)
         {
@@ -228,14 +186,54 @@ namespace HgSoftware.InsertCreator.ViewModel
             await MaterialDesignThemes.Wpf.DialogHost.Show(InfoViewModel, "MainWindow");
         }
 
+        private void ResetMinistries(object sender, EventArgs e)
+        {
+            MinistryViewModel.Reset();
+        }
+
+        private void SetPreview(bool state)
+        {
+            _gbData.UpdateButtons(state);
+            _cbData.UpdateButtons(state);
+            CustomizedViewModel.UpdateButtons(state);
+            MinistryViewModel.UpdateButtons(state);
+
+            if (state)
+            {
+                With = "1200";
+                Hight = "790";
+                PrviewVisibleFlag = true;
+                OnPropertyChanged("With");
+                OnPropertyChanged("Hight");
+                OnPropertyChanged("PrviewVisibleFlag");
+                return;
+            }
+            PrviewVisibleFlag = false;
+            With = "550";
+            Hight = "550";
+            OnPropertyChanged("With");
+            OnPropertyChanged("Hight");
+            OnPropertyChanged("PrviewVisibleFlag");
+        }
+
+        private void UpdateFullscreenMode(object sender, bool e)
+        {
+            _previewWindow.Update(e);
+        }
+
         private void UpdateMinistries(object sender, ObservableCollection<MinistryGridViewModel> e)
         {
             MinistryViewModel.UpdateMinistries(e);
         }
 
-        private void ResetMinistries(object sender, EventArgs e)
+        private void UpdatePreview(object sender, Bitmap e)
         {
-            MinistryViewModel.Reset();
+            PreviewViewModel.SetPreview(e);
+        }
+
+        private void UpdatePreviewMode(object sender, bool e)
+        {
+            SetPreview(e);
         }
 
         #endregion Private Methods

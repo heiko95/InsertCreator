@@ -7,15 +7,16 @@ namespace HgSoftware.InsertCreator.ViewModel
 {
     public class PreviewViewModel : ObservableObject
     {
+        #region Public Constructors
+
         public PreviewViewModel(Bitmap startimage)
         {
             PreviewImage = BitmapToImageSource(startimage);
         }
 
-        public void SetPreview(Bitmap image)
-        {
-            PreviewImage = BitmapToImageSource(image);
-        }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public ImageSource PreviewImage
         {
@@ -26,6 +27,19 @@ namespace HgSoftware.InsertCreator.ViewModel
                 SetValue(value);
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void SetPreview(Bitmap image)
+        {
+            PreviewImage = BitmapToImageSource(image);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
@@ -42,5 +56,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 return bitmapimage;
             }
         }
+
+        #endregion Private Methods
     }
 }

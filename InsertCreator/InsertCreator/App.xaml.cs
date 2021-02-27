@@ -22,7 +22,7 @@ namespace HgSoftware.InsertCreator
             string positionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Position.Json";
 
             PositionJsonReaderWriter positionDatajsonReaderWriter = new PositionJsonReaderWriter(positionPath);
-            
+
             PositionData positionData = new PositionData();
 
             if (!File.Exists(positionPath))
@@ -35,7 +35,6 @@ namespace HgSoftware.InsertCreator
                 positionData = positionDatajsonReaderWriter.LoadPositionData();
 
             FadeInWriter fadeInWriter = new FadeInWriter(positionData);
-
 
             if (!Directory.Exists(path))
             {

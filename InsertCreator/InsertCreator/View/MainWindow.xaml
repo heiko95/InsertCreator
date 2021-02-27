@@ -1,16 +1,18 @@
 ﻿<Window
     x:Class="HgSoftware.InsertCreator.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:HgSoftware.InsertCreator.View"
     xmlns:viewModels="clr-namespace:HgSoftware.InsertCreator.ViewModel"
     Title="Insert Creator"
     Width="{Binding With, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-    Height="550"
+    Height="{Binding Hight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+    d:DesignHeight="800"
+    d:DesignWidth="1200"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
     Icon="/DataSource/Logo.png"
@@ -71,13 +73,14 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="435" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="6*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="540" />
+                        <ColumnDefinition Width="533" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -88,9 +91,6 @@
                             </Grid>
                             <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
                                 <view:HymnalInputView DataContext="{Binding CurrentHymnalViewModel, UpdateSourceTrigger=PropertyChanged}" />
-                            </Grid>
-                            <Grid Visibility="{Binding Path=BibleInputVisible, Converter={StaticResource Converter}}">
-                                <view:BibleView DataContext="{Binding BibleViewModel, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Visibility="{Binding Path=CustomInputVisible, Converter={StaticResource Converter}}">
                                 <view:CustomizedInsertView DataContext="{Binding CustomizedViewModel, UpdateSourceTrigger=PropertyChanged}" />
@@ -153,10 +153,6 @@
                                 Width="95"
                                 HorizontalContentAlignment="Center"
                                 Content="Freitext" />
-                            <!--<ListBoxItem
-                                Width="100"
-                                HorizontalContentAlignment="Center"
-                                Content="Bibelstelle" />-->
 
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
@@ -241,6 +237,14 @@
                             </Button>
                         </DockPanel>
                     </DockPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Grid.Row="2"
+                    Margin="10"
+                    Background="{DynamicResource MaterialDesignPaper}"
+                    Visibility="{Binding Path=PrviewVisibleFlag, Converter={StaticResource Converter}}">
+                    <view:HistoryView DataContext="{Binding HistoryViewModel, UpdateSourceTrigger=PropertyChanged}" />
                 </materialDesign:Card>
             </Grid>
         </materialDesign:DialogHost>

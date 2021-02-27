@@ -8,7 +8,7 @@ namespace HgSoftware.InsertCreator.Extensions
     /// </summary>
     public static class ExtensionMethodes
     {
-        #region ObservableCollection extensions
+        #region Public Methods
 
         /// <summary>
         /// Add Range method for the type ObservableCollection
@@ -24,6 +24,19 @@ namespace HgSoftware.InsertCreator.Extensions
             }
         }
 
-        #endregion ObservableCollection extensions
+        /// <summary>
+        /// Shortens the string at the given position and adds "..." at end
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string LimitString(this string value, int length)
+        {
+            if (!string.IsNullOrEmpty(value) && value.Length > length)
+                return $"{ value.Substring(0, length - 4)} ...";
+            return value;
+        }
+
+        #endregion Public Methods
     }
 }

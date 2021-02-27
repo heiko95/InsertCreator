@@ -9,7 +9,7 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
-        private string _path;
+        private readonly string _path;
 
         #endregion Private Fields
 
@@ -45,12 +45,10 @@ namespace HgSoftware.InsertCreator.Model
             return ministries;
         }
 
-
         public void WriteMinistryData(ObservableCollection<MinistryGridViewModel> ministries)
         {
             File.WriteAllText(_path, JsonConvert.SerializeObject(ministries));
         }
-      
 
         #endregion Public Methods
     }

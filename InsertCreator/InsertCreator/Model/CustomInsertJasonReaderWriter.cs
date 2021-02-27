@@ -2,19 +2,15 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    class CustomInsertJasonReaderWriter
+    internal class CustomInsertJasonReaderWriter
     {
         #region Private Fields
 
-        private string _path;
+        private readonly string _path;
 
         #endregion Private Fields
 
@@ -40,22 +36,19 @@ namespace HgSoftware.InsertCreator.Model
                 var tmpInsert = JsonConvert.DeserializeObject<List<CustomListViewModel>>(insertListtext);
 
                 foreach (var insert in tmpInsert)
-                {     
+                {
                     if (!(String.IsNullOrEmpty(insert.TextLaneOne) && String.IsNullOrEmpty(insert.TextLaneTwo)))
-                        insertList.Add(insert);                 
+                        insertList.Add(insert);
                 }
             }
             return insertList;
         }
-
 
         public void WriteMinistryData(List<CustomListViewModel> inserts)
         {
             File.WriteAllText(_path, JsonConvert.SerializeObject(inserts));
         }
 
-
         #endregion Public Methods
     }
 }
-

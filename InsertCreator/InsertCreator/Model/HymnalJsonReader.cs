@@ -10,11 +10,9 @@ namespace HgSoftware.InsertCreator.Model
 
         public List<Song> LoadHymnalData(string path)
         {
-            var songs = new List<Song>();
-
             var o1 = File.ReadAllText(path);
 
-            songs = JsonConvert.DeserializeObject<List<Song>>(o1);
+            var songs = JsonConvert.DeserializeObject<List<Song>>(o1);
 
             return songs;
         }
