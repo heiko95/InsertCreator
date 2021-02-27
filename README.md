@@ -3,6 +3,8 @@
 Software to Create Inserts for Divine service livestreams
 Contains the song numbers and titles of the German hymnal as well as the German choir book of the New Apostolic Church
 
+See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
+
 ## Summary
 
 - Create hymnal Inserts
