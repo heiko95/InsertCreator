@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace HgSoftware.InsertCreator.Model
 {
@@ -44,17 +45,12 @@ namespace HgSoftware.InsertCreator.Model
             var drawingTool = Graphics.FromImage(image);
             DrawLogo(drawingTool);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
         public void ResetFade()
         {
             Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/CustomInsert.png", System.Drawing.Imaging.ImageFormat.Png);
             CurrentFade = image;
             OnInsertUpdate?.Invoke(this, image);
         }
@@ -68,19 +64,30 @@ namespace HgSoftware.InsertCreator.Model
 
         public void WriteFade(IInsertData insert)
         {
-            switch (insert)
+            Bitmap image = SelectFadeWriter(insert);
+            if (image != null)
             {
-                case CustomInsert _:
-                    WriteCustom(insert as CustomInsert);
-                    break;
+                CreateInsert(image);
+            }
+        }
 
-                case HymnalData _:
-                    WriteHymnalFade(insert as HymnalData);
-                    break;
+        public void SaveFade(IInsertData insert)
+        {
+            Bitmap image = SelectFadeWriter(insert);
+            if (image != null)
+            {
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-                case MinistryGridViewModel _:
-                    WriteMinistryFade(insert as MinistryGridViewModel);
-                    break;
+                saveFileDialog1.Filter = "png files (*.png)|*.png";
+                saveFileDialog1.FilterIndex = 2;
+                saveFileDialog1.RestoreDirectory = true;
+                saveFileDialog1.InitialDirectory = Environment.GetEnvironmentVariable("userprofile");
+                saveFileDialog1.FileName = $"{insert.FirstLine}_{insert.SecondLine}";
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    image.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                }
             }
         }
 
@@ -88,7 +95,30 @@ namespace HgSoftware.InsertCreator.Model
 
         #region Private Methods
 
-        private void CreateCustomInsertDouble(string textLaneOne, string textLaneTwo, bool transparent = true, bool useCornerBug = false)
+        private Bitmap SelectFadeWriter(IInsertData insert)
+        {
+            switch (insert)
+            {
+                case CustomInsert _:
+                    return WriteCustom(insert as CustomInsert);
+
+                case HymnalData _:
+                    return WriteHymnalFade(insert as HymnalData);
+
+                case MinistryGridViewModel _:
+                    return WriteMinistryFade(insert as MinistryGridViewModel);
+            }
+            return null;
+        }
+
+        private void CreateInsert(Bitmap image)
+        {
+            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
+            CurrentFade = image;
+            OnInsertUpdate?.Invoke(this, image);
+        }
+
+        private Bitmap CreateCustomInsertDouble(string textLaneOne, string textLaneTwo, bool transparent = true, bool useCornerBug = false)
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
@@ -105,13 +135,11 @@ namespace HgSoftware.InsertCreator.Model
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/CustomInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            CurrentFade = image;
-            OnInsertUpdate?.Invoke(this, image);
+
+            return image;
         }
 
-        private void CreateCustomInsertSingle(string text, bool transparent = true, bool useCornerBug = false)
+        private Bitmap CreateCustomInsertSingle(string text, bool transparent = true, bool useCornerBug = false)
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
@@ -123,13 +151,11 @@ namespace HgSoftware.InsertCreator.Model
             new SolidBrush(Color.Black), _positionData.TextOneRowFirstLinePosition);
 
             DrawLogo(drawingTool);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/CustomInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            CurrentFade = image;
-            OnInsertUpdate?.Invoke(this, image);
+
+            return image;
         }
 
-        private void CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true, bool useCornerBug = false)
+        private Bitmap CreateHymnalInsertPicture(HymnalData hymnalData, bool transparent = true, bool useCornerBug = false)
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
 
@@ -149,13 +175,10 @@ namespace HgSoftware.InsertCreator.Model
 
             DrawLogo(drawingTool);
 
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            CurrentFade = image;
-            OnInsertUpdate?.Invoke(this, image);
+            return image;
         }
 
-        private void CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent, bool useCornerBug)
+        private Bitmap CreateHymnalInsertPictureMeta(HymnalData hymnalData, bool transparent, bool useCornerBug)
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
 
@@ -184,13 +207,11 @@ namespace HgSoftware.InsertCreator.Model
                new SolidBrush(Color.Black), _positionData.TextFourRowFourthLinePosition);
 
             DrawLogo(drawingTool);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/HymnalInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            CurrentFade = image;
-            OnInsertUpdate?.Invoke(this, image);
+
+            return image;
         }
 
-        private void CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true, bool useCornerBug = false)
+        private Bitmap CreateMinistrieInsert(MinistryGridViewModel ministry, bool transparent = true, bool useCornerBug = false)
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
 
@@ -208,10 +229,7 @@ namespace HgSoftware.InsertCreator.Model
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
-            image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/MinistryInsert.png", System.Drawing.Imaging.ImageFormat.Png);
-            CurrentFade = image;
-            OnInsertUpdate?.Invoke(this, image);
+            return image;
         }
 
         private void DrawLogo(Graphics drawingTool)
@@ -269,42 +287,40 @@ namespace HgSoftware.InsertCreator.Model
             }
         }
 
-        private void WriteCustom(CustomInsert insert)
+        private Bitmap WriteCustom(CustomInsert insert)
         {
             var greenScreen = !Properties.Settings.Default.UseGreenscreen;
             var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
 
             if (String.IsNullOrEmpty(insert.LineOne))
             {
-                CreateCustomInsertSingle(insert.LineTwo, greenScreen, cornerbug);
-                return;
+                return CreateCustomInsertSingle(insert.LineTwo, greenScreen, cornerbug);
             }
 
             if (String.IsNullOrEmpty(insert.LineTwo))
             {
-                CreateCustomInsertSingle(insert.LineOne, greenScreen, cornerbug);
-                return;
+                return CreateCustomInsertSingle(insert.LineOne, greenScreen, cornerbug);
             }
-            CreateCustomInsertDouble(insert.LineOne, insert.LineTwo, greenScreen, cornerbug);
+            return CreateCustomInsertDouble(insert.LineOne, insert.LineTwo, greenScreen, cornerbug);
         }
 
-        private void WriteHymnalFade(HymnalData hymnalData)
+        private Bitmap WriteHymnalFade(HymnalData hymnalData)
         {
             var greenScreen = !Properties.Settings.Default.UseGreenscreen;
             var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
 
             if (Properties.Settings.Default.ShowComponistAndAutor)
-                CreateHymnalInsertPictureMeta(hymnalData, greenScreen, cornerbug);
+                return CreateHymnalInsertPictureMeta(hymnalData, greenScreen, cornerbug);
             else
-                CreateHymnalInsertPicture(hymnalData, greenScreen, cornerbug);
+                return CreateHymnalInsertPicture(hymnalData, greenScreen, cornerbug);
         }
 
-        private void WriteMinistryFade(MinistryGridViewModel ministry)
+        private Bitmap WriteMinistryFade(MinistryGridViewModel ministry)
         {
             var greenScreen = !Properties.Settings.Default.UseGreenscreen;
             var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
 
-            CreateMinistrieInsert(ministry, greenScreen, cornerbug);
+            return CreateMinistrieInsert(ministry, greenScreen, cornerbug);
         }
 
         #endregion Private Methods

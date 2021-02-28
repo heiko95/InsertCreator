@@ -30,6 +30,13 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ICommand CreateCommand => new RelayCommand(OnCreateCommand);
         public ICommand DeleteCommand => new RelayCommand(OnDeleteElement);
 
+        public ICommand SaveCommand => new RelayCommand(OnSaveElement);
+
+        private void OnSaveElement(object obj)
+        {
+            _fadeInWriter.SaveFade(SelectedItem);
+        }
+
         public List<IInsertData> History { get; private set; } = new List<IInsertData>();
 
         /// <summary>
