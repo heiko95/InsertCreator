@@ -17,7 +17,7 @@ See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
 
 - [Download](https://github.com/heiko95/InsertCreator/releases/latest) Last Release 
 - Unpack zip-file
-- Execute Setupexe
+- Execute Setup.exe
 - Follow Installer Instruction
 
 ## Using with OBS
