@@ -16,8 +16,6 @@ See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
 ## Getting Started
 
 - [Download](https://github.com/heiko95/InsertCreator/releases/latest) Last Release 
-
-![Release](wiki/Images/Release.PNG)
 - Unpack zip-file
 - Execute Setupexe
 - Follow Installer Instruction
