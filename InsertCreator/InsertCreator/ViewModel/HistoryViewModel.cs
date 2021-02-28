@@ -1,4 +1,5 @@
 ﻿using HgSoftware.InsertCreator.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -27,6 +28,8 @@ namespace HgSoftware.InsertCreator.ViewModel
         #region Public Properties
 
         public ICommand CreateCommand => new RelayCommand(OnCreateCommand);
+        public ICommand DeleteCommand => new RelayCommand(OnDeleteElement);
+
         public List<IInsertData> History { get; private set; } = new List<IInsertData>();
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-        public ICommand ListKeyDownCommand => new RelayCommand(OnListKeyDown);
+        public ICommand ListKeyDownCommand => new RelayCommand(OnDeleteElement);
         public ICommand ResetCommand => new RelayCommand(OnReset);
 
         public int SelectedIndex
@@ -139,7 +142,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 _fadeInWriter.WriteFade(SelectedItem);
         }
 
-        private void OnListKeyDown(object obj)
+        private void OnDeleteElement(object obj)
         {
             if (SelectedItem != null)
             {
