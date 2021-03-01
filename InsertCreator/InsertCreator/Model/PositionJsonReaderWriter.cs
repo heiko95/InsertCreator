@@ -7,6 +7,11 @@ namespace HgSoftware.InsertCreator.Model
     {
         #region Private Fields
 
+        /// <summary>
+        /// Logfield
+        /// </summary>
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
+
         private readonly string _path;
 
         #endregion Private Fields
@@ -24,6 +29,7 @@ namespace HgSoftware.InsertCreator.Model
 
         public PositionData LoadPositionData()
         {
+            _log.Info("Load Position Data");
             var positionData = new PositionData();
 
             var positionListText = File.ReadAllText(_path);
@@ -38,6 +44,7 @@ namespace HgSoftware.InsertCreator.Model
 
         public void WritePositionData(PositionData positionData)
         {
+            _log.Info("WritePositionData");
             File.WriteAllText(_path, JsonConvert.SerializeObject(positionData));
         }
 

@@ -18,6 +18,8 @@ namespace HgSoftware.InsertCreator
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            _log.Info("Startup App");
+
             string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
             string positionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Position.Json";
 
@@ -25,8 +27,17 @@ namespace HgSoftware.InsertCreator
 
             PositionData positionData = new PositionData();
 
+            _log.Info("Check InsertCreator Directory");
+            if (!Directory.Exists(path))
+            {
+                _log.Info("Create InsertCreator Directory");
+                Directory.CreateDirectory(path);
+            }
+
+            _log.Info("Check Position Data file");
             if (!File.Exists(positionPath))
             {
+                _log.Info("Create Position Data file");
                 var file = File.Create(positionPath, 1024);
                 file.Close();
                 positionDatajsonReaderWriter.WritePositionData(positionData);
@@ -36,10 +47,6 @@ namespace HgSoftware.InsertCreator
 
             FadeInWriter fadeInWriter = new FadeInWriter(positionData);
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
             _log.Info("Create Ministry.json");
             FileCreate("Ministry.json", path);
             FileCreate("Insert.json", path);
@@ -47,7 +54,6 @@ namespace HgSoftware.InsertCreator
             _log.Info("Load Images");
             fadeInWriter.LoadImages();
 
-            _log.Info("Create ViewModel");
             var vm = new WindowViewModel(positionData);
 
             _log.Info("Open Window");
@@ -61,6 +67,7 @@ namespace HgSoftware.InsertCreator
 
             if (!File.Exists(fullpath))
             {
+                _log.Info($"Create {filename}");
                 var file = File.Create(fullpath, 1024);
                 file.Close();
             }
