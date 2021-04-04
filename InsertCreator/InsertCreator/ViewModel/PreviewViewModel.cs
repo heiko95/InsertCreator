@@ -28,6 +28,16 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
+        public ImageSource OldPreviewImage
+        {
+            get { return GetValue<ImageSource>(); }
+            set
+            {
+                SetValue(string.Empty);
+                SetValue(value);
+            }
+        }
+
         #endregion Public Properties
 
         #region Public Methods

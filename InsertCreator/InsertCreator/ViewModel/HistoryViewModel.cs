@@ -1,7 +1,10 @@
-﻿using HgSoftware.InsertCreator.Model;
+﻿using HgSoftware.InsertCreator.Behaviors;
+using HgSoftware.InsertCreator.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -14,6 +17,10 @@ namespace HgSoftware.InsertCreator.ViewModel
         private readonly FadeInWriter _fadeInWriter;
 
         #endregion Private Fields
+
+        /// <summary>
+        /// Returns the type of the item that can be dropped
+        /// </summary>
 
         #region Public Constructors
 
@@ -30,14 +37,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         public ICommand CreateCommand => new RelayCommand(OnCreateCommand);
         public ICommand DeleteCommand => new RelayCommand(OnDeleteElement);
 
-        public ICommand SaveCommand => new RelayCommand(OnSaveElement);
-
-        private void OnSaveElement(object obj)
-        {
-            _fadeInWriter.SaveFade(SelectedItem);
-        }
-
-        public List<IInsertData> History { get; private set; } = new List<IInsertData>();
+        public ObservableCollection<IInsertData> History { get; private set; } = new ObservableCollection<IInsertData>();
 
         /// <summary>
         /// Filtered Itemlist
@@ -59,6 +59,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public ICommand ListKeyDownCommand => new RelayCommand(OnDeleteElement);
         public ICommand ResetCommand => new RelayCommand(OnReset);
+        public ICommand SaveCommand => new RelayCommand(OnSaveElement);
 
         public int SelectedIndex
         {
@@ -116,7 +117,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
             else
             {
-                SelectedItem = History.Find(x => x.FirstLine == insertData.FirstLine && x.SecondLine == insertData.SecondLine);
+                SelectedItem = History.First(x => x.FirstLine == insertData.FirstLine && x.SecondLine == insertData.SecondLine);
                 HistoryView.Refresh();
             }
         }
@@ -125,7 +126,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             if (AlreadyExists(insert))
             {
-                SelectedItem = History.Find(x => x.FirstLine == insert.FirstLine && x.SecondLine == insert.SecondLine);
+                SelectedItem = History.First(x => x.FirstLine == insert.FirstLine && x.SecondLine == insert.SecondLine);
                 HistoryView.Refresh();
                 return;
             }
@@ -138,7 +139,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private bool AlreadyExists(IInsertData insertData)
         {
-            if (History.Exists(x => x.FirstLine == insertData.FirstLine) && History.Exists(x => x.SecondLine == insertData.SecondLine))
+            if (History.Any(x => x.FirstLine == insertData.FirstLine) && History.Any(x => x.SecondLine == insertData.SecondLine))
                 return true;
             return false;
         }
@@ -163,6 +164,11 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             _fadeInWriter.ResetFade();
             SelectedIndex = -1;
+        }
+
+        private void OnSaveElement(object obj)
+        {
+            _fadeInWriter.SaveFade(SelectedItem);
         }
 
         #endregion Private Methods
