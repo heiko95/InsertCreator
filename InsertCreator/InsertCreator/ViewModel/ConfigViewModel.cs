@@ -29,6 +29,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
             ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
             LogoAsCornerbug = Properties.Settings.Default.LogoAsCornerlogo;
+            OnClickShow = Properties.Settings.Default.OnClickShow;
 
             if (Properties.Settings.Default.LogoOnLefthand)
                 LogoPositionSelection = 0;
@@ -67,6 +68,19 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                     Properties.Settings.Default.LogoAsCornerlogo = value;
+                }
+            }
+        }
+
+        public bool OnClickShow
+        {
+            get { return GetValue<bool>(); }
+            set
+            {
+                if (OnClickShow != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.OnClickShow = value;
                 }
             }
         }
