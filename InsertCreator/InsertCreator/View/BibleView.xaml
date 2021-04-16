@@ -1,0 +1,146 @@
+﻿<UserControl
+    x:Class="HgSoftware.InsertCreator.View.BibleView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:HgSoftware.InsertCreator.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:HgSoftware.InsertCreator.View"
+    xmlns:viewModels="clr-namespace:HgSoftware.InsertCreator.ViewModel"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    mc:Ignorable="d">
+
+    <UserControl.Resources />
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="1.2*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1.2*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox
+                Grid.Column="0"
+                Margin="20"
+                materialDesign:HintAssist.Hint="Buch"
+                IsEditable="True"
+                IsTextSearchCaseSensitive="False"
+                IsTextSearchEnabled="true"
+                ItemsSource="{Binding Bible}"
+                SelectedValue="{Binding Path=BibleBook.Name}"
+                SelectedValuePath="Name"
+                Text="{Binding SelectedBook, UpdateSourceTrigger=PropertyChanged}"
+                TextSearch.TextPath="Name">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="TextSearch.Text" Value="{Binding Name}" />
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+                <ComboBox.ItemTemplate>
+
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBox
+                Grid.Column="1"
+                Margin="20"
+                VerticalAlignment="Center"
+                materialDesign:HintAssist.Hint="Kapitel"
+                IsEnabled="{Binding EnableChapter, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding SelectedChapter, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <TextBox
+                Grid.Column="3"
+                Margin="20"
+                VerticalAlignment="Center"
+                materialDesign:HintAssist.Hint="Vers"
+                IsEnabled="{Binding EnableVerse, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding SelectedVerses, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Width="181"
+                    Margin="20"
+                    Command="{Binding RemoveText}"
+                    Content="Textwort leeren"
+                    IsEnabled="{Binding TextBlockNotEmpty, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button
+                    Grid.Column="1"
+                    Width="181"
+                    Margin="20"
+                    Command="{Binding ViewOnline}"
+                    Content="Bibelwort nachschlagen"
+                    IsEnabled="{Binding ButtonsEnable, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </StackPanel>
+        <TextBox
+            Grid.Row="2"
+            Height="150"
+            Margin="20"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            materialDesign:HintAssist.Hint="Textwort"
+            AcceptsReturn="True"
+            HorizontalScrollBarVisibility="Disabled"
+            Text="{Binding Path=BibleText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto" />
+
+        <StackPanel
+            Grid.Row="5"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Width="181"
+                    Margin="20"
+                    Command="{Binding LeftButtonCommand}"
+                    Content="{Binding ButtonLeft, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding ButtonsEnable, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Column="1"
+                    Width="181"
+                    Margin="20"
+                    Command="{Binding RightButtonCommand}"
+                    Content="{Binding ButtonRight, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="{Binding ButtonsEnable, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

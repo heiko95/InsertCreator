@@ -76,6 +76,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DwayneNeed">
+      <HintPath>..\..\..\..\Downloads\DwayneNeed-master\DwayneNeed-master\Microsoft.DwayneNeed\bin\Debug\Microsoft.DwayneNeed.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -106,21 +109,33 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\BindingProxy.cs" />
     <Compile Include="LogHelper.cs" />
+    <Compile Include="Model\BibleBook.cs" />
+    <Compile Include="Model\BibleChapter.cs" />
+    <Compile Include="Model\BibleJsonReader.cs" />
     <Compile Include="Model\CustomInsert.cs" />
     <Compile Include="Model\IInsertData.cs" />
     <Compile Include="Model\PositionJsonReaderWriter.cs" />
     <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
     <Compile Include="Model\PositionData.cs" />
     <Compile Include="Model\PreviewWindowController.cs" />
+    <Compile Include="ViewModel\BaseErrorViewModel.cs" />
+    <Compile Include="ViewModel\BibleValidationViewModel.cs" />
+    <Compile Include="ViewModel\BibleBrowserViewModel.cs" />
+    <Compile Include="ViewModel\BibleViewModel.cs" />
     <Compile Include="ViewModel\CustomizedInsertViewModel.cs" />
     <Compile Include="ViewModel\CustomListViewModel.cs" />
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\PreviewViewModel.cs" />
-    <Compile Include="View\Controls\FilteredComboBox.cs" />
     <Compile Include="Converters\SelectedRowConverter.cs" />
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
+    <Compile Include="View\BibleBrowserView.xaml.cs">
+      <DependentUpon>BibleBrowserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BibleView.xaml.cs">
+      <DependentUpon>BibleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomizedInsertView.xaml.cs">
       <DependentUpon>CustomizedInsertView.xaml</DependentUpon>
     </Compile>
@@ -136,7 +151,14 @@
     <Compile Include="View\PreView.xaml.cs">
       <DependentUpon>PreView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ValidationRules\MaxChapterValidation.cs" />
+    <Page Include="View\BibleBrowserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BibleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="HgSoftware.InsertCreator.View.BibleBrowserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:interop="clr-namespace:Microsoft.DwayneNeed.Interop;assembly=Microsoft.DwayneNeed"
+    xmlns:local="clr-namespace:HgSoftware.InsertCreator.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding BrowserLoaded}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <DockPanel Width="800" Height="600">
+            <interop:AirspaceDecorator
+                AirspaceMode="Redirect"
+                Background="White"
+                IsInputRedirectionEnabled="True"
+                IsOutputRedirectionEnabled="True">
+                <WebBrowser
+                    x:Name="myBrowser"
+                    Margin="10"
+                    local:BibleBrowserView.Url="{Binding BibleLink}" />
+            </interop:AirspaceDecorator>
+        </DockPanel>
+    </Grid>
+</UserControl>
