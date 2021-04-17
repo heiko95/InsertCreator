@@ -106,17 +106,5 @@ namespace HgSoftware.InsertCreator.Properties {
                 this["LogoOnLefthand"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OnClickShow {
-            get {
-                return ((bool)(this["OnClickShow"]));
-            }
-            set {
-                this["OnClickShow"] = value;
-            }
-        }
     }
 }
