@@ -36,6 +36,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public ICommand CreateCommand => new RelayCommand(OnCreateCommand);
         public ICommand DeleteCommand => new RelayCommand(OnDeleteElement);
+        public ICommand DoubleClick => new RelayCommand(OnCreateCommand);
 
         public ObservableCollection<IInsertData> History { get; private set; } = new ObservableCollection<IInsertData>();
 
