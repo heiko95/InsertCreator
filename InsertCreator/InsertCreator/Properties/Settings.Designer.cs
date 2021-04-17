@@ -106,5 +106,29 @@ namespace HgSoftware.InsertCreator.Properties {
                 this["LogoOnLefthand"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.bibleserver.com")]
+        public string BibleServer {
+            get {
+                return ((string)(this["BibleServer"]));
+            }
+            set {
+                this["BibleServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LUT")]
+        public string BibleTranslation {
+            get {
+                return ((string)(this["BibleTranslation"]));
+            }
+            set {
+                this["BibleTranslation"] = value;
+            }
+        }
     }
 }

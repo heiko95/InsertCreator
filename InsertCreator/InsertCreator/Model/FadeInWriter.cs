@@ -97,17 +97,24 @@ namespace HgSoftware.InsertCreator.Model
 
         private Bitmap SelectFadeWriter(IInsertData insert)
         {
+            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
+            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
+
             switch (insert)
             {
                 case CustomInsert _:
-                    return WriteCustom(insert as CustomInsert);
+                    return WriteCustom(insert as CustomInsert, greenScreen, cornerbug);
 
                 case HymnalData _:
-                    return WriteHymnalFade(insert as HymnalData);
+                    return WriteHymnalFade(insert as HymnalData, greenScreen, cornerbug);
 
                 case MinistryGridViewModel _:
-                    return WriteMinistryFade(insert as MinistryGridViewModel);
+                    return WriteMinistryFade(insert as MinistryGridViewModel, greenScreen, cornerbug);
+
+                case BibleData _:
+                    return WriteBibleFade(insert as BibleData, greenScreen, cornerbug);
             }
+
             return null;
         }
 
@@ -149,6 +156,27 @@ namespace HgSoftware.InsertCreator.Model
             text,
             _positionData.FontTextOneRowFirstLine,
             new SolidBrush(Color.Black), _positionData.TextOneRowFirstLinePosition);
+
+            DrawLogo(drawingTool);
+
+            return image;
+        }
+
+        private Bitmap CreateBibleInsert(BibleData bibleData, bool transparent = true, bool useCornerBug = false)
+        {
+            Bitmap image = LoadFrame(transparent, useCornerBug);
+            var drawingTool = Graphics.FromImage(image);
+            DrawRectangle(drawingTool);
+
+            drawingTool.DrawString(
+         "Textwort",
+         _positionData.FontTextTwoRowFirstLine,
+         new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
+
+            drawingTool.DrawString(
+             bibleData.SecondLine,
+             _positionData.FontTextTwoRowSecondLine,
+             new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
             DrawLogo(drawingTool);
 
@@ -287,11 +315,8 @@ namespace HgSoftware.InsertCreator.Model
             }
         }
 
-        private Bitmap WriteCustom(CustomInsert insert)
+        private Bitmap WriteCustom(CustomInsert insert, bool greenScreen, bool cornerbug)
         {
-            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
-            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
-
             if (String.IsNullOrEmpty(insert.LineOne))
             {
                 return CreateCustomInsertSingle(insert.LineTwo, greenScreen, cornerbug);
@@ -304,23 +329,22 @@ namespace HgSoftware.InsertCreator.Model
             return CreateCustomInsertDouble(insert.LineOne, insert.LineTwo, greenScreen, cornerbug);
         }
 
-        private Bitmap WriteHymnalFade(HymnalData hymnalData)
+        private Bitmap WriteHymnalFade(HymnalData hymnalData, bool greenScreen, bool cornerbug)
         {
-            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
-            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
-
             if (Properties.Settings.Default.ShowComponistAndAutor)
                 return CreateHymnalInsertPictureMeta(hymnalData, greenScreen, cornerbug);
             else
                 return CreateHymnalInsertPicture(hymnalData, greenScreen, cornerbug);
         }
 
-        private Bitmap WriteMinistryFade(MinistryGridViewModel ministry)
+        private Bitmap WriteMinistryFade(MinistryGridViewModel ministry, bool greenScreen, bool cornerbug)
         {
-            var greenScreen = !Properties.Settings.Default.UseGreenscreen;
-            var cornerbug = Properties.Settings.Default.LogoAsCornerlogo;
-
             return CreateMinistrieInsert(ministry, greenScreen, cornerbug);
+        }
+
+        private Bitmap WriteBibleFade(BibleData bibleData, bool greenScreen, bool cornerbug)
+        {
+            return CreateBibleInsert(bibleData, greenScreen, cornerbug);
         }
 
         #endregion Private Methods

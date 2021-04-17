@@ -18,7 +18,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly HymnalInputViewModel _cbData;
 
-        public BibleBrowserViewModel BibleBrowserViewModel { get; set; } = new BibleBrowserViewModel();
+        //public BibleBrowserViewModel BibleBrowserViewModel { get; set; } = new BibleBrowserViewModel();
 
         public BibleViewModel BibleViewModel { get; private set; }
 
@@ -63,7 +63,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             _log.Info("ReadBible");
             BibleViewModel = new BibleViewModel(BibleJsonReader.LoadBibleData($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json"), fadeInWriter, HistoryViewModel);
-            BibleViewModel.OpenBibleBrowser += OnOpenBibleBrowser;
+            //BibleViewModel.OpenBibleBrowser += OnOpenBibleBrowser;
 
             _log.Info("Create Preview");
             SetPreview(Properties.Settings.Default.ShowPreviewPicture);
@@ -72,10 +72,10 @@ namespace HgSoftware.InsertCreator.ViewModel
                 _previewWindow.Show();
         }
 
-        private async void OnOpenBibleBrowser(object sender, string e)
-        {
-            await MaterialDesignThemes.Wpf.DialogHost.Show(BibleBrowserViewModel, "MainWindow");
-        }
+        //private async void OnOpenBibleBrowser(object sender, string e)
+        //{
+        //    await MaterialDesignThemes.Wpf.DialogHost.Show(BibleBrowserViewModel, "MainWindow");
+        //}
 
         #endregion Public Constructors
 

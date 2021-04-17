@@ -111,6 +111,7 @@
     <Compile Include="LogHelper.cs" />
     <Compile Include="Model\BibleBook.cs" />
     <Compile Include="Model\BibleChapter.cs" />
+    <Compile Include="Model\BibleData.cs" />
     <Compile Include="Model\BibleJsonReader.cs" />
     <Compile Include="Model\CustomInsert.cs" />
     <Compile Include="Model\IInsertData.cs" />

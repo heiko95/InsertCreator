@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.Design;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
@@ -20,7 +21,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly BibleValidationViewModel _bibleValidationViewModel;
 
-        public event EventHandler<string> OpenBibleBrowser;
+        //public event EventHandler<string> OpenBibleBrowser;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
@@ -114,6 +115,9 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #endregion Public Properties
 
+        public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
+        public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
+
         public ICommand ViewOnline => new RelayCommand(OpenBrowserDialog);
         public ICommand RemoveText => new RelayCommand(OnRemoveText);
 
@@ -124,7 +128,9 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void OpenBrowserDialog(object obj)
         {
-            OpenBibleBrowser?.Invoke(this, string.Empty);
+            var url = $"{Properties.Settings.Default.BibleServer}/{Properties.Settings.Default.BibleTranslation}/{SelectedBook}{SelectedChapter},{SelectedVerses}";
+            System.Diagnostics.Process.Start(url);
+            //OpenBibleBrowser?.Invoke(this, string.Empty);
         }
 
         public string SelectedChapter
@@ -135,6 +141,9 @@ namespace HgSoftware.InsertCreator.ViewModel
                 SetValue(value);
                 if (!_bibleValidationViewModel.ValidateChapter(SelectedBook, value, nameof(SelectedChapter)))
                     return;
+
+                if (!string.IsNullOrEmpty(SelectedVerses))
+                    _bibleValidationViewModel.ValidateVerse(SelectedBook, value, SelectedVerses, nameof(SelectedVerses));
 
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(EnableChapter));
@@ -148,12 +157,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
-                _bibleValidationViewModel.ClearErrors(nameof(SelectedVerses));
-                if (value == "Hallo")
-                {
-                    _bibleValidationViewModel.AddError(nameof(SelectedVerses), "Invalid Verse");
+                if (!_bibleValidationViewModel.ValidateVerse(SelectedBook, SelectedChapter, value, nameof(SelectedVerses)))
                     return;
-                }
+
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(EnableChapter));
                 OnPropertyChanged(nameof(EnableVerse));
@@ -171,6 +177,9 @@ namespace HgSoftware.InsertCreator.ViewModel
 
                 if (!string.IsNullOrEmpty(SelectedChapter))
                     _bibleValidationViewModel.ValidateChapter(value, SelectedChapter, nameof(SelectedChapter));
+
+                if (!string.IsNullOrEmpty(SelectedVerses))
+                    _bibleValidationViewModel.ValidateVerse(value, SelectedChapter, SelectedVerses, nameof(SelectedVerses));
 
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(EnableChapter));
@@ -208,6 +217,44 @@ namespace HgSoftware.InsertCreator.ViewModel
         public IEnumerable GetErrors(string propertyName)
         {
             return _bibleValidationViewModel.GetErrors(propertyName);
+        }
+
+        private void OnButtonLeft(object obj)
+        {
+            if (_studioMode)
+            {
+                var bibleword = new BibleData();
+                _historyViewModel.AddToHistory(bibleword);
+                ClearView();
+                return;
+            }
+            _fadeInWriter.ResetFade();
+            _historyViewModel.SelectedIndex = -1;
+        }
+
+        private void ClearView()
+        {
+            SelectedVerses = string.Empty;
+            SelectedBook = string.Empty;
+            SelectedChapter = string.Empty;
+            BibleText = string.Empty;
+
+            _bibleValidationViewModel.ClearErrors(SelectedBook);
+            _bibleValidationViewModel.ClearErrors(SelectedChapter);
+            _bibleValidationViewModel.ClearErrors(SelectedVerses);
+        }
+
+        private void OnButtonRight(object obj)
+        {
+            var bibleword = new BibleData();
+
+            if (!_studioMode)
+            {
+                _historyViewModel.AddToHistory(bibleword);
+            }
+            _fadeInWriter.WriteFade(bibleword);
+            _historyViewModel.SelectFade(bibleword);
+            ClearView();
         }
     }
 }
