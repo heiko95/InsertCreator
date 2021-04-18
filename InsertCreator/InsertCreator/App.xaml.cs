@@ -71,7 +71,7 @@ namespace HgSoftware.InsertCreator
             _log.Info("Load Images");
             fadeInWriter.LoadImages();
 
-            var vm = new WindowViewModel(positionData);
+            var vm = new WindowViewModel(positionData, biblewordPositionData);
 
             _log.Info("Open Window");
             var window = new MainWindow(vm);

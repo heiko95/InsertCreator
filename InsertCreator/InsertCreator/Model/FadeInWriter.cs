@@ -57,12 +57,12 @@ namespace HgSoftware.InsertCreator.Model
             OnInsertUpdate?.Invoke(this, image);
         }
 
-        public float TextPositionX()
-        {
-            if (Properties.Settings.Default.LogoOnLefthand)
-                return 280;
-            return 70;
-        }
+        //public float TextPositionX()
+        //{
+        //    if (Properties.Settings.Default.LogoOnLefthand)
+        //        return 280;
+        //    return 70;
+        //}
 
         public void WriteFade(IInsertData insert)
         {
@@ -171,9 +171,9 @@ namespace HgSoftware.InsertCreator.Model
             DrawRectangle(drawingTool);
 
             drawingTool.DrawString(
-         "Textwort",
-         _positionData.FontTextTwoRowFirstLine,
-         new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
+             "Textwort",
+            _positionData.FontTextTwoRowFirstLine,
+             new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
             drawingTool.DrawString(
              $"{bibleData.BibleBook} {bibleData.BibleChapter}, {bibleData.BibleVerse}",
@@ -348,12 +348,35 @@ namespace HgSoftware.InsertCreator.Model
         {
             if (string.IsNullOrEmpty(bibleData.BibleText))
                 return CreateBibleInsert(bibleData, greenScreen, cornerbug);
-            return CreateFullscreenBibleInsert(bibleData, greenScreen, cornerbug);
+            return CreateFullscreenBibleInsert(bibleData, greenScreen);
         }
 
-        private Bitmap CreateFullscreenBibleInsert(BibleData bibleData, bool greenScreen, bool cornerbug)
+        private Bitmap CreateFullscreenBibleInsert(BibleData bibleData, bool greenScreen)
         {
-            throw new NotImplementedException();
+            Bitmap image = LoadFrame(!greenScreen, false);
+            var drawingTool = Graphics.FromImage(image);
+            //DrawBibleRectangle(drawingTool);
+
+            //drawingTool.DrawString(
+            // "Textwort",
+            //_positionData.FontTextTwoRowFirstLine,
+            // new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
+
+            //drawingTool.DrawString(
+            // $"{bibleData.BibleBook} {bibleData.BibleChapter}, {bibleData.BibleVerse}",
+            // _positionData.FontTextTwoRowSecondLine,
+            // new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
+
+            //DrawLogo(drawingTool);
+
+            return image;
+        }
+
+        private void DrawBibleRectangle(Graphics drawingTool)
+        {
+            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+            drawingTool.FillRectangle(myBrush, new Rectangle(_positionData.RectanglePosition.X, _positionData.RectanglePosition.Y, _positionData.SizeRectangle.Width, _positionData.SizeRectangle.Height));
+            myBrush.Dispose();
         }
 
         #endregion Private Methods
