@@ -84,6 +84,9 @@ namespace HgSoftware.InsertCreator.Model
         [JsonProperty("Objektgröße Logo")]
         private int _sizeLogo;
 
+        [JsonProperty("Transparenz Einblendefeld")]
+        private int _transparencyRectangle;
+
         #endregion Private Fields
 
         #region Public Constructor
@@ -158,6 +161,8 @@ namespace HgSoftware.InsertCreator.Model
             _sizeRectangle.Width = 1782;
 
             _sizeLogo = 240;
+
+            _transparencyRectangle = 200;
         }
 
         #endregion Public Constructor
@@ -306,6 +311,12 @@ namespace HgSoftware.InsertCreator.Model
         public int SizeLogo
         {
             get { return _sizeLogo; }
+        }
+
+        [JsonIgnore]
+        public int TransparencyRectangle
+        {
+            get { return _transparencyRectangle; }
         }
 
         #endregion Public Properties
