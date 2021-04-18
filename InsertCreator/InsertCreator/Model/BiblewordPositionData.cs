@@ -162,7 +162,7 @@ namespace HgSoftware.InsertCreator.Model
 
             _sizeLogo = 240;
 
-            _transparencyRectangle = 255;
+            _transparencyRectangle = 200;
         }
 
         #endregion Public Constructor
