@@ -22,10 +22,12 @@ namespace HgSoftware.InsertCreator
 
             string path = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator";
             string positionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Position.Json";
+            string bibleTextPositionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/BibleTextPosition.Json";
 
             PositionJsonReaderWriter positionDatajsonReaderWriter = new PositionJsonReaderWriter(positionPath);
 
             PositionData positionData = new PositionData();
+            BiblewordPositionData biblewordPositionData = new BiblewordPositionData();
 
             _log.Info("Check InsertCreator Directory");
             if (!Directory.Exists(path))
@@ -43,9 +45,24 @@ namespace HgSoftware.InsertCreator
                 positionDatajsonReaderWriter.WritePositionData(positionData);
             }
             else
-                positionData = positionDatajsonReaderWriter.LoadPositionData();
+            {
+                positionDatajsonReaderWriter.LoadPositionData(ref positionData);
+            }
 
-            FadeInWriter fadeInWriter = new FadeInWriter(positionData);
+            _log.Info("Check Bible Position Data file");
+            if (!File.Exists(bibleTextPositionPath))
+            {
+                _log.Info("Create Bible Position Data file");
+                var file = File.Create(bibleTextPositionPath, 1024);
+                file.Close();
+                positionDatajsonReaderWriter.WritePositionData(biblewordPositionData);
+            }
+            else
+            {
+                positionDatajsonReaderWriter.LoadPositionData(ref biblewordPositionData);
+            }
+
+            FadeInWriter fadeInWriter = new FadeInWriter(positionData, biblewordPositionData);
 
             _log.Info("Create Ministry.json");
             FileCreate("Ministry.json", path);

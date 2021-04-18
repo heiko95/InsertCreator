@@ -12,14 +12,16 @@ namespace HgSoftware.InsertCreator.Model
 
         private readonly PictureReader _pictureReader = new PictureReader();
         private readonly PositionData _positionData;
+        private readonly BiblewordPositionData _biblewordPositionData;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public FadeInWriter(PositionData positionData)
+        public FadeInWriter(PositionData positionData, BiblewordPositionData biblewordPositionData)
         {
             _positionData = positionData;
+            _biblewordPositionData = biblewordPositionData;
             CurrentFade = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
         }
 
@@ -174,7 +176,7 @@ namespace HgSoftware.InsertCreator.Model
          new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
             drawingTool.DrawString(
-             bibleData.SecondLine,
+             $"{bibleData.BibleBook} {bibleData.BibleChapter}, {bibleData.BibleVerse}",
              _positionData.FontTextTwoRowSecondLine,
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
@@ -344,7 +346,14 @@ namespace HgSoftware.InsertCreator.Model
 
         private Bitmap WriteBibleFade(BibleData bibleData, bool greenScreen, bool cornerbug)
         {
-            return CreateBibleInsert(bibleData, greenScreen, cornerbug);
+            if (string.IsNullOrEmpty(bibleData.BibleText))
+                return CreateBibleInsert(bibleData, greenScreen, cornerbug);
+            return CreateFullscreenBibleInsert(bibleData, greenScreen, cornerbug);
+        }
+
+        private Bitmap CreateFullscreenBibleInsert(BibleData bibleData, bool greenScreen, bool cornerbug)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion Private Methods

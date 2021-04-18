@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    public class PositionData
+    public class PositionData : IPositionData
     {
         #region Private Fields
 

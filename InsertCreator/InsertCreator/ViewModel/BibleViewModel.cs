@@ -176,10 +176,9 @@ namespace HgSoftware.InsertCreator.ViewModel
                     return;
 
                 if (!string.IsNullOrEmpty(SelectedChapter))
-                    _bibleValidationViewModel.ValidateChapter(value, SelectedChapter, nameof(SelectedChapter));
-
-                if (!string.IsNullOrEmpty(SelectedVerses))
-                    _bibleValidationViewModel.ValidateVerse(value, SelectedChapter, SelectedVerses, nameof(SelectedVerses));
+                    if (_bibleValidationViewModel.ValidateChapter(value, SelectedChapter, nameof(SelectedChapter)))
+                        if (!string.IsNullOrEmpty(SelectedVerses) && !_bibleValidationViewModel.PropertyHasError(SelectedChapter))
+                            _bibleValidationViewModel.ValidateVerse(value, SelectedChapter, SelectedVerses, nameof(SelectedVerses));
 
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(EnableChapter));
@@ -223,7 +222,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             if (_studioMode)
             {
-                var bibleword = new BibleData();
+                var bibleword = new BibleData(SelectedBook, SelectedChapter, SelectedVerses, BibleText);
                 _historyViewModel.AddToHistory(bibleword);
                 ClearView();
                 return;
@@ -235,8 +234,9 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void ClearView()
         {
             SelectedVerses = string.Empty;
-            SelectedBook = string.Empty;
             SelectedChapter = string.Empty;
+            SelectedBook = string.Empty;
+
             BibleText = string.Empty;
 
             _bibleValidationViewModel.ClearErrors(SelectedBook);
@@ -246,7 +246,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void OnButtonRight(object obj)
         {
-            var bibleword = new BibleData();
+            var bibleword = new BibleData(SelectedBook, SelectedChapter, SelectedVerses, BibleText);
 
             if (!_studioMode)
             {

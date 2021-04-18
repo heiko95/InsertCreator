@@ -113,8 +113,10 @@
     <Compile Include="Model\BibleChapter.cs" />
     <Compile Include="Model\BibleData.cs" />
     <Compile Include="Model\BibleJsonReader.cs" />
+    <Compile Include="Model\BiblewordPositionData.cs" />
     <Compile Include="Model\CustomInsert.cs" />
     <Compile Include="Model\IInsertData.cs" />
+    <Compile Include="Model\IPositionData.cs" />
     <Compile Include="Model\PositionJsonReaderWriter.cs" />
     <Compile Include="Model\CustomInsertJasonReaderWriter.cs" />
     <Compile Include="Model\PositionData.cs" />

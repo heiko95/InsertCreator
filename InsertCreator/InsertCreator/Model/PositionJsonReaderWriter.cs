@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace HgSoftware.InsertCreator.Model
@@ -27,22 +28,19 @@ namespace HgSoftware.InsertCreator.Model
 
         #region Public Methods
 
-        public PositionData LoadPositionData()
+        public void LoadPositionData<T>(ref T positionData) where T : IPositionData
         {
             _log.Info("Load Position Data");
-            var positionData = new PositionData();
 
             var positionListText = File.ReadAllText(_path);
 
             if (!string.IsNullOrEmpty(positionListText))
             {
-                positionData = JsonConvert.DeserializeObject<PositionData>(positionListText);
+                positionData = JsonConvert.DeserializeObject<T>(positionListText);
             }
-
-            return positionData;
         }
 
-        public void WritePositionData(PositionData positionData)
+        public void WritePositionData(IPositionData positionData)
         {
             _log.Info("WritePositionData");
             File.WriteAllText(_path, JsonConvert.SerializeObject(positionData));

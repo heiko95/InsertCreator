@@ -22,7 +22,10 @@ namespace HgSoftware.InsertCreator.ViewModel
         public bool ValidateBook(string book, string propertyName)
         {
             ClearErrors(propertyName);
-            var isBookValid = (book == "" || _bible.Exists(x => x.Name == book));
+            if (string.IsNullOrEmpty(book))
+                return true;
+
+            var isBookValid = (_bible.Exists(x => x.Name == book));
             if (!isBookValid)
             {
                 AddError(propertyName, "Ungültiges Buch");
@@ -35,6 +38,9 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             ClearErrors(propertyName);
 
+            if (string.IsNullOrEmpty(chapter))
+                return true;
+
             var isChapterValid = (int.TryParse(chapter, out int chapterNumber) && _bible.Exists(x => x.Name == book));
             if (isChapterValid)
             {
@@ -46,9 +52,6 @@ namespace HgSoftware.InsertCreator.ViewModel
                 }
             }
 
-            if (book == "" && chapter == "")
-                return true;
-
             AddError(propertyName, "Ungültiges Kapitel");
             return false;
         }
@@ -57,10 +60,10 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             ClearErrors(propertyName);
 
-            if (book == "" && chapter == "" && verse == "")
+            if (string.IsNullOrEmpty(verse))
                 return true;
 
-            if (!IsVerseSyntaxValid(verse) || !IsVerseValueValid(verse, book, chapter))
+            if (string.IsNullOrEmpty(chapter) || !IsVerseSyntaxValid(verse) || !IsVerseValueValid(verse, book, chapter))
             {
                 AddError(propertyName, "Ungültiger Vers");
                 return false;
@@ -70,7 +73,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public bool IsVerseSyntaxValid(string verse)
         {
-            Match match = Regex.Match(verse, "([0-9]+([.-][0-9]+)?)(;([0-9]+([.-][0-9]+)?))*");
+            Match match = Regex.Match(verse, "([0-9]+([.-][0-9]+)?)(;( )?([0-9]+([.-][0-9]+)?))*");
             if (match.Success && match.Value.Length == verse.Length)
             {
                 return true;
