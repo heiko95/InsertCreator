@@ -297,18 +297,17 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         [JsonIgnore]
-        public Size sizeRectangle
+        public Size SizeRectangle
         {
             get { return _sizeRectangle; }
         }
 
         [JsonIgnore]
-        public int sizeLogo
+        public int SizeLogo
         {
             get { return _sizeLogo; }
         }
 
         #endregion Public Properties
-
     }
 }
