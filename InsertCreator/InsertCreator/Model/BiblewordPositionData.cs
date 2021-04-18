@@ -297,7 +297,7 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         [JsonIgnore]
-        public Size sizeRectangle
+        public Size SizeRectangle
         {
             get { return _sizeRectangle; }
         }
