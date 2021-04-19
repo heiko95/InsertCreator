@@ -1,7 +1,11 @@
 ﻿using HgSoftware.InsertCreator.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace HgSoftware.InsertCreator.Model
@@ -369,13 +373,74 @@ namespace HgSoftware.InsertCreator.Model
           _biblewordPositionData.FontTextHeadline,
           new SolidBrush(Color.Black), _biblewordPositionData.HeadlineTextSecondLine);
 
-            DrawBibleText(drawingTool, _biblewordPositionData, bibleData.BibleText);
+            DrawBibleText(drawingTool, bibleData.BibleText);
 
             return image;
         }
 
-        private void DrawBibleText(Graphics drawingTool, BiblewordPositionData biblewordPositionData, string bibleText)
+        private void DrawBibleText(Graphics drawingTool, string bibleText)
         {
+            var verses = Regex.Split(bibleText, "([0-9]+.[^0-9]+)").Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
+
+            var count = 0;
+
+            foreach (var item in verses)
+            {
+                var verse = Regex.Match(item, "[0-9]+").Value;
+                var text = item.Replace($"{verse}", "").Trim(' ').Trim(Convert.ToChar(160)).Replace(Convert.ToChar(160), ' ');
+
+                drawingTool.DrawString(verse, _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.Versenumbers[count]);
+
+                SplitSublines(drawingTool, ref count, text);
+                count++;
+
+                if (count == 9)
+                    return;
+            }
+        }
+
+        private void SplitSublines(Graphics drawingTool, ref int count, string text)
+        {
+            var words = text.Split(' ').ToList();
+
+            var actualLine = new StringBuilder();
+
+            float actualWith = 0F;
+
+            foreach (var item in words)
+            {
+                var LineSizeWithNextWord = (actualWith + drawingTool.MeasureString(item, _biblewordPositionData.FontTextBody).Width);
+
+                if (LineSizeWithNextWord <= _biblewordPositionData.MaxTextLength)
+                {
+                    actualLine.Append(item + " ");
+                    actualWith = LineSizeWithNextWord;
+                }
+                else
+                {
+                    drawingTool.DrawString(SetToBlock(drawingTool, actualLine.ToString()), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
+                    count++;
+
+                    if (count == 8)
+                        return;
+
+                    actualLine.Clear();
+                    actualWith = drawingTool.MeasureString(item, _biblewordPositionData.FontTextBody).Width;
+                    actualLine.Append(item + " ");
+                }
+            }
+
+            drawingTool.DrawString(actualLine.ToString(), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
+        }
+
+        private string SetToBlock(Graphics drawingTool, string text)
+        {
+            var lengthOfText = drawingTool.MeasureString(text, _biblewordPositionData.FontTextBody).Width;
+            if (lengthOfText > 1000) //TODO
+            {
+            }
+
+            return text;
         }
 
         #endregion Private Methods

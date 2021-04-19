@@ -206,6 +206,44 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         [JsonIgnore]
+        public List<Point> Versenumbers
+        {
+            get
+            {
+                return new List<Point>()
+                {
+                    _versenumberFirstLine,
+                    _versenumberSecondLine,
+                    _versenumberThirdLine,
+                    _versenumberFourthLine,
+                    _versenumberFifthLine,
+                    _versenumberSixthLine,
+                    _versenumberSeventhLine,
+                    _versenumberEighthLine
+                };
+            }
+        }
+
+        [JsonIgnore]
+        public List<Point> TextLines
+        {
+            get
+            {
+                return new List<Point>()
+                {
+                    _textFirstLine,
+                    _textSecondLine,
+                    _textThirdLine,
+                    _textFourthLine,
+                    _textFifthLine,
+                    _textSixthLine,
+                    _textSeventhLine,
+                    _textEighthLine
+                };
+            }
+        }
+
+        [JsonIgnore]
         public Point VersenumberFirstLine
         {
             get { return _versenumberFirstLine; }
@@ -328,7 +366,9 @@ namespace HgSoftware.InsertCreator.Model
         public int MaxTextLength
         {
             get
-            { return _sizeRectangle.Width - _versenumberFirstLine.X - _textFirstLine.X; }
+            {
+                return _sizeRectangle.Width - 2 * (_versenumberFirstLine.X - _rectanglePosition.X);
+            }
         }
 
         #endregion Public Properties
