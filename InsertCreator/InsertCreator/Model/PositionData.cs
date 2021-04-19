@@ -345,9 +345,13 @@ namespace HgSoftware.InsertCreator.Model
         [JsonIgnore]
         public int TransparencyRectangle
         {
-            get { return _transparencyRectangle; }
+            get
+            {
+                if (Properties.Settings.Default.UseGreenscreen)
+                    return 255;
+                return _transparencyRectangle;
+            }
         }
-
         #endregion Public Properties
     }
 }
