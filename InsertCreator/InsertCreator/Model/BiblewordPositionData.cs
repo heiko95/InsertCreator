@@ -325,17 +325,10 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         [JsonIgnore]
-        public Point MaxTextPosition
+        public int MaxTextLength
         {
             get
-            {
-                var maxTextPosition = new Point
-                {
-                    X = 1920 - _textFirstLine.X,
-                    Y = 1080 - _headlineTextFirstLine.Y
-                };
-                return maxTextPosition;
-            }
+            { return _sizeRectangle.Width - _versenumberFirstLine.X - _textFirstLine.X; }
         }
 
         #endregion Public Properties
