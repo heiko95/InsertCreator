@@ -87,10 +87,6 @@ namespace HgSoftware.InsertCreator.Model
         [JsonProperty("Transparenz Einblendefeld")]
         private int _transparencyRectangle;
 
-        [JsonIgnore]
-        private Point _maxTextPosition = new Point();
-
-
         #endregion Private Fields
 
         #region Public Constructor
@@ -167,9 +163,6 @@ namespace HgSoftware.InsertCreator.Model
             _sizeLogo = 240;
 
             _transparencyRectangle = 200;
-
-            _maxTextPosition.X = 1920 - _textFirstLine.X;
-            _maxTextPosition.Y = 1080 - _headlineTextFirstLine.Y;
         }
 
         #endregion Public Constructor
@@ -323,18 +316,26 @@ namespace HgSoftware.InsertCreator.Model
         [JsonIgnore]
         public int TransparencyRectangle
         {
-            get { 
+            get
+            {
                 if (Properties.Settings.Default.UseGreenscreen)
                     return 255;
                 return _transparencyRectangle;
             }
-                
         }
 
         [JsonIgnore]
         public Point MaxTextPosition
         {
-            get { return _maxTextPosition; }
+            get
+            {
+                var maxTextPosition = new Point
+                {
+                    X = 1920 - _textFirstLine.X,
+                    Y = 1080 - _headlineTextFirstLine.Y
+                };
+                return maxTextPosition;
+            }
         }
 
         #endregion Public Properties
