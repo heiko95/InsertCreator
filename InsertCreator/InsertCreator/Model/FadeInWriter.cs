@@ -131,7 +131,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
             textLaneOne,
@@ -152,7 +152,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
             text,
@@ -168,7 +168,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
              "Textwort",
@@ -191,7 +191,7 @@ namespace HgSoftware.InsertCreator.Model
 
             var drawingTool = Graphics.FromImage(image);
 
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
@@ -214,7 +214,7 @@ namespace HgSoftware.InsertCreator.Model
 
             var drawingTool = Graphics.FromImage(image);
 
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
@@ -246,7 +246,7 @@ namespace HgSoftware.InsertCreator.Model
             Bitmap image = LoadFrame(transparent, useCornerBug);
 
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool, !transparent, _positionData);
+            DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
              $"{ministry.ForeName} {ministry.SureName}",
@@ -271,12 +271,9 @@ namespace HgSoftware.InsertCreator.Model
             }
         }
 
-        private void DrawRectangle(Graphics drawingTool, bool greenScreen, IPositionData positionData)
+        private void DrawRectangle(Graphics drawingTool, IPositionData positionData)
         {
-            var transparency = 255;
-            if (!greenScreen)
-                transparency = positionData.TransparencyRectangle;
-            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(Color.FromArgb(transparency, 255, 255, 255));
+            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(Color.FromArgb(positionData.TransparencyRectangle, 255, 255, 255));
 
             drawingTool.FillRectangle(myBrush, new Rectangle(positionData.RectanglePosition.X, positionData.RectanglePosition.Y, positionData.SizeRectangle.Width, positionData.SizeRectangle.Height));
             myBrush.Dispose();
@@ -359,7 +356,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, false);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool, !transparent, _biblewordPositionData);
+            DrawRectangle(drawingTool, _biblewordPositionData);
             DrawLogo(drawingTool, _biblewordPositionData);
 
             drawingTool.DrawString(
@@ -372,17 +369,13 @@ namespace HgSoftware.InsertCreator.Model
           _biblewordPositionData.FontTextHeadline,
           new SolidBrush(Color.Black), _biblewordPositionData.HeadlineTextSecondLine);
 
-            //drawingTool.DrawString(
-            // "Textwort",
-            //_positionData.FontTextTwoRowFirstLine,
-            // new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
-
-            //drawingTool.DrawString(
-            // $"{bibleData.BibleBook} {bibleData.BibleChapter}, {bibleData.BibleVerse}",
-            // _positionData.FontTextTwoRowSecondLine,
-            // new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
+            DrawBibleText(drawingTool, _biblewordPositionData, bibleData.BibleText);
 
             return image;
+        }
+
+        private void DrawBibleText(Graphics drawingTool, BiblewordPositionData biblewordPositionData, string bibleText)
+        {
         }
 
         #endregion Private Methods
