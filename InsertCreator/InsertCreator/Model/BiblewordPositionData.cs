@@ -22,7 +22,7 @@ namespace HgSoftware.InsertCreator.Model
         private Point _rectanglePosition = new Point();
 
         [JsonProperty("Position Logo")]
-        private Point _logoPosition = new Point();
+        private PointF _logoPosition = new PointF();
 
         [JsonProperty("1.Position Überschrift")]
         private Point _headlineTextFirstLine = new Point();
@@ -188,7 +188,7 @@ namespace HgSoftware.InsertCreator.Model
         }
 
         [JsonIgnore]
-        public Point LogoPosition
+        public PointF LogoPosition
         {
             get { return _logoPosition; }
         }

@@ -45,7 +45,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(!Properties.Settings.Default.UseGreenscreen, Properties.Settings.Default.LogoAsCornerlogo);
             var drawingTool = Graphics.FromImage(image);
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
             image.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Insert.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
@@ -131,7 +131,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
             textLaneOne,
@@ -143,7 +143,7 @@ namespace HgSoftware.InsertCreator.Model
              _positionData.FontTextTwoRowSecondLine,
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
 
             return image;
         }
@@ -152,14 +152,14 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
             text,
             _positionData.FontTextOneRowFirstLine,
             new SolidBrush(Color.Black), _positionData.TextOneRowFirstLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
 
             return image;
         }
@@ -168,7 +168,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             Bitmap image = LoadFrame(transparent, useCornerBug);
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
              "Textwort",
@@ -180,7 +180,7 @@ namespace HgSoftware.InsertCreator.Model
              _positionData.FontTextTwoRowSecondLine,
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
 
             return image;
         }
@@ -191,7 +191,7 @@ namespace HgSoftware.InsertCreator.Model
 
             var drawingTool = Graphics.FromImage(image);
 
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
@@ -203,7 +203,7 @@ namespace HgSoftware.InsertCreator.Model
                 _positionData.FontTextTwoRowSecondLine,
                 new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
 
             return image;
         }
@@ -214,7 +214,7 @@ namespace HgSoftware.InsertCreator.Model
 
             var drawingTool = Graphics.FromImage(image);
 
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
              $"{hymnalData.Book} {hymnalData.Number}{hymnalData.SongVerses}",
@@ -236,7 +236,7 @@ namespace HgSoftware.InsertCreator.Model
                _positionData.FontTextFourRowFourthLine,
                new SolidBrush(Color.Black), _positionData.TextFourRowFourthLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
 
             return image;
         }
@@ -246,7 +246,7 @@ namespace HgSoftware.InsertCreator.Model
             Bitmap image = LoadFrame(transparent, useCornerBug);
 
             var drawingTool = Graphics.FromImage(image);
-            DrawRectangle(drawingTool);
+            DrawRectangle(drawingTool, !transparent, _positionData);
 
             drawingTool.DrawString(
              $"{ministry.ForeName} {ministry.SureName}",
@@ -258,23 +258,27 @@ namespace HgSoftware.InsertCreator.Model
              _positionData.FontTextTwoRowSecondLine,
              new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
-            DrawLogo(drawingTool);
+            DrawLogo(drawingTool, _positionData);
             return image;
         }
 
-        private void DrawLogo(Graphics drawingTool)
+        private void DrawLogo(Graphics drawingTool, IPositionData positionData)
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                var image = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), _positionData.SizeLogo);
-                LogoWriter(drawingTool, image, _positionData.LogoPosition, _positionData.SizeLogo);
+                var image = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), positionData.SizeLogo);
+                LogoWriter(drawingTool, image, positionData.LogoPosition, positionData.SizeLogo);
             }
         }
 
-        private void DrawRectangle(Graphics drawingTool)
+        private void DrawRectangle(Graphics drawingTool, bool greenScreen, IPositionData positionData)
         {
-            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-            drawingTool.FillRectangle(myBrush, new Rectangle(_positionData.RectanglePosition.X, _positionData.RectanglePosition.Y, _positionData.SizeRectangle.Width, _positionData.SizeRectangle.Height));
+            var transparency = 255;
+            if (!greenScreen)
+                transparency = positionData.TransparencyRectangle;
+            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(Color.FromArgb(transparency, 255, 255, 255));
+
+            drawingTool.FillRectangle(myBrush, new Rectangle(positionData.RectanglePosition.X, positionData.RectanglePosition.Y, positionData.SizeRectangle.Width, positionData.SizeRectangle.Height));
             myBrush.Dispose();
         }
 
@@ -351,11 +355,22 @@ namespace HgSoftware.InsertCreator.Model
             return CreateFullscreenBibleInsert(bibleData, greenScreen);
         }
 
-        private Bitmap CreateFullscreenBibleInsert(BibleData bibleData, bool greenScreen)
+        private Bitmap CreateFullscreenBibleInsert(BibleData bibleData, bool transparent)
         {
-            Bitmap image = LoadFrame(!greenScreen, false);
+            Bitmap image = LoadFrame(transparent, false);
             var drawingTool = Graphics.FromImage(image);
-            DrawBibleRectangle(drawingTool, greenScreen);
+            DrawRectangle(drawingTool, !transparent, _biblewordPositionData);
+            DrawLogo(drawingTool, _biblewordPositionData);
+
+            drawingTool.DrawString(
+           "Textwort",
+           _biblewordPositionData.FontTextHeadline,
+           new SolidBrush(Color.Black), _biblewordPositionData.HeadlineTextFirstLine);
+
+            drawingTool.DrawString(
+          $"{bibleData.BibleBook} {bibleData.BibleChapter}, {bibleData.BibleVerse}",
+          _biblewordPositionData.FontTextHeadline,
+          new SolidBrush(Color.Black), _biblewordPositionData.HeadlineTextSecondLine);
 
             //drawingTool.DrawString(
             // "Textwort",
@@ -367,19 +382,7 @@ namespace HgSoftware.InsertCreator.Model
             // _positionData.FontTextTwoRowSecondLine,
             // new SolidBrush(Color.Black), _positionData.TextTwoRowSecondLinePosition);
 
-            DrawLogo(drawingTool);
-
             return image;
-        }
-
-        private void DrawBibleRectangle(Graphics drawingTool, bool greenScreen)
-        {
-            var transparency = 255;
-            if (!greenScreen)
-                transparency = 200;
-            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(Color.FromArgb(transparency, 255, 255, 255));
-            drawingTool.FillRectangle(myBrush, new Rectangle(_biblewordPositionData.RectanglePosition.X, _biblewordPositionData.RectanglePosition.Y, _biblewordPositionData.SizeRectangle.Width, _biblewordPositionData.SizeRectangle.Height));
-            myBrush.Dispose();
         }
 
         #endregion Private Methods

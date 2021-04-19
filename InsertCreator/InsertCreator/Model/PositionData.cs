@@ -91,6 +91,9 @@ namespace HgSoftware.InsertCreator.Model
         [JsonProperty("Objektgröße Einblendefeld")]
         private Size _sizeRectangle = new Size();
 
+        [JsonProperty("Transparenz Einblendefeld")]
+        private int _transparencyRectangle;
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -171,6 +174,8 @@ namespace HgSoftware.InsertCreator.Model
 
             _sizeRectangle.Height = 220;
             _sizeRectangle.Width = 1650;
+
+            _transparencyRectangle = 255;
         }
 
         #endregion Public Constructors
@@ -335,6 +340,12 @@ namespace HgSoftware.InsertCreator.Model
                     return _leftTextTwoRowSecondLine;
                 return _rightTextTwoRowSecondLine;
             }
+        }
+
+        [JsonIgnore]
+        public int TransparencyRectangle
+        {
+            get { return _transparencyRectangle; }
         }
 
         #endregion Public Properties

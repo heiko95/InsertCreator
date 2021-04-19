@@ -24,7 +24,7 @@ namespace HgSoftware.InsertCreator
             string positionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Position.Json";
             string bibleTextPositionPath = $"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/BibleTextPosition.Json";
 
-            PositionJsonReaderWriter positionDatajsonReaderWriter = new PositionJsonReaderWriter(positionPath);
+            PositionJsonReaderWriter positionDatajsonReaderWriter = new PositionJsonReaderWriter();
 
             PositionData positionData = new PositionData();
             BiblewordPositionData biblewordPositionData = new BiblewordPositionData();
@@ -42,11 +42,11 @@ namespace HgSoftware.InsertCreator
                 _log.Info("Create Position Data file");
                 var file = File.Create(positionPath, 1024);
                 file.Close();
-                positionDatajsonReaderWriter.WritePositionData(positionData);
+                positionDatajsonReaderWriter.WritePositionData(positionData, positionPath);
             }
             else
             {
-                positionDatajsonReaderWriter.LoadPositionData(ref positionData);
+                positionDatajsonReaderWriter.LoadPositionData(ref positionData, positionPath);
             }
 
             _log.Info("Check Bible Position Data file");
@@ -55,11 +55,11 @@ namespace HgSoftware.InsertCreator
                 _log.Info("Create Bible Position Data file");
                 var file = File.Create(bibleTextPositionPath, 1024);
                 file.Close();
-                positionDatajsonReaderWriter.WritePositionData(biblewordPositionData);
+                positionDatajsonReaderWriter.WritePositionData(biblewordPositionData, bibleTextPositionPath);
             }
             else
             {
-                positionDatajsonReaderWriter.LoadPositionData(ref biblewordPositionData);
+                positionDatajsonReaderWriter.LoadPositionData(ref biblewordPositionData, bibleTextPositionPath);
             }
 
             FadeInWriter fadeInWriter = new FadeInWriter(positionData, biblewordPositionData);
