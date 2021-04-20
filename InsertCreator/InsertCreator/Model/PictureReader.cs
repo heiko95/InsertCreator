@@ -23,9 +23,11 @@ namespace HgSoftware.InsertCreator.Model
                 {
                     RemovePicture();
 
-                    Bitmap bigImage = new Bitmap(openFileDialog.FileName);
-                    bigImage.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png", System.Drawing.Imaging.ImageFormat.Png);
-                    bigImage.Dispose();
+                    Bitmap image = new Bitmap(openFileDialog.FileName);
+                    var scaledBitmap = ScaleBitmap(image);
+                    scaledBitmap.Save($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png", System.Drawing.Imaging.ImageFormat.Png);
+                    scaledBitmap.Dispose();
+                    image.Dispose();
                     Properties.Settings.Default.UseLogo = true;
                 }
             }
@@ -40,21 +42,31 @@ namespace HgSoftware.InsertCreator.Model
             Properties.Settings.Default.UseLogo = false;
         }
 
-        public Bitmap ResizePicture(Bitmap image, int size)
+        public Bitmap ScaleBitmap(Bitmap image)
         {
-            if (image.Width == image.Height)
-            {
-                return new Bitmap(image, size, size);
-            }
-            double ratio;
+            var size = Math.Max(image.Width, image.Height);
 
-            if (image.Width < image.Height)
+            var resultPicture = new Bitmap(size, size);
+
+            using (var g = Graphics.FromImage(resultPicture))
             {
-                ratio = (double)size / image.Height;
-                return new Bitmap(image, Convert.ToInt32(image.Width * ratio), size);
+                if (image.Width > image.Height)
+                {
+                    var offsetY = (size - image.Height) / 2;
+                    g.DrawImage(image, 0, offsetY);
+                    return resultPicture;
+                }
+
+                if (image.Width < image.Height)
+                {
+                    var offsetX = (size - image.Width) / 2;
+                    g.DrawImage(image, offsetX, 0);
+                    return resultPicture;
+                }
+
+                g.DrawImage(image, 0, 0);
+                return resultPicture;
             }
-            ratio = (double)size / image.Width;
-            return new Bitmap(image, size, Convert.ToInt32(image.Height * ratio));
         }
 
         #endregion Public Methods

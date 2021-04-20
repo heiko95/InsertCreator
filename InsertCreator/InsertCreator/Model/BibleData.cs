@@ -21,7 +21,17 @@ namespace HgSoftware.InsertCreator.Model
         public string BibleVerse { get; set; }
 
         public string BibleText { get; set; }
-        public string FirstLine => "Textwort";
+
+        public string FirstLine
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(BibleText))
+                    return "Textwort";
+                return "Bibeltext";
+            }
+        }
+
         public string SecondLine => $"{BibleBook} {BibleChapter}, {BibleVerse}";
     }
 }

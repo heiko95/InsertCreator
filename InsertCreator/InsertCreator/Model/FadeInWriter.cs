@@ -271,8 +271,8 @@ namespace HgSoftware.InsertCreator.Model
         {
             if (File.Exists($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"))
             {
-                var image = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), positionData.SizeLogo);
-                LogoWriter(drawingTool, image, positionData.LogoPosition, positionData.SizeLogo);
+                var image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
+                drawingTool.DrawImage(image, new Rectangle(Point.Round(positionData.LogoPosition), new Size(positionData.SizeLogo, positionData.SizeLogo)));
             }
         }
 
@@ -299,28 +299,10 @@ namespace HgSoftware.InsertCreator.Model
             {
                 var drawingTool = Graphics.FromImage(image);
 
-                var logoImage = _pictureReader.ResizePicture(new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png"), _positionData.SizeCornerbug);
-                LogoWriter(drawingTool, logoImage, _positionData.CornerbugPosition, _positionData.SizeCornerbug);
+                var logoImage = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
+                drawingTool.DrawImage(logoImage, new Rectangle(Point.Round(_positionData.CornerbugPosition), new Size(_positionData.SizeCornerbug, _positionData.SizeCornerbug)));
             }
             return image;
-        }
-
-        private void LogoWriter(Graphics drawingTool, Image image, PointF position, float size)
-        {
-            if (image.Width == image.Height)
-            {
-                drawingTool.DrawImage(image, new PointF(position.X, position.Y));
-                return;
-            }
-            if (image.Width > image.Height)
-            {
-                drawingTool.DrawImage(image, new PointF(position.X, ((size - image.Height) / 2) + position.Y));
-                return;
-            }
-            if (image.Width < image.Height)
-            {
-                drawingTool.DrawImage(image, new PointF(((size - image.Width) / 2) + position.X, position.Y));
-            }
         }
 
         private Bitmap WriteCustom(CustomInsert insert, bool greenScreen, bool cornerbug)
