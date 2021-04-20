@@ -113,7 +113,7 @@
             materialDesign:HintAssist.Hint="Textwort"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Disabled"
-            Text="{Binding Path=BibleText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding BibleText, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Auto" />
 

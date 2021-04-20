@@ -12,11 +12,30 @@ namespace HgSoftware.InsertCreator.ViewModel
 {
     public class BibleValidationViewModel : BaseErrorViewModel
     {
-        private List<BibleBook> _bible;
+        private readonly List<BibleBook> _bible;
 
         public BibleValidationViewModel(List<BibleBook> Bible) : base()
         {
             _bible = Bible;
+        }
+
+        public bool ValidateBibleText(string text, List<int> verses, string propertyName)
+        {
+            ClearErrors(propertyName);
+            if (string.IsNullOrEmpty(text))
+                return true;
+
+            var results = Regex.Matches(text, "[0-9]+").Cast<Match>().Select(match => match.Value).ToList().ConvertAll(int.Parse);
+
+            var diff1 = verses.Except(results).ToList().Count == 0;
+            var diff2 = results.Except(verses).ToList().Count == 0;
+
+            if (!(diff1 && diff2))
+            {
+                AddError(propertyName, "Verszahl stimmt nicht überein");
+                return false;
+            }
+            return true;
         }
 
         public bool ValidateBook(string book, string propertyName)

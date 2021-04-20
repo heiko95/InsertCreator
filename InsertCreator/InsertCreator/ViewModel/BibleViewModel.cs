@@ -5,29 +5,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.Design;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
 {
     public class BibleViewModel : ObservableObject, INotifyDataErrorInfo
     {
-        #region Private Fields
-
-        private FadeInWriter _fadeInWriter;
-        private HistoryViewModel _historyViewModel;
-
+        private readonly FadeInWriter _fadeInWriter;
+        private readonly HistoryViewModel _historyViewModel;
         private readonly BibleValidationViewModel _bibleValidationViewModel;
 
-        //public event EventHandler<string> OpenBibleBrowser;
-
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        #endregion Private Fields
-
-        #region Public Constructors
 
         public BibleViewModel(List<BibleBook> bible, FadeInWriter fadeInWriter, HistoryViewModel historyViewModel)
         {
@@ -97,23 +85,19 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 SetValue(value);
                 if (!string.IsNullOrEmpty(value))
-                {
                     TextBlockNotEmpty = true;
+                else
+                    TextBlockNotEmpty = false;
+
+                if (!_bibleValidationViewModel.ValidateBibleText(value, GetVerselist(SelectedVerses), nameof(BibleText)))
                     return;
-                }
-                TextBlockNotEmpty = false;
+                OnPropertyChanged(nameof(ButtonsEnable));
             }
         }
 
         private bool _studioMode;
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
         public ObservableCollection<BibleBook> Bible { get; set; }
-
-        #endregion Public Properties
 
         public ICommand RightButtonCommand => new RelayCommand(OnButtonRight);
         public ICommand LeftButtonCommand => new RelayCommand(OnButtonLeft);
@@ -130,7 +114,6 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             var url = $"{Properties.Settings.Default.BibleServer}/{Properties.Settings.Default.BibleTranslation}/{SelectedBook}{SelectedChapter},{SelectedVerses}";
             System.Diagnostics.Process.Start(url);
-            //OpenBibleBrowser?.Invoke(this, string.Empty);
         }
 
         public string SelectedChapter
@@ -160,7 +143,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (!_bibleValidationViewModel.ValidateVerse(SelectedBook, SelectedChapter, value, nameof(SelectedVerses)))
                     return;
 
-                OnPropertyChanged(nameof(ButtonsEnable));
+                if (!string.IsNullOrEmpty(value))
+                    OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(EnableChapter));
                 OnPropertyChanged(nameof(EnableVerse));
             }
@@ -255,6 +239,44 @@ namespace HgSoftware.InsertCreator.ViewModel
             _fadeInWriter.WriteFade(bibleword);
             _historyViewModel.SelectFade(bibleword);
             ClearView();
+        }
+
+        private List<int> GetVerselist(string verses)
+        {
+            var result = new List<int>();
+
+            if (string.IsNullOrEmpty(verses))
+                return result;
+
+            var sections = verses.Split(';').ToList();
+
+            foreach (var section in sections)
+            {
+                var innerSections = section.Split('.').ToList();
+
+                foreach (var innerSection in innerSections)
+                {
+                    var inner = innerSection.Split('-').ToList();
+
+                    if (inner.Count == 1)
+                        result.Add(int.Parse(inner[0]));
+                    else
+                    {
+                        var first = int.Parse(inner[0]);
+                        var second = int.Parse(inner[1]);
+                        var count = second - first;
+                        var state = first;
+                        while (count >= 0)
+                        {
+                            result.Add(state);
+                            state++;
+                            count--;
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
