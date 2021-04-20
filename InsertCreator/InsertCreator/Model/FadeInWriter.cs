@@ -394,7 +394,7 @@ namespace HgSoftware.InsertCreator.Model
                 SplitSublines(drawingTool, ref count, text);
                 count++;
 
-                if (count == 9)
+                if (count == 8)
                     return;
             }
         }
@@ -403,7 +403,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             var words = text.Split(' ').ToList();
 
-            var actualLine = new StringBuilder();
+            var actualLine = new List<string>();
 
             float actualWith = 0F;
 
@@ -413,34 +413,58 @@ namespace HgSoftware.InsertCreator.Model
 
                 if (LineSizeWithNextWord <= _biblewordPositionData.MaxTextLength)
                 {
-                    actualLine.Append(item + " ");
+                    actualLine.Add(item + " ");
                     actualWith = LineSizeWithNextWord;
                 }
                 else
                 {
-                    drawingTool.DrawString(SetToBlock(drawingTool, actualLine.ToString()), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
+
+                    drawingTool.DrawString(SetToBlock(drawingTool, actualLine, actualWith), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
                     count++;
 
                     if (count == 8)
                         return;
-
                     actualLine.Clear();
                     actualWith = drawingTool.MeasureString(item, _biblewordPositionData.FontTextBody).Width;
-                    actualLine.Append(item + " ");
+                    actualLine.Add(item + " ");
                 }
             }
 
-            drawingTool.DrawString(actualLine.ToString(), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
+            drawingTool.DrawString(SetToBlock(drawingTool, actualLine, actualWith), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
         }
 
-        private string SetToBlock(Graphics drawingTool, string text)
+        private string SetToBlock(Graphics drawingTool, List<string> unjustifiedlist, float actualWith)
         {
-            var lengthOfText = drawingTool.MeasureString(text, _biblewordPositionData.FontTextBody).Width;
-            if (lengthOfText > 1000) //TODO
+            float missingSpaceToBlock = _biblewordPositionData.MaxTextLength - actualWith;
+            
+            double missingSpacebars = Math.Round(missingSpaceToBlock / 14);
+            
+            int i = 0;
+            if (actualWith > 1000)
             {
+                while (missingSpacebars > 0)
+                {
+                    unjustifiedlist[i] = unjustifiedlist[i] + " ";
+
+                    i ++;
+
+                    if (i == unjustifiedlist.Count - 1)
+                    {
+                        i = 0;
+                    }
+                    missingSpacebars--;
+                }
             }
 
-            return text;
+            
+            var justifiedLine = string.Join("", unjustifiedlist) ;
+            justifiedLine.Trim(' ');
+            return justifiedLine;
+
+
+
+
+            
         }
 
         #endregion Private Methods
