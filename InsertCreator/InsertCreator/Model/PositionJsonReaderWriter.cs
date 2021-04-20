@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace HgSoftware.InsertCreator.Model
@@ -12,40 +13,34 @@ namespace HgSoftware.InsertCreator.Model
         /// </summary>
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
-        private readonly string _path;
-
         #endregion Private Fields
 
         #region Public Constructors
 
-        public PositionJsonReaderWriter(string path)
+        public PositionJsonReaderWriter()
         {
-            _path = path;
         }
 
         #endregion Public Constructors
 
         #region Public Methods
 
-        public PositionData LoadPositionData()
+        public void LoadPositionData<T>(ref T positionData, string path) where T : IPositionData
         {
             _log.Info("Load Position Data");
-            var positionData = new PositionData();
 
-            var positionListText = File.ReadAllText(_path);
+            var positionListText = File.ReadAllText(path);
 
             if (!string.IsNullOrEmpty(positionListText))
             {
-                positionData = JsonConvert.DeserializeObject<PositionData>(positionListText);
+                positionData = JsonConvert.DeserializeObject<T>(positionListText);
             }
-
-            return positionData;
         }
 
-        public void WritePositionData(PositionData positionData)
+        public void WritePositionData(IPositionData positionData, string path)
         {
             _log.Info("WritePositionData");
-            File.WriteAllText(_path, JsonConvert.SerializeObject(positionData));
+            File.WriteAllText(path, JsonConvert.SerializeObject(positionData));
         }
 
         #endregion Public Methods

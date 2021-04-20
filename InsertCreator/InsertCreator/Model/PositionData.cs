@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    public class PositionData
+    public class PositionData : IPositionData
     {
         #region Private Fields
 
@@ -91,6 +91,9 @@ namespace HgSoftware.InsertCreator.Model
         [JsonProperty("Objektgröße Einblendefeld")]
         private Size _sizeRectangle = new Size();
 
+        [JsonProperty("Transparenz Einblendefeld")]
+        private int _transparencyRectangle;
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -171,6 +174,8 @@ namespace HgSoftware.InsertCreator.Model
 
             _sizeRectangle.Height = 220;
             _sizeRectangle.Width = 1650;
+
+            _transparencyRectangle = 255;
         }
 
         #endregion Public Constructors
@@ -337,6 +342,16 @@ namespace HgSoftware.InsertCreator.Model
             }
         }
 
+        [JsonIgnore]
+        public int TransparencyRectangle
+        {
+            get
+            {
+                if (Properties.Settings.Default.UseGreenscreen)
+                    return 255;
+                return _transparencyRectangle;
+            }
+        }
         #endregion Public Properties
     }
 }
