@@ -34,6 +34,13 @@
             SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             Style="{StaticResource MaterialDesignCardsListBox}">
 
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding StationSelectedCommand}"
+                                                   CommandParameter="{Binding ElementName=Grid, Path=CurrentItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <ListBox.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding ListKeyDownCommand}" />
             </ListBox.InputBindings>
@@ -60,6 +67,10 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
+
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Source={StaticResource proxy}, Path=Data.DoubleClick}" />
+                            </Grid.InputBindings>
 
                             <TextBlock
                                 Grid.Row="0"
