@@ -123,7 +123,6 @@
     <Compile Include="Model\PreviewWindowController.cs" />
     <Compile Include="ViewModel\BaseErrorViewModel.cs" />
     <Compile Include="ViewModel\BibleValidationViewModel.cs" />
-    <Compile Include="ViewModel\BibleBrowserViewModel.cs" />
     <Compile Include="ViewModel\BibleViewModel.cs" />
     <Compile Include="ViewModel\CustomizedInsertViewModel.cs" />
     <Compile Include="ViewModel\CustomListViewModel.cs" />
@@ -133,9 +132,6 @@
     <Compile Include="Model\CsvReaderWriter.cs" />
     <Compile Include="Model\MinistryJsonReaderWriter.cs" />
     <Compile Include="Model\PictureReader.cs" />
-    <Compile Include="View\BibleBrowserView.xaml.cs">
-      <DependentUpon>BibleBrowserView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\BibleView.xaml.cs">
       <DependentUpon>BibleView.xaml</DependentUpon>
     </Compile>
@@ -154,10 +150,6 @@
     <Compile Include="View\PreView.xaml.cs">
       <DependentUpon>PreView.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\BibleBrowserView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\BibleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
