@@ -12,7 +12,7 @@
     TextElement.FontWeight="Medium"
     mc:Ignorable="d">
 
-    <DockPanel Width="525" Height="450">
+    <DockPanel Width="575" Height="450">
 
         <ScrollViewer>
             <DockPanel Margin="5,10,5,10">

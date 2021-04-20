@@ -241,7 +241,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 return;
             }
             PrviewVisibleFlag = false;
-            With = "550";
+            With = "600";
             Hight = "550";
             OnPropertyChanged("With");
             OnPropertyChanged("Hight");

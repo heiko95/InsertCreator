@@ -80,7 +80,7 @@
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="533" />
+                        <ColumnDefinition Width="583" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -145,19 +145,19 @@
                                 HorizontalContentAlignment="Center"
                                 Content="Gesangbuch" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Chorbuch" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Bibelwort" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Freitext" />
                             <ListBox.ItemContainerStyle>

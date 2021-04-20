@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using HgSoftware.InsertCreator.Extensions;
 
 namespace HgSoftware.InsertCreator.Model
 {
@@ -391,80 +392,16 @@ namespace HgSoftware.InsertCreator.Model
 
                 drawingTool.DrawString(verse, _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.Versenumbers[count]);
 
-                SplitSublines(drawingTool, ref count, text);
-                count++;
+                var lines = text.JustifyParagraph(_biblewordPositionData.FontTextBody, _biblewordPositionData.MaxTextLength).Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-                if (count == 8)
-                    return;
-            }
-        }
-
-        private void SplitSublines(Graphics drawingTool, ref int count, string text)
-        {
-            var words = text.Split(' ').ToList();
-
-            var actualLine = new List<string>();
-
-            float actualWith = 0F;
-
-            foreach (var item in words)
-            {
-                var LineSizeWithNextWord = (actualWith + drawingTool.MeasureString(item, _biblewordPositionData.FontTextBody).Width);
-
-                if (LineSizeWithNextWord <= _biblewordPositionData.MaxTextLength)
+                foreach (var line in lines)
                 {
-                    actualLine.Add(item + " ");
-                    actualWith = LineSizeWithNextWord;
-                }
-                else
-                {
-
-                    drawingTool.DrawString(SetToBlock(drawingTool, actualLine, actualWith), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
-                    count++;
-
                     if (count == 8)
                         return;
-                    actualLine.Clear();
-                    actualWith = drawingTool.MeasureString(item, _biblewordPositionData.FontTextBody).Width;
-                    actualLine.Add(item + " ");
+                    drawingTool.DrawString(line, _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
+                    count++;
                 }
             }
-
-            drawingTool.DrawString(SetToBlock(drawingTool, actualLine, actualWith), _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.TextLines[count]);
-        }
-
-        private string SetToBlock(Graphics drawingTool, List<string> unjustifiedlist, float actualWith)
-        {
-            float missingSpaceToBlock = _biblewordPositionData.MaxTextLength - actualWith;
-            
-            double missingSpacebars = Math.Round(missingSpaceToBlock / 14);
-            
-            int i = 0;
-            if (actualWith > 1000)
-            {
-                while (missingSpacebars > 0)
-                {
-                    unjustifiedlist[i] = unjustifiedlist[i] + " ";
-
-                    i ++;
-
-                    if (i == unjustifiedlist.Count - 1)
-                    {
-                        i = 0;
-                    }
-                    missingSpacebars--;
-                }
-            }
-
-            
-            var justifiedLine = string.Join("", unjustifiedlist) ;
-            justifiedLine.Trim(' ');
-            return justifiedLine;
-
-
-
-
-            
         }
 
         #endregion Private Methods

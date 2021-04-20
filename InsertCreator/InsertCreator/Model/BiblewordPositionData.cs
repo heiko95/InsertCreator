@@ -367,7 +367,7 @@ namespace HgSoftware.InsertCreator.Model
         {
             get
             {
-                return _sizeRectangle.Width - 2 * (_versenumberFirstLine.X - _rectanglePosition.X);
+                return _sizeRectangle.Width - (_versenumberFirstLine.X - _rectanglePosition.X) - (_textFirstLine.X - _rectanglePosition.X);
             }
         }
 
