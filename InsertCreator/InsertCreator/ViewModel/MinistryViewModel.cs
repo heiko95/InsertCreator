@@ -159,6 +159,12 @@ namespace HgSoftware.InsertCreator.ViewModel
             OnPropertyChanged("ValidFlagRight");
         }
 
+        public void SaveMinistries()
+        {
+            _readerWriter.WriteMinistryData(Ministries);
+        }
+
+
         #endregion Public Methods
 
         #region Internal Methods
@@ -327,7 +333,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 UsedFunctions.Add(newFunction);
             }
-            _readerWriter.WriteMinistryData(Ministries);
+            
         }
 
         private void UpdateFunctionList()

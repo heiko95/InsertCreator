@@ -55,6 +55,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ConfigViewModel.OnResetMinistries += ResetMinistries;
             ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
             ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
+            ConfigViewModel.OnSaveMinistries += SaveMinistries;
             fadeInWriter.OnInsertUpdate += UpdatePreview;
 
             CurrentHymnalViewModel = _gbData;
@@ -70,6 +71,11 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             if (Properties.Settings.Default.ShowInsertInFullscreen)
                 _previewWindow.Show();
+        }
+
+        private void SaveMinistries(object sender, EventArgs e)
+        {
+            MinistryViewModel.SaveMinistries();
         }
 
         //private async void OnOpenBibleBrowser(object sender, string e)
@@ -196,6 +202,12 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public string InsertWith
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
         #endregion Public Properties
 
         #region Private Methods
@@ -203,6 +215,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void OnCloseWindow(object obj)
         {
             CustomizedViewModel.SaveInserts();
+            MinistryViewModel.SaveMinistries();
             Properties.Settings.Default.Save();
             _previewWindow.Close();
         }
@@ -232,20 +245,24 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             if (state)
             {
+                InsertWith = "535";
                 With = "1200";
                 Hight = "790";
                 PrviewVisibleFlag = true;
-                OnPropertyChanged("With");
-                OnPropertyChanged("Hight");
-                OnPropertyChanged("PrviewVisibleFlag");
+                OnPropertyChanged(nameof(InsertWith));
+                OnPropertyChanged(nameof(With));
+                OnPropertyChanged(nameof(Hight));
+                OnPropertyChanged(nameof(PrviewVisibleFlag));
                 return;
             }
             PrviewVisibleFlag = false;
+            InsertWith = "583";
             With = "600";
             Hight = "550";
-            OnPropertyChanged("With");
-            OnPropertyChanged("Hight");
-            OnPropertyChanged("PrviewVisibleFlag");
+            OnPropertyChanged(nameof(InsertWith));
+            OnPropertyChanged(nameof(With));
+            OnPropertyChanged(nameof(Hight));
+            OnPropertyChanged(nameof(PrviewVisibleFlag));
         }
 
         private void UpdateFullscreenMode(object sender, bool e)
