@@ -372,6 +372,9 @@ namespace HgSoftware.InsertCreator.Model
                 var verse = Regex.Match(item, "[0-9]+").Value;
                 var text = item.Replace($"{verse}", "").Trim(' ').Trim(Convert.ToChar(160)).Replace(Convert.ToChar(160), ' ');
 
+                if (count == 8)
+                    return;
+
                 drawingTool.DrawString(verse, _biblewordPositionData.FontTextBody, new SolidBrush(Color.Black), _biblewordPositionData.Versenumbers[count]);
 
                 var lines = text.JustifyParagraph(_biblewordPositionData.FontTextBody, _biblewordPositionData.MaxTextLength).Split(new string[] { "\r\n" }, StringSplitOptions.None);
