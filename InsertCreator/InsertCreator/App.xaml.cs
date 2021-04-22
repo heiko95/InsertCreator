@@ -69,7 +69,7 @@ namespace HgSoftware.InsertCreator
             FileCreate("Insert.json", path);
 
             _log.Info("Load Images");
-            fadeInWriter.LoadImages();
+            fadeInWriter.ResetFade();
 
             var vm = new WindowViewModel(positionData, biblewordPositionData);
 
