@@ -101,7 +101,7 @@
                     Margin="20"
                     Command="{Binding ViewOnline}"
                     Content="Bibelwort nachschlagen"
-                    IsEnabled="{Binding ButtonsEnable, UpdateSourceTrigger=PropertyChanged}" />
+                    IsEnabled="{Binding ResearchEnable, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </StackPanel>
         <TextBox
@@ -115,7 +115,8 @@
             HorizontalScrollBarVisibility="Disabled"
             Text="{Binding BibleText, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             TextWrapping="Wrap"
-            VerticalScrollBarVisibility="Auto" />
+            VerticalScrollBarVisibility="Auto"
+            IsEnabled="{Binding ResearchEnable, UpdateSourceTrigger=PropertyChanged}" />
 
         <StackPanel
             Grid.Row="5"

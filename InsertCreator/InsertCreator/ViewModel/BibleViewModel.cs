@@ -30,6 +30,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             ErrorsChanged?.Invoke(this, e);
             OnPropertyChanged(nameof(ButtonsEnable));
+            OnPropertyChanged(nameof(ResearchEnable));
             OnPropertyChanged(nameof(EnableChapter));
             OnPropertyChanged(nameof(EnableVerse));
         }
@@ -44,13 +45,30 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             get
             {
-                if (string.IsNullOrEmpty(SelectedChapter) ||
-                    string.IsNullOrEmpty(SelectedBook) ||
-                    string.IsNullOrEmpty(SelectedVerses) ||
-                    HasErrors)
+                if (_bibleValidationViewModel.PropertyHasError(nameof(BibleText)) || !ResearchEnable)
                     return false;
                 return true;
             }
+        }
+
+        public bool ResearchEnable
+        {
+            get
+            {
+                if (PropertyIsEmptyOrHasError(nameof(SelectedChapter), SelectedChapter) ||
+                    PropertyIsEmptyOrHasError(nameof(SelectedBook), SelectedBook) ||
+                    PropertyIsEmptyOrHasError(nameof(SelectedVerses), SelectedVerses))
+
+                    return false;
+                return true;
+            }
+        }
+
+        private bool PropertyIsEmptyOrHasError(string propertyName, string value)
+        {
+            if (string.IsNullOrEmpty(value) || _bibleValidationViewModel.PropertyHasError(propertyName))
+                return true;
+            return false;
         }
 
         public bool EnableChapter
@@ -92,6 +110,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 if (!_bibleValidationViewModel.ValidateBibleText(value, GetVerselist(SelectedVerses), nameof(BibleText)))
                     return;
                 OnPropertyChanged(nameof(ButtonsEnable));
+                OnPropertyChanged(nameof(ResearchEnable));
             }
         }
 
@@ -129,6 +148,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                     _bibleValidationViewModel.ValidateVerse(SelectedBook, value, SelectedVerses, nameof(SelectedVerses));
 
                 OnPropertyChanged(nameof(ButtonsEnable));
+                OnPropertyChanged(nameof(ResearchEnable));
                 OnPropertyChanged(nameof(EnableChapter));
                 OnPropertyChanged(nameof(EnableVerse));
             }
@@ -140,11 +160,20 @@ namespace HgSoftware.InsertCreator.ViewModel
             set
             {
                 SetValue(value);
-                if (!_bibleValidationViewModel.ValidateVerse(SelectedBook, SelectedChapter, value, nameof(SelectedVerses)))
-                    return;
 
-                if (!string.IsNullOrEmpty(value))
+                if (!_bibleValidationViewModel.ValidateVerse(SelectedBook, SelectedChapter, value, nameof(SelectedVerses)))
+                {
+                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselist(SelectedVerses), nameof(BibleText));
                     OnPropertyChanged(nameof(ButtonsEnable));
+                    OnPropertyChanged(nameof(ResearchEnable));
+                    return;
+                }
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselist(SelectedVerses), nameof(BibleText));
+                }
+                OnPropertyChanged(nameof(ButtonsEnable));
+                OnPropertyChanged(nameof(ResearchEnable));
                 OnPropertyChanged(nameof(EnableChapter));
                 OnPropertyChanged(nameof(EnableVerse));
             }
@@ -165,6 +194,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                             _bibleValidationViewModel.ValidateVerse(value, SelectedChapter, SelectedVerses, nameof(SelectedVerses));
 
                 OnPropertyChanged(nameof(ButtonsEnable));
+                OnPropertyChanged(nameof(ResearchEnable));
                 OnPropertyChanged(nameof(EnableChapter));
                 OnPropertyChanged(nameof(EnableVerse));
             }
@@ -245,7 +275,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             var result = new List<int>();
 
-            if (string.IsNullOrEmpty(verses))
+            if (string.IsNullOrEmpty(verses) || _bibleValidationViewModel.PropertyHasError(nameof(SelectedVerses)))
                 return result;
 
             var sections = verses.Split(';').ToList();
