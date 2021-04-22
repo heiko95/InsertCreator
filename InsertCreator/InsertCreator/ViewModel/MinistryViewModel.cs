@@ -179,24 +179,49 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         internal void UpdateMinistries(ObservableCollection<MinistryGridViewModel> ministryList)
         {
-            var count = 0;
+            var addCount = 0;
+            var updatedCount = 0;
+            string addMessage = "";
+            string updatedMessage = "";
 
             var tmpMinistryList = new List<MinistryGridViewModel>();
             tmpMinistryList.AddRange(Ministries);
 
             foreach (var item in ministryList)
             {
-                if (!tmpMinistryList.Exists(x => x.FullName == item.FullName) && (!tmpMinistryList.Exists(x => x.Function == item.Function)))
+                if (!tmpMinistryList.Exists(x => x.FullName == item.FullName))
                 {
                     Ministries.Add(item);
-                    count++;
+                    addCount++;
+                }
+                if (tmpMinistryList.Exists(x => x.FullName == item.FullName))
+                {
+                    var oldFunction = tmpMinistryList.Find(x => x.FullName == item.FullName).Function;
+
+                    if (oldFunction != item.Function)
+                    {
+                        tmpMinistryList.Find(x => x.FullName == item.FullName).Function = item.Function;
+                        updatedCount++;
+                    }
                 }
             }
 
-            if (count == 1)
-                MessageBox.Show($"{count} Eintrag wurde zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (addCount == 1)
+                addMessage = $"{addCount} Eintrag wurde zum Verzeichnis hinzugefügt";
             else
-                MessageBox.Show($"{count} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                addMessage = $"{addCount} Einträge wurden zum Verzeichnis hinzugefügt";
+
+            if (updatedCount == 1)
+                updatedMessage = $"{updatedCount} Eintrag wurde im Verzeichnis aktualisiert";
+            else
+                updatedMessage = $"{updatedCount} Einträge wurden im Verzeichnis aktualisiert";
+
+            MessageBox.Show(addMessage + Environment.NewLine + updatedMessage, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //if (addCount == 1)
+            //    MessageBox.Show($"{addCount} Eintrag wurde zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //else
+            //    MessageBox.Show($"{addCount} Einträge wurden zum Verzeichnis hinzugefügt", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             UpdateFunctionList();
             MinistryViewSource.Source = Ministries;
