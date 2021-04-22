@@ -54,6 +54,8 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         public event EventHandler<bool> OnUpdatePreview;
 
+        public event EventHandler<EventArgs> OnSaveMinistries;
+
         #endregion Public Events
 
         #region Public Properties
@@ -217,6 +219,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void SaveCSV(object obj)
         {
+            OnSaveMinistries?.Invoke(this, EventArgs.Empty);
             _csvReaderWriter.SaveCsv();
         }
 
