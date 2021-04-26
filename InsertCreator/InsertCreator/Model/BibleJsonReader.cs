@@ -4,17 +4,19 @@ using System.IO;
 
 namespace HgSoftware.InsertCreator.Model
 {
-    internal static class HymnalJsonReader
+    internal static class BibleJsonReader
     {
         #region Public Methods
 
-        public static List<Song> LoadHymnalData(string path)
+        public static List<BibleBook> LoadBibleData(string path)
         {
+            List<BibleBook> biblebooks;
+
             var o1 = File.ReadAllText(path);
 
-            var songs = JsonConvert.DeserializeObject<List<Song>>(o1);
+            biblebooks = JsonConvert.DeserializeObject<List<BibleBook>>(o1);
 
-            return songs;
+            return biblebooks;
         }
 
         #endregion Public Methods

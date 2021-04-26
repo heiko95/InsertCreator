@@ -1,10 +1,10 @@
 ﻿<Window
     x:Class="HgSoftware.InsertCreator.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:HgSoftware.InsertCreator.View"
     xmlns:viewModels="clr-namespace:HgSoftware.InsertCreator.ViewModel"
@@ -80,13 +80,13 @@
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="533" />
+                        <ColumnDefinition Width="{Binding InsertWith, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <materialDesign:Card Margin="10">
                         <Grid>
-                            <Grid>
+                            <Grid Visibility="{Binding Path=MinistryInputVisible, Converter={StaticResource Converter}}">
                                 <view:MinistryView DataContext="{Binding MinistryViewModel, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Visibility="{Binding Path=HymnalInputVisible, Converter={StaticResource Converter}}">
@@ -94,6 +94,9 @@
                             </Grid>
                             <Grid Visibility="{Binding Path=CustomInputVisible, Converter={StaticResource Converter}}">
                                 <view:CustomizedInsertView DataContext="{Binding CustomizedViewModel, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Path=BibleInputVisible, Converter={StaticResource Converter}}">
+                                <view:BibleView DataContext="{Binding BibleViewModel, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                         </Grid>
                     </materialDesign:Card>
@@ -142,18 +145,21 @@
                                 HorizontalContentAlignment="Center"
                                 Content="Gesangbuch" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Chorbuch" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Amtsträger" />
                             <ListBoxItem
-                                Width="95"
+                                Width="90"
+                                HorizontalContentAlignment="Center"
+                                Content="Bibelwort" />
+                            <ListBoxItem
+                                Width="90"
                                 HorizontalContentAlignment="Center"
                                 Content="Freitext" />
-
                             <ListBox.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListBoxItem">
 

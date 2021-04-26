@@ -18,9 +18,11 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private readonly HymnalInputViewModel _cbData;
 
-        private readonly HymnalInputViewModel _gbData;
+        //public BibleBrowserViewModel BibleBrowserViewModel { get; set; } = new BibleBrowserViewModel();
 
-        private readonly HymnalJsonReader _hymnalJsonReader = new HymnalJsonReader();
+        public BibleViewModel BibleViewModel { get; private set; }
+
+        private readonly HymnalInputViewModel _gbData;
 
         private readonly PreviewWindowController _previewWindow;
 
@@ -28,17 +30,19 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         #region Public Constructors
 
-        public WindowViewModel(PositionData positionData)
+        public WindowViewModel(PositionData positionData, BiblewordPositionData biblewordPositionData)
         {
-            var fadeInWriter = new FadeInWriter(positionData);
+            var fadeInWriter = new FadeInWriter(positionData, biblewordPositionData);
             HistoryViewModel = new HistoryViewModel(fadeInWriter);
 
             _log.Info("Load Data");
-            _gbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json")), "Gesangbuch", fadeInWriter, HistoryViewModel);
-            _cbData = new HymnalInputViewModel(_hymnalJsonReader.LoadHymnalData(($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json")), "Chorbuch", fadeInWriter, HistoryViewModel);
+            _gbData = new HymnalInputViewModel(HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json"), "Gesangbuch", fadeInWriter, HistoryViewModel);
+            _cbData = new HymnalInputViewModel(HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json"), "Chorbuch", fadeInWriter, HistoryViewModel);
 
             HymnalInputVisible = true;
             BibleInputVisible = false;
+            CustomInputVisible = false;
+            MinistryInputVisible = false;
 
             _log.Info("Load Ministry");
             MinistryViewModel = new MinistryViewModel(fadeInWriter, HistoryViewModel);
@@ -51,11 +55,16 @@ namespace HgSoftware.InsertCreator.ViewModel
             ConfigViewModel.OnResetMinistries += ResetMinistries;
             ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
             ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
+            ConfigViewModel.OnSaveMinistries += SaveMinistries;
             fadeInWriter.OnInsertUpdate += UpdatePreview;
 
             CurrentHymnalViewModel = _gbData;
 
             _previewWindow = new PreviewWindowController(PreviewViewModel);
+
+            _log.Info("ReadBible");
+            BibleViewModel = new BibleViewModel(BibleJsonReader.LoadBibleData($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json"), fadeInWriter, HistoryViewModel);
+            //BibleViewModel.OpenBibleBrowser += OnOpenBibleBrowser;
 
             _log.Info("Create Preview");
             SetPreview(Properties.Settings.Default.ShowPreviewPicture);
@@ -63,6 +72,16 @@ namespace HgSoftware.InsertCreator.ViewModel
             if (Properties.Settings.Default.ShowInsertInFullscreen)
                 _previewWindow.Show();
         }
+
+        private void SaveMinistries(object sender, EventArgs e)
+        {
+            MinistryViewModel.SaveMinistries();
+        }
+
+        //private async void OnOpenBibleBrowser(object sender, string e)
+        //{
+        //    await MaterialDesignThemes.Wpf.DialogHost.Show(BibleBrowserViewModel, "MainWindow");
+        //}
 
         #endregion Public Constructors
 
@@ -84,6 +103,12 @@ namespace HgSoftware.InsertCreator.ViewModel
         }
 
         public bool CustomInputVisible
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public bool MinistryInputVisible
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
@@ -130,11 +155,21 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 SetValue(value);
 
-                if (value == 3)
+                if (value == 4)
                 {
                     HymnalInputVisible = false;
                     BibleInputVisible = false;
                     CustomInputVisible = true;
+                    MinistryInputVisible = false;
+                    return;
+                }
+
+                if (value == 3)
+                {
+                    HymnalInputVisible = false;
+                    BibleInputVisible = true;
+                    CustomInputVisible = false;
+                    MinistryInputVisible = false;
                     return;
                 }
 
@@ -143,12 +178,14 @@ namespace HgSoftware.InsertCreator.ViewModel
                     HymnalInputVisible = false;
                     BibleInputVisible = false;
                     CustomInputVisible = false;
+                    MinistryInputVisible = true;
                     return;
                 }
 
                 HymnalInputVisible = true;
                 BibleInputVisible = false;
                 CustomInputVisible = false;
+                MinistryInputVisible = false;
 
                 if (value == 1)
                 {
@@ -165,6 +202,12 @@ namespace HgSoftware.InsertCreator.ViewModel
             set { SetValue(value); }
         }
 
+        public string InsertWith
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
         #endregion Public Properties
 
         #region Private Methods
@@ -172,6 +215,7 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void OnCloseWindow(object obj)
         {
             CustomizedViewModel.SaveInserts();
+            MinistryViewModel.SaveMinistries();
             Properties.Settings.Default.Save();
             _previewWindow.Close();
         }
@@ -195,25 +239,30 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             _gbData.UpdateButtons(state);
             _cbData.UpdateButtons(state);
+            BibleViewModel.UpdateButtons(state);
             CustomizedViewModel.UpdateButtons(state);
             MinistryViewModel.UpdateButtons(state);
 
             if (state)
             {
+                InsertWith = "535";
                 With = "1200";
                 Hight = "790";
                 PrviewVisibleFlag = true;
-                OnPropertyChanged("With");
-                OnPropertyChanged("Hight");
-                OnPropertyChanged("PrviewVisibleFlag");
+                OnPropertyChanged(nameof(InsertWith));
+                OnPropertyChanged(nameof(With));
+                OnPropertyChanged(nameof(Hight));
+                OnPropertyChanged(nameof(PrviewVisibleFlag));
                 return;
             }
             PrviewVisibleFlag = false;
-            With = "550";
+            InsertWith = "583";
+            With = "600";
             Hight = "550";
-            OnPropertyChanged("With");
-            OnPropertyChanged("Hight");
-            OnPropertyChanged("PrviewVisibleFlag");
+            OnPropertyChanged(nameof(InsertWith));
+            OnPropertyChanged(nameof(With));
+            OnPropertyChanged(nameof(Hight));
+            OnPropertyChanged(nameof(PrviewVisibleFlag));
         }
 
         private void UpdateFullscreenMode(object sender, bool e)

@@ -10,6 +10,7 @@
     BorderThickness="0"
     WindowStyle="None"
     mc:Ignorable="d" Loaded="Window_loaded">
+
     <Grid>
         <Image
             HorizontalAlignment="Center"

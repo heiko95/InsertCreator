@@ -23,5 +23,11 @@
     <Setting Name="LogoOnLefthand" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="BibleServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.bibleserver.com</Value>
+    </Setting>
+    <Setting Name="BibleTranslation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LUT</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

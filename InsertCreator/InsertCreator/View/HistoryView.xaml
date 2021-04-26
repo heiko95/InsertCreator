@@ -2,7 +2,10 @@
     x:Class="HgSoftware.InsertCreator.View.HistoryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:HgSoftware.InsertCreator.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dd="urn:gong-wpf-dragdrop"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -13,10 +16,16 @@
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
+        <Grid.Resources>
+            <behaviors:BindingProxy x:Key="proxy" Data="{Binding}" />
+        </Grid.Resources>
+
         <ListBox
             x:Name="History"
             Margin="12,10,12,0"
             HorizontalContentAlignment="Stretch"
+            dd:DragDrop.IsDragSource="True"
+            dd:DragDrop.IsDropTarget="True"
             Background="{DynamicResource MaterialDesignPaper}"
             DockPanel.Dock="Top"
             ItemsSource="{Binding HistoryView, UpdateSourceTrigger=PropertyChanged}"
@@ -25,24 +34,43 @@
             SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             Style="{StaticResource MaterialDesignCardsListBox}">
 
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding StationSelectedCommand}"
+                                                   CommandParameter="{Binding ElementName=Grid, Path=CurrentItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <ListBox.InputBindings>
                 <KeyBinding Key="Delete" Command="{Binding ListKeyDownCommand}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
-
                 <DataTemplate>
                     <DockPanel
+                        x:Name="ListBoxItem"
                         Width="{Binding Path=DataContext.ItemWith, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, UpdateSourceTrigger=PropertyChanged}"
                         Height="45"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
+
+                        <DockPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding Source={StaticResource proxy}, Path=Data.DeleteCommand}" Header="Löschen" />
+                                <Separator />
+                                <MenuItem Command="{Binding Source={StaticResource proxy}, Path=Data.SaveCommand}" Header="Speichern" />
+                            </ContextMenu>
+                        </DockPanel.ContextMenu>
 
                         <Grid VerticalAlignment="Center" DockPanel.Dock="Top">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
+
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Source={StaticResource proxy}, Path=Data.DoubleClick}" />
+                            </Grid.InputBindings>
 
                             <TextBlock
                                 Grid.Row="0"
