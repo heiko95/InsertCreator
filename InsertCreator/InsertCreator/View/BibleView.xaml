@@ -113,10 +113,10 @@
             materialDesign:HintAssist.Hint="Textwort"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Disabled"
+            IsEnabled="{Binding ResearchEnable, UpdateSourceTrigger=PropertyChanged}"
             Text="{Binding BibleText, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
             TextWrapping="Wrap"
-            VerticalScrollBarVisibility="Auto"
-            IsEnabled="{Binding ResearchEnable, UpdateSourceTrigger=PropertyChanged}" />
+            VerticalScrollBarVisibility="Auto" />
 
         <StackPanel
             Grid.Row="5"
