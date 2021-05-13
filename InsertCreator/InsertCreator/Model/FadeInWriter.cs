@@ -176,7 +176,7 @@ namespace HgSoftware.InsertCreator.Model
             DrawRectangle(drawingTool, _positionData);
 
             drawingTool.DrawString(
-             "Textwort",
+             "Bibelwort",
             _positionData.FontTextTwoRowFirstLine,
              new SolidBrush(Color.Black), _positionData.TextTwoRowFirstLinePosition);
 
@@ -347,7 +347,7 @@ namespace HgSoftware.InsertCreator.Model
             DrawLogo(drawingTool, _biblewordPositionData);
 
             drawingTool.DrawString(
-           "Textwort",
+           "Bibelwort",
            _biblewordPositionData.FontTextHeadline,
            new SolidBrush(Color.Black), _biblewordPositionData.HeadlineTextFirstLine);
 

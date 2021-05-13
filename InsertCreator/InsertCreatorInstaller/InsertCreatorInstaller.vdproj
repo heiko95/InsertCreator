@@ -822,15 +822,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Insert Creator"
-        "ProductCode" = "8:{77FD35EF-D2E6-4B45-ABA6-51ADCD9C3828}"
-        "PackageCode" = "8:{3204FB3C-654A-476C-BF3F-AE43E2C1DDA1}"
+        "ProductCode" = "8:{4BC9CECD-C08E-465E-A212-5E7A57690300}"
+        "PackageCode" = "8:{DF955674-8D23-4A25-9F9A-4076213D1993}"
         "UpgradeCode" = "8:{FB94BEFD-845D-42EF-8E73-B359AA59AB09}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.3.0"
+        "ProductVersion" = "8:1.3.1"
         "Manufacturer" = "8:HgSoftware"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:heigrbk@arcor.de"
@@ -1372,7 +1372,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4AD7E247AAB94287AAC299BBD076834D"
             {
-            "SourcePath" = "8:..\\InsertCreator\\obj\\Debug\\InsertCreator.exe"
+            "SourcePath" = "8:..\\InsertCreator\\obj\\Release\\InsertCreator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_ED53DF7F84EF49D787E376C613FE3437"

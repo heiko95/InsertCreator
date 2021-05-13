@@ -92,7 +92,7 @@
                     Width="181"
                     Margin="20"
                     Command="{Binding RemoveText}"
-                    Content="Textwort leeren"
+                    Content="Bibelwort leeren"
                     IsEnabled="{Binding TextBlockNotEmpty, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button
@@ -110,7 +110,7 @@
             Margin="20"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
-            materialDesign:HintAssist.Hint="Textwort"
+            materialDesign:HintAssist.Hint="Bibelwort"
             AcceptsReturn="True"
             HorizontalScrollBarVisibility="Disabled"
             IsEnabled="{Binding ResearchEnable, UpdateSourceTrigger=PropertyChanged}"

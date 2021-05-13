@@ -27,7 +27,7 @@ namespace HgSoftware.InsertCreator.Model
             get
             {
                 if (string.IsNullOrEmpty(BibleText))
-                    return "Textwort";
+                    return "Bibelwort";
                 return "Bibeltext";
             }
         }
