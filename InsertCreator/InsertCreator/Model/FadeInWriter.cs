@@ -363,7 +363,9 @@ namespace HgSoftware.InsertCreator.Model
 
         private void DrawBibleText(Graphics drawingTool, string bibleText)
         {
-            var verses = Regex.Split(bibleText.TrimStart(' ').TrimStart(Convert.ToChar(160)), "([0-9]+.[^0-9]+)").Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
+            var bibleTextWithoutLinks = Regex.Replace(bibleText, "[ ][(].+[)]", string.Empty);
+
+            var verses = Regex.Split(bibleTextWithoutLinks.TrimStart(' ').TrimStart(Convert.ToChar(160)), "([0-9]+.[^0-9]+)").Where(s => !string.IsNullOrEmpty(s)).Distinct().ToList();
 
             var count = 0;
 
