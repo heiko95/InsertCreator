@@ -25,7 +25,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             if (string.IsNullOrEmpty(text))
                 return true;
 
-            var results = Regex.Matches(text, "[0-9]+").Cast<Match>().Select(match => match.Value).ToList().ConvertAll(int.Parse);
+            var bibleTextWithoutLink = Regex.Replace(text, "[ ][(].+[)]", string.Empty);
+
+            var results = Regex.Matches(bibleTextWithoutLink, "[0-9]+").Cast<Match>().Select(match => match.Value).ToList().ConvertAll(int.Parse);
 
             var diff1 = verses.Except(results).ToList().Count == 0;
             var diff2 = results.Except(verses).ToList().Count == 0;
