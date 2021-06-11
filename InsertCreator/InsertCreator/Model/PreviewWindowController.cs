@@ -1,5 +1,6 @@
 ﻿using HgSoftware.InsertCreator.View;
 using HgSoftware.InsertCreator.ViewModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HgSoftware.InsertCreator.Model
@@ -56,6 +57,15 @@ namespace HgSoftware.InsertCreator.Model
 
         #region Private Methods
 
+        private int CheckMonitor(int number, List<System.Windows.Forms.Screen> screens)
+        {
+            if (screens.Count >= number)
+            {
+                return number;
+            }
+            return CheckMonitor(number - 1, screens);
+        }
+
         private bool SetWindow()
         {
             var screens = System.Windows.Forms.Screen.AllScreens.ToList();
@@ -67,7 +77,10 @@ namespace HgSoftware.InsertCreator.Model
             _window.ShowInTaskbar = false;
             _window.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
 
-            var secScreen = screens.First(x => !x.Primary);
+            //var secScreen = screens.First(x => !x.Primary);
+
+            var secScreen = screens[CheckMonitor(Properties.Settings.Default.MonitorNumber, screens) - 1];
+
             System.Drawing.Rectangle r = secScreen.WorkingArea;
 
             _window.Top = r.Top;

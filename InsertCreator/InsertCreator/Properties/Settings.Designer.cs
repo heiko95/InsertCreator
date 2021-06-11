@@ -130,5 +130,17 @@ namespace HgSoftware.InsertCreator.Properties {
                 this["BibleTranslation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MonitorNumber {
+            get {
+                return ((int)(this["MonitorNumber"]));
+            }
+            set {
+                this["MonitorNumber"] = value;
+            }
+        }
     }
 }
