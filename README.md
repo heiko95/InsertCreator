@@ -1,5 +1,12 @@
 # Insertcreator
 
+- [EN](#Short description)
+- [DE](#Kurzbeschreibung)
+
+---
+
+## Short description
+
 Software to create inserts for divine service livestreams.
 Contains the song numbers and titles of the German hymnal as well as the German choir book of the New Apostolic Church.
 
@@ -35,7 +42,7 @@ See [InsertCreator-Wiki](https://github.com/heiko95/InsertCreator/wiki)
 
 ---
 
-# Insertcreator
+## Kurzbeschreibung
 
 Software zur Erstellung von Einblenden in Gottesdienst-Livestreams
 Enthält die Liednummern und Titel des Deutschen Gesangbuchs sowie des Deutschen Chorbuchs der Neuapostolischen Kirche.
