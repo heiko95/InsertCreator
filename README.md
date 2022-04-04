@@ -1,11 +1,11 @@
 # Insertcreator
 
-- [EN](#Short description)
+- [EN](#Shortdescription)
 - [DE](#Kurzbeschreibung)
 
 ---
 
-## Short description
+## Shortdescription
 
 Software to create inserts for divine service livestreams.
 Contains the song numbers and titles of the German hymnal as well as the German choir book of the New Apostolic Church.
