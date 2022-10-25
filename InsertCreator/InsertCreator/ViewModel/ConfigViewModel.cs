@@ -187,7 +187,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void DeleteMinistryList(object obj)
         {
-            var result = MessageBox.Show("Möchten sie die Amtsträgerliste unwiderruflich löschen", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var result = MessageBox.Show("Möchten sie die Amtsträgerliste unwiderruflich löschen?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 OnResetMinistries?.Invoke(this, new EventArgs());
