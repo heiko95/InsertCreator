@@ -3911,6 +3911,590 @@
     ]
   },
   {
+    "Name": "Tobit",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 22
+      },
+      {
+        "Number": 2,
+        "Versecount": 14
+      },
+      {
+        "Number": 3,
+        "Versecount": 17
+      },
+      {
+        "Number": 4,
+        "Versecount": 21
+      },
+      {
+        "Number": 5,
+        "Versecount": 22
+      },
+      {
+        "Number": 6,
+        "Versecount": 18
+      },
+      {
+        "Number": 7,
+        "Versecount": 17
+      },
+      {
+        "Number": 8,
+        "Versecount": 21
+      },
+      {
+        "Number": 9,
+        "Versecount": 6
+      },
+      {
+        "Number": 10,
+        "Versecount": 13
+      },
+      {
+        "Number": 11,
+        "Versecount": 18
+      },
+      {
+        "Number": 12,
+        "Versecount": 22
+      },
+      {
+        "Number": 13,
+        "Versecount": 18
+      },
+      {
+        "Number": 14,
+        "Versecount": 15
+      }
+
+    ]
+  },
+  {
+    "Name": "Judit",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 16
+      },
+      {
+        "Number": 2,
+        "Versecount": 28
+      },
+      {
+        "Number": 3,
+        "Versecount": 10
+      },
+      {
+        "Number": 4,
+        "Versecount": 15
+      },
+      {
+        "Number": 5,
+        "Versecount": 24
+      },
+      {
+        "Number": 6,
+        "Versecount": 21
+      },
+      {
+        "Number": 7,
+        "Versecount": 32
+      },
+      {
+        "Number": 8,
+        "Versecount": 36
+      },
+      {
+        "Number": 9,
+        "Versecount": 14
+      },
+      {
+        "Number": 10,
+        "Versecount": 23
+      },
+      {
+        "Number": 11,
+        "Versecount": 23
+      },
+      {
+        "Number": 12,
+        "Versecount": 20
+      },
+      {
+        "Number": 13,
+        "Versecount": 20
+      },
+      {
+        "Number": 14,
+        "Versecount": 19
+      },
+      {
+        "Number": 15,
+        "Versecount": 14
+      },
+      {
+        "Number": 16,
+        "Versecount": 25
+      }
+    ]
+  },
+  {
+    "Name": "1.Makkabäer",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 64
+      },
+      {
+        "Number": 2,
+        "Versecount": 70
+      },
+      {
+        "Number": 3,
+        "Versecount": 60
+      },
+      {
+        "Number": 4,
+        "Versecount": 61
+      },
+      {
+        "Number": 5,
+        "Versecount": 68
+      },
+      {
+        "Number": 6,
+        "Versecount": 63
+      },
+      {
+        "Number": 7,
+        "Versecount": 50
+      },
+      {
+        "Number": 8,
+        "Versecount": 32
+      },
+      {
+        "Number": 9,
+        "Versecount": 73
+      },
+      {
+        "Number": 10,
+        "Versecount": 89
+      },
+      {
+        "Number": 11,
+        "Versecount": 74
+      },
+      {
+        "Number": 12,
+        "Versecount": 53
+      },
+      {
+        "Number": 13,
+        "Versecount": 53
+      },
+      {
+        "Number": 14,
+        "Versecount": 49
+      },
+      {
+        "Number": 15,
+        "Versecount": 41
+      },
+      {
+        "Number": 16,
+        "Versecount": 24
+      }
+    ]
+  },
+  {
+    "Name": "2.Makkabäer",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 36
+      },
+      {
+        "Number": 2,
+        "Versecount": 32
+      },
+      {
+        "Number": 3,
+        "Versecount": 40
+      },
+      {
+        "Number": 4,
+        "Versecount": 50
+      },
+      {
+        "Number": 5,
+        "Versecount": 27
+      },
+      {
+        "Number": 6,
+        "Versecount": 31
+      },
+      {
+        "Number": 7,
+        "Versecount": 42
+      },
+      {
+        "Number": 8,
+        "Versecount": 36
+      },
+      {
+        "Number": 9,
+        "Versecount": 29
+      },
+      {
+        "Number": 10,
+        "Versecount": 38
+      },
+      {
+        "Number": 11,
+        "Versecount": 38
+      },
+      {
+        "Number": 12,
+        "Versecount": 45
+      },
+      {
+        "Number": 13,
+        "Versecount": 26
+      },
+      {
+        "Number": 14,
+        "Versecount": 46
+      },
+      {
+        "Number": 15,
+        "Versecount": 39
+      }
+    ]
+  },
+  {
+    "Name": "Weisheit",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 16
+      },
+      {
+        "Number": 2,
+        "Versecount": 25
+      },
+      {
+        "Number": 3,
+        "Versecount": 19
+      },
+      {
+        "Number": 4,
+        "Versecount": 20
+      },
+      {
+        "Number": 5,
+        "Versecount": 23
+      },
+      {
+        "Number": 6,
+        "Versecount": 25
+      },
+      {
+        "Number": 7,
+        "Versecount": 30
+      },
+      {
+        "Number": 8,
+        "Versecount": 21
+      },
+      {
+        "Number": 9,
+        "Versecount": 18
+      },
+      {
+        "Number": 10,
+        "Versecount": 21
+      },
+      {
+        "Number": 11,
+        "Versecount": 26
+      },
+      {
+        "Number": 12,
+        "Versecount": 27
+      },
+      {
+        "Number": 13,
+        "Versecount": 19
+      },
+      {
+        "Number": 14,
+        "Versecount": 31
+      },
+      {
+        "Number": 15,
+        "Versecount": 19
+      },
+      {
+        "Number": 16,
+        "Versecount": 29
+      },
+      {
+        "Number": 17,
+        "Versecount": 21
+      },
+      {
+        "Number": 18,
+        "Versecount": 25
+      },
+      {
+        "Number": 19,
+        "Versecount": 22
+      }
+    ]
+  },
+  {
+    "Name": "Jesus Sirach",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 30
+      },
+      {
+        "Number": 2,
+        "Versecount": 18
+      },
+      {
+        "Number": 3,
+        "Versecount": 31
+      },
+      {
+        "Number": 4,
+        "Versecount": 31
+      },
+      {
+        "Number": 5,
+        "Versecount": 15
+      },
+      {
+        "Number": 6,
+        "Versecount": 37
+      },
+      {
+        "Number": 7,
+        "Versecount": 36
+      },
+      {
+        "Number": 8,
+        "Versecount": 19
+      },
+      {
+        "Number": 9,
+        "Versecount": 18
+      },
+      {
+        "Number": 10,
+        "Versecount": 31
+      },
+      {
+        "Number": 11,
+        "Versecount": 34
+      },
+      {
+        "Number": 12,
+        "Versecount": 18
+      },
+      {
+        "Number": 13,
+        "Versecount": 26
+      },
+      {
+        "Number": 14,
+        "Versecount": 27
+      },
+      {
+        "Number": 15,
+        "Versecount": 20
+      },
+      {
+        "Number": 16,
+        "Versecount": 30
+      },
+      {
+        "Number": 17,
+        "Versecount": 32
+      },
+      {
+        "Number": 18,
+        "Versecount": 33
+      },
+      {
+        "Number": 19,
+        "Versecount": 30
+      },
+      {
+        "Number": 20,
+        "Versecount": 31
+      },
+      {
+        "Number": 21,
+        "Versecount": 28
+      },
+      {
+        "Number": 22,
+        "Versecount": 27
+      },
+      {
+        "Number": 23,
+        "Versecount": 27
+      },
+      {
+        "Number": 24,
+        "Versecount": 34
+      },
+      {
+        "Number": 25,
+        "Versecount": 26
+      },
+      {
+        "Number": 26,
+        "Versecount": 29
+      },
+      {
+        "Number": 27,
+        "Versecount": 30
+      },
+      {
+        "Number": 28,
+        "Versecount": 26
+      },
+      {
+        "Number": 29,
+        "Versecount": 28
+      },
+      {
+        "Number": 30,
+        "Versecount": 25
+      },
+      {
+        "Number": 31,
+        "Versecount": 31
+      },
+      {
+        "Number": 32,
+        "Versecount": 24
+      },
+      {
+        "Number": 33,
+        "Versecount": 33
+      },
+      {
+        "Number": 34,
+        "Versecount": 31
+      },
+      {
+        "Number": 35,
+        "Versecount": 26
+      },
+      {
+        "Number": 36,
+        "Versecount": 31
+      },
+      {
+        "Number": 37,
+        "Versecount": 31
+      },
+      {
+        "Number": 38,
+        "Versecount": 34
+      },
+      {
+        "Number": 39,
+        "Versecount": 35
+      },
+      {
+        "Number": 40,
+        "Versecount": 30
+      },
+      {
+        "Number": 41,
+        "Versecount": 22
+      },
+      {
+        "Number": 42,
+        "Versecount": 25
+      },
+      {
+        "Number": 43,
+        "Versecount": 33
+      },
+      {
+        "Number": 44,
+        "Versecount": 23
+      },
+      {
+        "Number": 45,
+        "Versecount": 26
+      },
+      {
+        "Number": 46,
+        "Versecount": 20
+      },
+      {
+        "Number": 47,
+        "Versecount": 25
+      },
+      {
+        "Number": 48,
+        "Versecount": 25
+      },
+      {
+        "Number": 49,
+        "Versecount": 16
+      },
+      {
+        "Number": 50,
+        "Versecount": 29
+      },
+      {
+        "Number": 51,
+        "Versecount": 30
+      }
+    ]
+  },
+  {
+    "Name": "Baruch",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 22
+      },
+      {
+        "Number": 2,
+        "Versecount": 35
+      },
+      {
+        "Number": 3,
+        "Versecount": 38
+      },
+      {
+        "Number": 4,
+        "Versecount": 37
+      },
+      {
+        "Number": 5,
+        "Versecount": 9
+      },
+      {
+        "Number": 6,
+        "Versecount": 72
+      }
+    ]
+  },
+  {
     "Name": "Matthäus",
     "Chapters": [
       {
@@ -4657,7 +5241,7 @@
     ]
   },
   {
-    "Name": "Philliper",
+    "Name": "Phillipper",
     "Chapters": [
       {
         "Number": 1,
@@ -4817,6 +5401,91 @@
     ]
   },
   {
+    "Name": "1.Petrus",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 25
+      },
+      {
+        "Number": 2,
+        "Versecount": 25
+      },
+      {
+        "Number": 3,
+        "Versecount": 22
+      },
+      {
+        "Number": 4,
+        "Versecount": 19
+      },
+      {
+        "Number": 5,
+        "Versecount": 14
+      }
+    ]
+  },
+  {
+    "Name": "2.Petrus",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 21
+      },
+      {
+        "Number": 2,
+        "Versecount": 22
+      },
+      {
+        "Number": 3,
+        "Versecount": 18
+      }
+    ]
+  },
+  {
+    "Name": "1.Johannes",
+    "Chapters": [
+      {
+        "Number": 1,
+        "Versecount": 10
+      },
+      {
+        "Number": 2,
+        "Versecount": 29
+      },
+      {
+        "Number": 3,
+        "Versecount": 24
+      },
+      {
+        "Number": 4,
+        "Versecount": 21
+      },
+      {
+        "Number": 5,
+        "Versecount": 21
+      }
+    ]
+  },
+  {
+    "Name": "2.Johannes",
+    "Chapters": [      
+      {
+        "Number": 1,
+        "Versecount": 13
+      }
+    ]
+  },
+  {
+    "Name": "3.Johannes",
+    "Chapters": [      
+      {
+        "Number": 1,
+        "Versecount": 15
+      }
+    ]
+  },
+  {
     "Name": "Hebräer",
     "Chapters": [
       {
@@ -4895,81 +5564,6 @@
       {
         "Number": 5,
         "Versecount": 20
-      }
-    ]
-  },
-  {
-    "Name": "1.Petrus",
-    "Chapters": [
-      {
-        "Number": 1,
-        "Versecount": 25
-      },
-      {
-        "Number": 2,
-        "Versecount": 25
-      },
-      {
-        "Number": 3,
-        "Versecount": 22
-      },
-      {
-        "Number": 4,
-        "Versecount": 19
-      },
-      {
-        "Number": 5,
-        "Versecount": 14
-      }
-    ]
-  },
-  {
-    "Name": "2.Petrus",
-    "Chapters": [
-      {
-        "Number": 1,
-        "Versecount": 21
-      },
-      {
-        "Number": 2,
-        "Versecount": 22
-      },
-      {
-        "Number": 3,
-        "Versecount": 18
-      }
-    ]
-  },
-  {
-    "Name": "1.Johannes",
-    "Chapters": [
-      {
-        "Number": 1,
-        "Versecount": 10
-      },
-      {
-        "Number": 2,
-        "Versecount": 29
-      },
-      {
-        "Number": 3,
-        "Versecount": 24
-      },
-      {
-        "Number": 4,
-        "Versecount": 21
-      },
-      {
-        "Number": 5,
-        "Versecount": 21
-      },
-      {
-        "Number": 1,
-        "Versecount": 13
-      },
-      {
-        "Number": 1,
-        "Versecount": 15
       }
     ]
   },
