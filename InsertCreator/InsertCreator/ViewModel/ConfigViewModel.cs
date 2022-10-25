@@ -39,6 +39,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
                 PreviewLogo = BitmapToImageSource(image);
+                image.Dispose();
             }
         }
 
@@ -208,6 +209,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             {
                 Bitmap image = new Bitmap($"{Environment.GetEnvironmentVariable("userprofile")}/InsertCreator/Logo.png");
                 PreviewLogo = BitmapToImageSource(image);
+                image.Dispose();
             }
         }
 
