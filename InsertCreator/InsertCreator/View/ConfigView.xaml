@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="525"
+    xmlns:vm="clr-namespace:HgSoftware.InsertCreator.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:ConfigViewModel}"
     FontFamily="{materialDesign:MaterialDesignFont}"
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"

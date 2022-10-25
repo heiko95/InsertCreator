@@ -53,18 +53,18 @@ namespace HgSoftware.InsertCreator.Model
                 if (image.Width > image.Height)
                 {
                     var offsetY = (size - image.Height) / 2;
-                    g.DrawImage(image, 0, offsetY);
+                    g.DrawImage(image, 0, offsetY, image.Width, image.Height);
                     return resultPicture;
                 }
 
                 if (image.Width < image.Height)
                 {
                     var offsetX = (size - image.Width) / 2;
-                    g.DrawImage(image, offsetX, 0);
+                    g.DrawImage(image, offsetX, 0, image.Width, image.Height);
                     return resultPicture;
                 }
 
-                g.DrawImage(image, 0, 0);
+                g.DrawImage(image, 0, 0, image.Width, image.Height);
                 return resultPicture;
             }
         }

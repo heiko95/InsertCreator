@@ -87,6 +87,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CD01C33DB63D4245B52ADFF4A5DA6B88"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DCC0F2CA5D97D07877C5CE28E5C7014A"
         "OwnerKey" = "8:_4AD7E247AAB94287AAC299BBD076834D"
         "MsmSig" = "8:_UNDEFINED"
@@ -118,12 +124,6 @@
         "Entry"
         {
         "MsmKey" = "8:_F3E804E800B041FABF22CC78363607A2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F8C75DA4964349E985C93BF5D393A535"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -540,6 +540,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD01C33DB63D4245B52ADFF4A5DA6B88"
+            {
+            "SourcePath" = "8:..\\InsertCreator\\DataSource\\Bible_Data.json"
+            "TargetName" = "8:Bible_Data.json"
+            "Tag" = "8:"
+            "Folder" = "8:_18F15C82792249ABA8FFC38481155CBF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCC0F2CA5D97D07877C5CE28E5C7014A"
             {
             "AssemblyRegister" = "3:1"
@@ -704,26 +724,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F8C75DA4964349E985C93BF5D393A535"
-            {
-            "SourcePath" = "8:..\\InsertCreator\\DataSource\\Bible_Data.json"
-            "TargetName" = "8:Bible_Data.json"
-            "Tag" = "8:"
-            "Folder" = "8:_18F15C82792249ABA8FFC38481155CBF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FB20D8C5D94F49B3A27EBBB8BC20539E"
             {
             "SourcePath" = "8:..\\InsertCreator\\DataSource\\logo128.ico"
@@ -822,15 +822,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Insert Creator"
-        "ProductCode" = "8:{728FA635-4B80-42DC-B3FF-EE8986DD1367}"
-        "PackageCode" = "8:{4C1A36D8-D289-4CD8-8B9A-5A4B54EC3455}"
+        "ProductCode" = "8:{589B275E-FA84-4BAC-AB0D-F4EDF266D3F7}"
+        "PackageCode" = "8:{7C40BAC7-9FFB-4528-9F27-A4DE94F8FBD9}"
         "UpgradeCode" = "8:{FB94BEFD-845D-42EF-8E73-B359AA59AB09}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.3.3"
+        "ProductVersion" = "8:1.3.4"
         "Manufacturer" = "8:HgSoftware"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:heigrbk@arcor.de"
@@ -1372,7 +1372,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4AD7E247AAB94287AAC299BBD076834D"
             {
-            "SourcePath" = "8:..\\InsertCreator\\obj\\Debug\\InsertCreator.exe"
+            "SourcePath" = "8:..\\InsertCreator\\obj\\Release\\InsertCreator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_ED53DF7F84EF49D787E376C613FE3437"
