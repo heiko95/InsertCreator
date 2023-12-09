@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyTitle("InsertCreator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HgSoftware")]
+[assembly: AssemblyCompany("hgSoftware")]
 [assembly: AssemblyProduct("InsertCreator")]
 [assembly: AssemblyCopyright("Copyright © 2021 Heiko Gruber")]
 [assembly: AssemblyTrademark("")]
@@ -47,6 +47,6 @@ using System.Windows;
 // Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 // indem Sie "*" wie unten gezeigt eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.4.0")]
-[assembly: AssemblyFileVersion("1.3.4.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]

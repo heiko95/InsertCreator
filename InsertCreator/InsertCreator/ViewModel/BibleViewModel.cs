@@ -296,9 +296,11 @@ namespace HgSoftware.InsertCreator.ViewModel
             var sb = new StringBuilder();
             foreach (var verse in GetVerselist(SelectedVerses))
             {
+                var bibleText = _bibleTextService.GetBibleText(SelectedBook, Convert.ToInt32(SelectedChapter), verse);
+                if (string.IsNullOrEmpty(bibleText)) continue;
                 sb.Append(verse);
                 sb.Append(" ");
-                sb.Append(_bibleTextService.GetBibleText(SelectedBook, Convert.ToInt32(SelectedChapter), verse));
+                sb.Append(bibleText);
                 sb.Append(" ");
             }
             var text = sb.ToString();
