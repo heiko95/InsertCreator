@@ -113,6 +113,9 @@
     <Compile Include="Model\BibleChapter.cs" />
     <Compile Include="Model\BibleData.cs" />
     <Compile Include="Model\BibleJsonReader.cs" />
+    <Compile Include="Model\BibleTextRepository.cs" />
+    <Compile Include="Model\BibleTextService.cs" />
+    <Compile Include="Model\BibleVerse.cs" />
     <Compile Include="Model\BiblewordPositionData.cs" />
     <Compile Include="Model\CustomInsert.cs" />
     <Compile Include="Model\IInsertData.cs" />
@@ -280,6 +283,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CsvHelper">
+      <Version>30.0.1</Version>
+    </PackageReference>
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>2.3.2</Version>
     </PackageReference>
