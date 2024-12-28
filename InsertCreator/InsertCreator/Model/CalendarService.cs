@@ -1,4 +1,5 @@
 ﻿using HgSoftware.InsertCreator.ViewModel;
+using Microsoft.DwayneNeed.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -159,6 +160,12 @@ namespace HgSoftware.InsertCreator.Model
                             var datestring = value.Split(';').First();
                             var eventData = value.Substring(datestring.Length + 1);
                             var date = DateTime.Parse(datestring);
+
+                            // Add an offset of 1.5 hours.This means that the end time of the event
+                            // is always listed in the dictionary. The correct determination of the
+                            // current event is therefore possible even while the event is running
+                            date = date.AddHours(1.5);
+
                             events.Add(date, eventData);
                         }
                     }
