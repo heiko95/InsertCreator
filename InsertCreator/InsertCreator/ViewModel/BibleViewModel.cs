@@ -32,7 +32,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             _bibleValidationViewModel = new BibleValidationViewModel(bible);
             _bibleValidationViewModel.ErrorsChanged += ErrorViewModel_ErrorChanged;
 
-            _bibleTextService.ReadBible();
+            
         }
 
         #endregion Public Constructors
@@ -58,7 +58,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 else
                     TextBlockNotEmpty = false;
 
-                if (!_bibleValidationViewModel.ValidateBibleText(value, GetVerselist(SelectedVerses), nameof(BibleText)))
+                if (!_bibleValidationViewModel.ValidateBibleText(value, GetVerselistFromString(SelectedVerses), nameof(BibleText)))
                     return;
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(ResearchEnable));
@@ -189,14 +189,14 @@ namespace HgSoftware.InsertCreator.ViewModel
 
                 if (!_bibleValidationViewModel.ValidateVerse(SelectedBook, SelectedChapter, value, nameof(SelectedVerses)))
                 {
-                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselist(SelectedVerses), nameof(BibleText));
+                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselistFromString(SelectedVerses), nameof(BibleText));
                     OnPropertyChanged(nameof(ButtonsEnable));
                     OnPropertyChanged(nameof(ResearchEnable));
                     return;
                 }
                 if (!string.IsNullOrEmpty(value))
                 {
-                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselist(SelectedVerses), nameof(BibleText));
+                    _bibleValidationViewModel.ValidateBibleText(BibleText, GetVerselistFromString(SelectedVerses), nameof(BibleText));
                 }
                 OnPropertyChanged(nameof(ButtonsEnable));
                 OnPropertyChanged(nameof(ResearchEnable));
@@ -253,57 +253,16 @@ namespace HgSoftware.InsertCreator.ViewModel
             OnPropertyChanged(nameof(EnableVerse));
         }
 
-        private List<int> GetVerselist(string verses)
-        {
-            var result = new List<int>();
-
-            if (string.IsNullOrEmpty(verses) || _bibleValidationViewModel.PropertyHasError(nameof(SelectedVerses)))
-                return result;
-
-            var sections = verses.Split(';').ToList();
-
-            foreach (var section in sections)
-            {
-                var innerSections = section.Split('.').ToList();
-
-                foreach (var innerSection in innerSections)
-                {
-                    var inner = innerSection.Split('-').ToList();
-
-                    if (inner.Count == 1)
-                        result.Add(int.Parse(inner[0]));
-                    else
-                    {
-                        var first = int.Parse(inner[0]);
-                        var second = int.Parse(inner[1]);
-                        var count = second - first;
-                        var state = first;
-                        while (count >= 0)
-                        {
-                            result.Add(state);
-                            state++;
-                            count--;
-                        }
-                    }
-                }
-            }
-
-            return result;
+        private List<int> GetVerselistFromString(string verses)
+        {            
+            if ( _bibleValidationViewModel.PropertyHasError(nameof(SelectedVerses)))
+                return new List<int>();
+            return _bibleTextService.GetVerseList(verses);
         }
 
         private void LoadBibleText(object obj)
-        {
-            var sb = new StringBuilder();
-            foreach (var verse in GetVerselist(SelectedVerses))
-            {
-                var bibleText = _bibleTextService.GetBibleText(SelectedBook, Convert.ToInt32(SelectedChapter), verse);
-                if (string.IsNullOrEmpty(bibleText)) continue;
-                sb.Append(verse);
-                sb.Append(" ");
-                sb.Append(bibleText);
-                sb.Append(" ");
-            }
-            var text = sb.ToString();
+        {            
+            var text = _bibleTextService.GetBibleText(SelectedBook, Convert.ToInt32(SelectedChapter), GetVerselistFromString(SelectedVerses));
 
             if (!string.IsNullOrEmpty(text))
             {

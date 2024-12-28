@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Security.RightsManagement;
 using System.Windows.Input;
 
 namespace HgSoftware.InsertCreator.ViewModel
@@ -16,13 +17,13 @@ namespace HgSoftware.InsertCreator.ViewModel
         /// </summary>
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
-        private readonly HymnalInputViewModel _cbData;
+        private readonly HymnalInputViewModel _cbDataHymnalInputViewModel;
 
         //public BibleBrowserViewModel BibleBrowserViewModel { get; set; } = new BibleBrowserViewModel();
 
         public BibleViewModel BibleViewModel { get; private set; }
 
-        private readonly HymnalInputViewModel _gbData;
+        private readonly HymnalInputViewModel _gbHymnalInputViewModel;
 
         private readonly PreviewWindowController _previewWindow;
 
@@ -36,8 +37,13 @@ namespace HgSoftware.InsertCreator.ViewModel
             HistoryViewModel = new HistoryViewModel(fadeInWriter);
 
             _log.Info("Load Data");
-            _gbData = new HymnalInputViewModel(HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json"), "Gesangbuch", fadeInWriter, HistoryViewModel);
-            _cbData = new HymnalInputViewModel(HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json"), "Chorbuch", fadeInWriter, HistoryViewModel);
+
+            var gbData = HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/GB_Data.json");
+            var cbData = HymnalJsonReader.LoadHymnalData($"{Directory.GetCurrentDirectory()}/DataSource/CB_Data.json");
+
+
+            _gbHymnalInputViewModel = new HymnalInputViewModel(gbData, "Gesangbuch", fadeInWriter, HistoryViewModel);
+            _cbDataHymnalInputViewModel = new HymnalInputViewModel(cbData, "Chorbuch", fadeInWriter, HistoryViewModel);
 
             HymnalInputVisible = true;
             BibleInputVisible = false;
@@ -58,7 +64,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ConfigViewModel.OnSaveMinistries += SaveMinistries;
             fadeInWriter.OnInsertUpdate += UpdatePreview;
 
-            CurrentHymnalViewModel = _gbData;
+            CurrentHymnalViewModel = _gbHymnalInputViewModel;
 
             _previewWindow = new PreviewWindowController(PreviewViewModel);
 
@@ -71,6 +77,17 @@ namespace HgSoftware.InsertCreator.ViewModel
 
             if (Properties.Settings.Default.ShowInsertInFullscreen)
                 _previewWindow.Show();
+
+
+            // Auto Add from Calendar
+
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.CalendarUrl))
+            {
+                var calendarService = new CalendarService(Properties.Settings.Default.CalendarUrl, HistoryViewModel);
+                calendarService.CreateTodayInserts();
+
+
+            }
         }
 
         private void SaveMinistries(object sender, EventArgs e)
@@ -189,10 +206,10 @@ namespace HgSoftware.InsertCreator.ViewModel
 
                 if (value == 1)
                 {
-                    CurrentHymnalViewModel = _cbData;
+                    CurrentHymnalViewModel = _cbDataHymnalInputViewModel;
                     return;
                 }
-                CurrentHymnalViewModel = _gbData;
+                CurrentHymnalViewModel = _gbHymnalInputViewModel;
             }
         }
 
@@ -237,8 +254,8 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         private void SetPreview(bool state)
         {
-            _gbData.UpdateButtons(state);
-            _cbData.UpdateButtons(state);
+            _gbHymnalInputViewModel.UpdateButtons(state);
+            _cbDataHymnalInputViewModel.UpdateButtons(state);
             BibleViewModel.UpdateButtons(state);
             CustomizedViewModel.UpdateButtons(state);
             MinistryViewModel.UpdateButtons(state);

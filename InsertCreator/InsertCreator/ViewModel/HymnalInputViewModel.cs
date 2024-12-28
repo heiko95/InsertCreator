@@ -189,6 +189,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 MelodieAutor = "";
         }
 
+       
+
         private void OnButtonLeft(object obj)
         {
             if (_studioMode)

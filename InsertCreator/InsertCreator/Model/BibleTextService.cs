@@ -1,5 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using HgSoftware.InsertCreator.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -22,14 +24,68 @@ namespace HgSoftware.InsertCreator.Model
         public BibleTextService(string filePath)
         {
             _filePath = filePath;
+            ReadBible();
         }
+
+        public List<int> GetVerseList(string verses)
+        {
+            var result = new List<int>();
+
+            if (string.IsNullOrEmpty(verses))
+                return result;
+
+            var sections = verses.Split(';').ToList();
+
+            foreach (var section in sections)
+            {
+                var innerSections = section.Split('.').ToList();
+
+                foreach (var innerSection in innerSections)
+                {
+                    var inner = innerSection.Split('-').ToList();
+
+                    if (inner.Count == 1)
+                        result.Add(int.Parse(inner[0]));
+                    else
+                    {
+                        var first = int.Parse(inner[0]);
+                        var second = int.Parse(inner[1]);
+                        var count = second - first;
+                        var state = first;
+                        while (count >= 0)
+                        {
+                            result.Add(state);
+                            state++;
+                            count--;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
 
         #endregion Public Constructors
 
         #region Public Methods
 
-        public string GetBibleText(string book, int chapter, int verse)
-            => _bibleVerses.FirstOrDefault(x => x.Book == book && x.Chapter == chapter && x.Verse == verse)?.Text ?? string.Empty;
+        public string GetBibleText(string book, int chapter, List<int> verses)
+        {
+            var sb = new StringBuilder();
+            foreach (var verse in verses)
+            {
+                var bibleText = _bibleVerses.FirstOrDefault(x => x.Book == book && x.Chapter == chapter && x.Verse == verse)?.Text ?? string.Empty;
+                if (string.IsNullOrEmpty(bibleText)) continue;
+                sb.Append(verse);
+                sb.Append(" ");
+                sb.Append(bibleText);
+                sb.Append(" ");
+            }
+            return  sb.ToString();
+        }
+
+       
 
         public void ReadBible()
         {

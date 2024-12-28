@@ -12,15 +12,15 @@ namespace HgSoftware.InsertCreator.ViewModel
 {
     public class ConfigViewModel : ObservableObject
     {
-        #region Private Fields
+        #region Fields
 
         private readonly CsvReaderWriter _csvReaderWriter = new CsvReaderWriter();
 
         private readonly PictureReader _pictureReader = new PictureReader();
 
-        #endregion Private Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public ConfigViewModel()
         {
@@ -29,6 +29,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
             ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
             LogoAsCornerbug = Properties.Settings.Default.LogoAsCornerlogo;
+            CalendarUrl = Properties.Settings.Default.CalendarUrl;
 
             if (Properties.Settings.Default.LogoOnLefthand)
                 LogoPositionSelection = 0;
@@ -43,23 +44,36 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Events
+        #region Events
 
         public event EventHandler<ObservableCollection<MinistryGridViewModel>> OnLoadMinistries;
 
         public event EventHandler<EventArgs> OnResetMinistries;
 
+        public event EventHandler<EventArgs> OnSaveMinistries;
+
         public event EventHandler<bool> OnUpdateFullscreenMode;
 
         public event EventHandler<bool> OnUpdatePreview;
 
-        public event EventHandler<EventArgs> OnSaveMinistries;
+        #endregion Events
 
-        #endregion Public Events
+        #region Properties
 
-        #region Public Properties
+        public string CalendarUrl
+        {
+            get { return GetValue<string>(); }
+            set
+            {
+                if (CalendarUrl != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.CalendarUrl = value;
+                }
+            }
+        }
 
         public bool LogoAsCornerbug
         {
@@ -165,9 +179,9 @@ namespace HgSoftware.InsertCreator.ViewModel
             }
         }
 
-        #endregion Public Properties
+        #endregion Properties
 
-        #region Private Methods
+        #region Methods
 
         private BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
@@ -225,6 +239,6 @@ namespace HgSoftware.InsertCreator.ViewModel
             _csvReaderWriter.SaveCsv();
         }
 
-        #endregion Private Methods
+        #endregion Methods
     }
 }

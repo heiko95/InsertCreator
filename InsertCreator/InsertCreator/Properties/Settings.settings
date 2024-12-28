@@ -29,5 +29,8 @@
     <Setting Name="BibleTranslation" Type="System.String" Scope="User">
       <Value Profile="(Default)">LUT</Value>
     </Setting>
+    <Setting Name="CalendarUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
