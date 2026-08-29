@@ -72,18 +72,24 @@ namespace HgSoftware.InsertCreator.Model
             _window.DataContext = _previewViewModel;
             _window.ShowInTaskbar = false;
             _window.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
-            _window.WindowState = System.Windows.WindowState.Normal;
 
             var screen = _selectedMonitorIndex >= 0 && _selectedMonitorIndex < screens.Count
                 ? screens[_selectedMonitorIndex]
                 : screens.FirstOrDefault(x => !x.Primary) ?? screens[1];
             System.Drawing.Rectangle r = screen.WorkingArea;
 
+            // Stay in Normal state and size the (borderless) window to exactly
+            // cover the target monitor instead of using WindowState.Maximized.
+            // Setting WindowState.Maximized before the window has ever been
+            // shown is a well-known WPF issue: Windows computes the maximized
+            // bounds from the monitor the HWND is created on (usually the
+            // primary monitor), not from Left/Top, so the window would first
+            // appear on the wrong monitor regardless of the position we set here.
+            _window.WindowState = System.Windows.WindowState.Normal;
             _window.Top = r.Top;
             _window.Left = r.Left;
             _window.Width = r.Width;
             _window.Height = r.Height;
-            _window.WindowState = System.Windows.WindowState.Maximized;
             return true;
         }
 
