@@ -60,6 +60,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ConfigViewModel.OnLoadMinistries += UpdateMinistries;
             ConfigViewModel.OnResetMinistries += ResetMinistries;
             ConfigViewModel.OnUpdateFullscreenMode += UpdateFullscreenMode;
+            ConfigViewModel.OnMonitorSelectionChanged += UpdateSelectedMonitor;
             ConfigViewModel.OnUpdatePreview += UpdatePreviewMode;
             ConfigViewModel.OnSaveMinistries += SaveMinistries;
             fadeInWriter.OnInsertUpdate += UpdatePreview;
@@ -67,6 +68,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             CurrentHymnalViewModel = _gbHymnalInputViewModel;
 
             _previewWindow = new PreviewWindowController(PreviewViewModel);
+            _previewWindow.SetSelectedMonitor(Properties.Settings.Default.SelectedMonitorIndex);
 
             _log.Info("ReadBible");
             BibleViewModel = new BibleViewModel(BibleJsonReader.LoadBibleData($"{Directory.GetCurrentDirectory()}/DataSource/Bible_Data.json"), fadeInWriter, HistoryViewModel);
@@ -239,6 +241,7 @@ namespace HgSoftware.InsertCreator.ViewModel
 
         async private void OpenConfigDialog(object obj)
         {
+            ConfigViewModel.RefreshAvailableMonitors();
             await MaterialDesignThemes.Wpf.DialogHost.Show(ConfigViewModel, "MainWindow");
         }
 
@@ -300,6 +303,14 @@ namespace HgSoftware.InsertCreator.ViewModel
         private void UpdatePreviewMode(object sender, bool e)
         {
             SetPreview(e);
+        }
+
+        private void UpdateSelectedMonitor(object sender, int e)
+        {
+            _previewWindow.SetSelectedMonitor(e);
+
+            if (Properties.Settings.Default.ShowInsertInFullscreen)
+                _previewWindow.Update(true);
         }
 
         #endregion Private Methods

@@ -29,6 +29,7 @@ namespace HgSoftware.InsertCreator.ViewModel
             ShowInsertInFullscreen = Properties.Settings.Default.ShowInsertInFullscreen;
             UseCorporateDesign2026 = Properties.Settings.Default.UseCorporateDesign2026;
             ShowPreviewPicture = Properties.Settings.Default.ShowPreviewPicture;
+            SelectedMonitorIndex = Properties.Settings.Default.SelectedMonitorIndex;
             LogoAsCornerbug = Properties.Settings.Default.LogoAsCornerlogo;
             CalendarUrl = Properties.Settings.Default.CalendarUrl;
 
@@ -43,6 +44,8 @@ namespace HgSoftware.InsertCreator.ViewModel
                 PreviewLogo = BitmapToImageSource(image);
                 image.Dispose();
             }
+
+            RefreshAvailableMonitors();
         }
 
         #endregion Constructors
@@ -56,6 +59,8 @@ namespace HgSoftware.InsertCreator.ViewModel
         public event EventHandler<EventArgs> OnSaveMinistries;
 
         public event EventHandler<bool> OnUpdateFullscreenMode;
+
+        public event EventHandler<int> OnMonitorSelectionChanged;
 
         public event EventHandler<bool> OnUpdatePreview;
 
@@ -74,6 +79,12 @@ namespace HgSoftware.InsertCreator.ViewModel
                     Properties.Settings.Default.CalendarUrl = value;
                 }
             }
+        }
+
+        public ObservableCollection<string> AvailableMonitors
+        {
+            get { return GetValue<ObservableCollection<string>>(); }
+            set { SetValue(value); }
         }
 
         public bool LogoAsCornerbug
@@ -135,6 +146,7 @@ namespace HgSoftware.InsertCreator.ViewModel
                 {
                     SetValue(value);
                     Properties.Settings.Default.ShowInsertInFullscreen = value;
+                    RefreshAvailableMonitors();
                     OnUpdateFullscreenMode?.Invoke(this, value);
                 }
             }
@@ -176,6 +188,20 @@ namespace HgSoftware.InsertCreator.ViewModel
                     SetValue(value);
                     Properties.Settings.Default.ShowPreviewPicture = value;
                     OnUpdatePreview?.Invoke(this, value);
+                }
+            }
+        }
+
+        public int SelectedMonitorIndex
+        {
+            get { return GetValue<int>(); }
+            set
+            {
+                if (SelectedMonitorIndex != value)
+                {
+                    SetValue(value);
+                    Properties.Settings.Default.SelectedMonitorIndex = value;
+                    OnMonitorSelectionChanged?.Invoke(this, value);
                 }
             }
         }
@@ -245,6 +271,26 @@ namespace HgSoftware.InsertCreator.ViewModel
         {
             PreviewLogo = null;
             _pictureReader.RemovePicture();
+        }
+
+        public void RefreshAvailableMonitors()
+        {
+            var screens = Screen.AllScreens;
+            var monitors = new ObservableCollection<string>();
+
+            for (int i = 0; i < screens.Length; i++)
+            {
+                var screen = screens[i];
+                monitors.Add($"Monitor {i + 1} ({screen.Bounds.Width}x{screen.Bounds.Height})");
+            }
+
+            AvailableMonitors = monitors;
+
+            if (screens.Length == 0)
+                return;
+
+            if (SelectedMonitorIndex < 0 || SelectedMonitorIndex >= screens.Length)
+                SelectedMonitorIndex = screens.Length > 1 ? 1 : 0;
         }
 
         private void SaveCSV(object obj)

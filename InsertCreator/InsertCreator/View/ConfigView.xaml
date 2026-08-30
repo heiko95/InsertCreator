@@ -94,7 +94,8 @@
                     DockPanel.Dock="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.7*" />
+                            <ColumnDefinition Width="1.2*" />
+                            <ColumnDefinition Width="0.5*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -108,6 +109,15 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             IsChecked="{Binding ShowInsertInFullscreen}" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            IsEnabled="{Binding ShowInsertInFullscreen}"
+                            ItemsSource="{Binding AvailableMonitors}"
+                            SelectedIndex="{Binding SelectedMonitorIndex}" />
                     </Grid>
                 </materialDesign:Card>
 

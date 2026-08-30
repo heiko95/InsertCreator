@@ -154,5 +154,17 @@ namespace HgSoftware.InsertCreator.Properties {
                 this["CalendarUrl"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int SelectedMonitorIndex {
+            get {
+                return ((int)(this["SelectedMonitorIndex"]));
+            }
+            set {
+                this["SelectedMonitorIndex"] = value;
+            }
+        }
     }
 }
