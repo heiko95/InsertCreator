@@ -1,5 +1,7 @@
 ﻿using HgSoftware.InsertCreator.View;
 using HgSoftware.InsertCreator.ViewModel;
+using System;
+using System.Drawing;
 using System.Linq;
 
 namespace HgSoftware.InsertCreator.Model
@@ -78,6 +80,18 @@ namespace HgSoftware.InsertCreator.Model
                 : screens.FirstOrDefault(x => !x.Primary) ?? screens[1];
             System.Drawing.Rectangle r = screen.WorkingArea;
 
+            // Screen.WorkingArea is reported in physical pixels, while WPF window
+            // coordinates (Top/Left/Width/Height) are device-independent units
+            // (1/96"). The app is not per-monitor DPI aware, so a single system
+            // DPI scale applies; convert the rectangle with it so placement and
+            // sizing stay correct when display scaling is not 100%.
+            double scaleX, scaleY;
+            using (var g = Graphics.FromHwnd(IntPtr.Zero))
+            {
+                scaleX = g.DpiX / 96.0;
+                scaleY = g.DpiY / 96.0;
+            }
+
             // Stay in Normal state and size the (borderless) window to exactly
             // cover the target monitor instead of using WindowState.Maximized.
             // Setting WindowState.Maximized before the window has ever been
@@ -86,10 +100,10 @@ namespace HgSoftware.InsertCreator.Model
             // primary monitor), not from Left/Top, so the window would first
             // appear on the wrong monitor regardless of the position we set here.
             _window.WindowState = System.Windows.WindowState.Normal;
-            _window.Top = r.Top;
-            _window.Left = r.Left;
-            _window.Width = r.Width;
-            _window.Height = r.Height;
+            _window.Top = r.Top / scaleY;
+            _window.Left = r.Left / scaleX;
+            _window.Width = r.Width / scaleX;
+            _window.Height = r.Height / scaleY;
             return true;
         }
 
